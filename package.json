@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "firebase": "^12.15.0",
+    "interact.js": "^1.2.8"
+  }
+}

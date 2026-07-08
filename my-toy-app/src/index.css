@@ -1,0 +1,20 @@
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff; 
+  
+  /* 1. Permanently lock the background to the screen */
+  position: fixed; 
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  
+  /* 2. Forbid any overflow outside the exact screen size */
+  overflow: hidden; 
+  
+  /* 3. Keep our bounce-prevention rules just in case */
+  overscroll-behavior: none; 
+}

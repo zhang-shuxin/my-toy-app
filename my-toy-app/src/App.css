@@ -1,0 +1,1141 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+/* Reset default browser margins */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- CENTERS THE "PHONE" ON YOUR DESKTOP --- */
+body {
+  background-color: #e6e6e6; /* Gives your desktop a gray background so the app pops out */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.mobile-container, .App {
+  width: 100%;
+  min-height: 100dvh;   
+  background-size: 100% 100%; 
+  background-position: center top; 
+  background-repeat: no-repeat;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  touch-action: pan-y;
+}
+
+/* --- WELCOME SCREEN STYLES --- */
+.welcome-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  /* Pushes everything down so it fits inside the drawn museum archway */
+  padding-top: 120px; 
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-bottom: 40px;
+  
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Building Image Background */
+.building-bg-img {
+  position: absolute;
+  /* 1. The classic centering trick */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%; 
+  height: auto; 
+  
+  z-index: 0;
+  pointer-events: none; 
+}
+
+/* Make sure your interactive content safely floats above the building */
+.welcome-content, .paper-plane-decoration, .seagull-banner {
+  position: relative;
+  z-index: 1;
+}
+
+.paper-plane-decoration {
+  position: absolute;
+  top: 10px;         /* Distance from the top */
+  left: -15px;       /* Pulls it slightly off the left screen edge */
+  width: 388px;      /* Exact width from Figma */
+  height: 67px;      /* Exact height from Figma */
+  z-index: 10;       /* Keeps it floating above the background */
+  pointer-events: none; /* Ensures it doesn't accidentally block you from clicking anything else */
+}
+
+.logo {
+  margin-top: -12px;
+  width: 75%;
+  max-width: 280px;
+  object-fit: contain; /* Keeps the image perfectly proportioned inside the box */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.intro-text {
+  font-family: 'Itim', cursive, sans-serif;
+  color: #000000;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 20px;
+  width: 100%;
+  max-width: 250px; 
+  margin: 0 auto 40px auto; /* Centers the text and adds space above the button */
+}
+
+.intro-text p {
+  margin-bottom: 20px;
+}
+
+.start-button {
+  display: inline-flex;
+  padding: 20px 50px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 40px;
+  background: #EA4335;
+  box-shadow: -2px -2px 2px 0 rgba(0, 0, 0, 0.25) inset;
+  color: #FFEE99;
+  font-family: sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  /* Smooth transition for hover/active states */
+  transition: all 0.1s ease;
+}
+
+/* Optional: Subtle effect when clicked */
+.start-button:active {
+  transform: scale(0.98);
+  opacity: 0.95;
+}
+
+.seagull-banner {
+  position: absolute;
+  bottom: 8px;      /* Distance from the bottom (15.1 in Figma) */
+  right: 18px;       /* Distance from the right edge */
+  width: 257px;      /* Exact width from Figma */
+  height: 137px;     /* Exact height from Figma */
+  z-index: 10;       /* Keeps it layered above the background */
+  pointer-events: none; /* Ensures it doesn't block scrolling or clicks */
+}
+
+.dollhouse-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  height: 85px;
+  z-index: 10;
+  background-color: transparent;
+}
+
+/* --- THE LOGO (Freely Positioned) --- */
+.small-logo {
+  height: 60px;
+  width: auto;
+  position: absolute; /* 1. Breaks it out of the Flexbox relationship */
+  left: 15%;/* 2. Moves it exactly to the center horizontally */
+  transform: translateX(-20%);
+  top: 80px; /* 3. Adjust this number freely to move it up or down! */
+  z-index: 20; /* Ensures it always stays on top of the background and other elements */
+}
+
+.pretty-back-btn {
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-family: 'Itim', cursive, sans-serif;
+  font-size: 18px;
+  color: #000000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.pretty-back-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px rgba(0,0,0,0.8);
+}
+
+.info-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-btn img {
+  width: 35px; /* Adjust this to make the icon bigger or smaller */
+  height: auto;
+  transition: transform 0.1s ease;
+}
+
+.info-btn:active img {
+  transform: scale(0.9);
+}
+
+/* --- INFO MODAL STYLES --- */
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* The dark background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100; /* Ensures it sits on top of everything else */
+}
+
+.info-modal-content {
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  padding: 30px 25px;
+  width: 80%;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  font-family: 'Itim', cursive, sans-serif;
+  color: #000000;
+}
+
+.info-modal-content h3 {
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.info-modal-content p {
+  font-size: 16px;
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+.info-modal-content p:last-child {
+  margin-bottom: 0; /* Removes extra space at the very bottom */
+}
+
+/* The main house background */
+.house-display {
+  /* 1. Tell it to expand and fill the entire mobile-container */
+  flex-grow: 1; 
+  width: 100%; 
+  /* 2. Tell the background image to stretch with it! */
+  background-size: 100% 100%; 
+  background-position: center top;
+  background-repeat: no-repeat;  
+  /* Keep any other rules you already had here, like position: relative! */
+  position: relative; 
+}
+
+/* Bottom panel container */
+.bottom-panel {
+  height: 80px;
+  background-color: #FFF9E7;
+  border-top: 2px solid #F7D842;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.create-button {
+  background-color: #EA4335;
+  color: #FFFFFF;
+  font-size: 60px; /* A smaller font fits beautifully inside a 60px button */
+  line-height: 1;  /* Removes automatic browser text padding */
+  border: 1px solid #EA4335;
+  border-radius: 100%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0px 3px 3px #f59f2e;
+  padding-bottom: 6px;
+}
+
+/* --- POP-UP MODAL STYLES --- */
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+/* Off-white background, tall container */
+.modal-content {
+  background-color: #fdfaf4; 
+  width: 85%;
+  border-radius: 24px;
+  padding: 40px 25px 30px 25px;
+  position: relative;
+  text-align: center;
+  font-family: sans-serif;
+  box-shadow: 0px 10px 30px rgba(0,0,0,0.15);
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px; /* Moved to the right to match your design */
+  background-color: white;
+  color: #e84e3a;
+  border: 2px solid #e84e3a;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sticker-header {
+  display: inline-block;
+  padding: 6px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  border: 1.5px solid #333;
+  margin-bottom: 15px;
+  box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+}
+
+.yellow-sticker {
+  background-color: #f9d854; /* Yellow tape color */
+  color: #111;
+  transform: rotate(-1deg); /* Gives it that playful, placed-by-hand look */
+}
+
+.gray-sticker-disabled {
+  background-color: #e0e0e0;
+  color: #888;
+  border-color: #aaa;
+  box-shadow: none;
+  transform: rotate(1deg);
+}
+
+.gray-sticker-active {
+  background-color: #d1cfc7;
+  color: #111;
+  transform: rotate(1deg);
+}
+
+/* --- UPLOAD BOX & DASHES --- */
+.upload-section {
+  text-align: left;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.custom-dash-red {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 3px dashed #e84e3a; 
+  border-radius: 4px;
+  height: 180px;
+  width: 100%;
+  background-color: white;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.custom-dash-brown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px dashed #938575; /* The brown border from your design */
+  border-radius: 4px;
+  height: 180px;
+  background-color: white;
+  margin-bottom: 15px;
+}
+
+.no-dash {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid transparent; 
+  height: 180px;
+  background-color: transparent;
+  margin-bottom: 15px;
+}
+
+.bold-text { color: #282828; font-size: 14px; font-weight: bold; }
+.subtext { font-size: 12px; color: #606060; }
+.image-preview img { max-width: 90%; max-height: 90%; object-fit: contain; }
+
+/* --- DYNAMIC REMOVE BG BUTTONS --- */
+.remove-bg-btn {
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 12px;
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.disabled {
+  background-color: #edece9;
+  border: none;
+  color: #a8a39d;
+}
+
+.active-red {
+  background-color: #e84e3a;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #c23824; /* Fun 3D pop effect */
+  transition: all 0.1s;
+}
+
+.active-red:active {
+  transform: translateY(4px);
+  box-shadow: none;
+}
+
+/* --- TEXT AREA --- */
+.story-section {
+  text-align: left;
+  margin-bottom: 30px;
+  min-height: 110px; /* Keeps the modal from jumping sizes wildly */
+}
+
+textarea {
+  width: 100%;
+  height: 80px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  background-color: white;
+  resize: none;
+}
+
+/* --- BOTTOM PILL BUTTONS --- */
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 14px;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 15px;
+  text-align: center;
+}
+
+.btn-outline {
+  background-color: white;
+  border: 2px solid #eaeaea;
+  color: #2b2b4e; /* Dark blue/purple text */
+  cursor: pointer;
+}
+
+.btn-solid-disabled {
+  background-color: #a8a39d; /* Gray */
+  border: none;
+  color: white;
+}
+
+.btn-solid-active {
+  background-color: #EA4335; /* Dark brown/gray */
+  border: 1.5px solid #FFEE99;
+  color: #FFEE99;
+  cursor: pointer;
+}
+
+/* --- WORD COUNTER --- */
+.word-count {
+  font-size: 12px;
+  text-align: right;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+/* --- THE DRAGGABLE TOY ON THE DOLLHOUSE --- */
+.draggable-toy {
+  width: 140px; /* Size of the toy in the house */
+  height: 140px;
+  position: absolute;
+  top: 40%;
+  left: 35%;
+  cursor: grab;
+  touch-action: none; /* Required for touch screens to drag properly */
+  user-select: none;
+  z-index: 50;
+  filter: drop-shadow(0px 8px 12px rgba(0,0,0,0.25)); /* Makes it look like it's floating slightly */
+}
+
+.draggable-toy:active {
+  cursor: grabbing; /* Changes cursor when clicked */
+}
+
+.draggable-toy img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none; /* Stops the browser from accidentally "saving" the image instead of dragging it */
+}
+
+/* --- THE DRAGGABLE TOY ON THE DOLLHOUSE --- */
+.draggable-toy {
+  /* We removed the fixed width/height here because React controls it now! */
+  position: absolute;
+  top: 40%;
+  left: 35%;
+  cursor: grab;
+  touch-action: none; 
+  user-select: none;
+  z-index: 50;
+  filter: drop-shadow(0px 8px 12px rgba(0,0,0,0.25)); 
+  transition: width 0.3s ease-in-out, height 0.3s ease-in-out; /* Smooth growing animation */
+}
+
+.draggable-toy:active {
+  cursor: grabbing; 
+}
+
+.draggable-toy img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none; 
+}
+
+/* --- THE RESIZE BUTTON --- */
+.resize-btn {
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
+  background-color: #EA4335;
+  color: white;
+  border: 2px solid white;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  z-index: 60;
+  touch-action: none; /* Prevents the browser from misinterpreting a tap */
+}
+
+.resize-btn:active {
+  background-color: #a12313; /* Flashes red when tapped */
+  transform: scale(0.9);
+}
+
+/* --- DYNAMIC BOTTOM PANEL ACTIONS --- */
+.bottom-actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 20px;
+  gap: 15px;
+}
+
+/* --- SAVED TOYS IN THE DOLLHOUSE --- */
+.saved-toy {
+  position: absolute;
+  top: 40%;
+  left: 35%;
+  z-index: 40; /* Sits slightly behind the toy you are currently dragging */
+  filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.15));
+}
+
+.saved-toy img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none; /* Keeps the browser from accidentally "saving" the image */
+}
+
+/* --- THE SPEECH BUBBLE BUTTON --- */
+.story-bubble-btn {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 50;
+  width: 32px; /* Set this to whatever size looks best for your custom icon! */
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  transition: transform 0.1s;
+}
+
+.story-bubble-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.2)); /* Adds a tiny shadow to make it pop */
+}
+
+.story-bubble-btn:active {
+  transform: scale(0.9);
+}
+
+/* --- DETAILS & COMMENTS PAGE --- */
+.details-close-btn {
+  background-color: white;
+  color: #e84e3a;
+  border: 1px solid #000000;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.details-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 0 20px;
+}
+
+.details-image-box {
+  background-color: #f2f2f2;
+  border: 1px solid #cacaca;
+  border-radius: 12px;
+  width: 150px;
+  height: 150px;
+  margin: 10px 0 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: 0 4px 3px rgba(0,0,0,0.05);
+}
+
+.details-image-box img {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+}
+
+.details-story-box {
+  background-color: #f2f2f2; /* The warm gray from your mockup */
+  border: 1px solid #cacaca;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 22px;
+  position: relative;
+  box-shadow: 0 2px 3px rgba(0,0,0,0.05);
+}
+
+.details-story-box p {
+  color: #333;
+  font-size: 15px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.details-date {
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+  font-size: 12px;
+  color: #888;
+  font-weight: bold;
+}
+
+.comments-divider {
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.no-comments {
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.comment-item {
+  background-color: white;
+  padding: 14px;
+  border: 1px solid #cacaca;
+  border-radius: 12px;
+  font-size: 15px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: #333;
+  box-shadow: 0 2px 3px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-text {
+  margin: 0 0 10px 0; /* Adds a little breathing room above the date */
+  line-height: 1.4;
+}
+
+.comment-date {
+  align-self: flex-end; /* This is the magic line that pushes the date to the right! */
+  font-size: 12px;
+  color: #888888;
+  font-family: sans-serif;
+}
+
+/* --- STICKY BOTTOM INPUT BAR --- */
+.details-input-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px 20px 30px 20px;
+  background-color: #eae4fa;
+  box-shadow: 0 -10px 15px rgba(219, 210, 236, 0.9); /* Fades perfectly into background */
+}
+
+.input-wrapper {
+  background-color: white;
+  border-radius: 25px;
+  padding: 10px 15px;
+  box-shadow: 0 4px 4px rgba(0,0,0,0.05);
+}
+
+.input-wrapper input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  margin-bottom: 15px;
+  color: #333;
+  background: transparent;
+}
+
+.input-wrapper input::placeholder {
+  color: #aaa;
+}
+
+.input-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.send-btn {
+  margin-left: auto; /* Pushes it to the far right */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+
+/* --- UPLOAD MODAL STYLES --- */
+.upload-modal-content {
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  padding: 30px 25px;
+  width: 80%;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  font-family: 'Itim', cursive, sans-serif;
+}
+
+.upload-modal-content h3 {
+  font-size: 22px;
+  margin-top: 0;
+  margin-bottom: 25px;
+  color: #000000;
+}
+
+/* Container for the two big buttons */
+.upload-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between the two buttons */
+  margin-bottom: 20px;
+}
+
+/* The Flat-Design Action Buttons */
+.upload-option-btn {
+  background-color: #F7D842;
+  border: 2px solid #3d3d3d;
+  border-radius: 18px;
+  padding: 15px;
+  
+  font-family: 'Itim', cursive, sans-serif;
+  font-size: 16px;
+  color: #000000;
+  text-align: left;
+  
+  cursor: pointer;
+  box-shadow: 0px 2px 0px rgba(60, 60, 60, 0.8);
+  transition: all 0.1s ease;
+  
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.upload-option-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px rgba(0,0,0,0.8);
+}
+
+.emoji-icon {
+  font-size: 30px;
+}
+
+/* Simple text button to close the modal */
+.cancel-text-btn {
+  background: none;
+  border: none;
+  color: #888888;
+  font-family: 'Itim', cursive, sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* --- DETAILS BOTTOM SHEET --- */
+
+/* The dark background behind the pop-up */
+.details-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); 
+  z-index: 100;
+  display: flex;
+  
+  /* Pushes the white card to the very bottom! */
+  align-items: flex-end; 
+  justify-content: center;
+}
+
+/* The actual pop-up card */
+.details-bottom-sheet {
+  width: 100%;
+  height: 88%; 
+  background-color: #eae4fa; 
+  /* Big rounded corners on the top ONLY */
+  border-radius: 30px 30px 0 0; 
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  
+  /* Triggers the slide-up animation */
+  animation: slideUp 0.3s ease-out forwards; 
+}
+
+/* The smooth sliding animation */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%); 
+  }
+  to {
+    transform: translateY(0); 
+  }
+}
+
+/* Ensures your close button aligns to the right edge neatly */
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+/* --- COMMENT ATTACHMENTS --- */
+.comment-attached-image {
+  width: 140px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* --- COMMENT IMAGE PREVIEW (Before Sending) --- */
+.comment-image-preview {
+  position: absolute;
+  bottom: 100%; /* Pushes it right above the input bar */
+  left: 20px;
+  background-color: white;
+  padding: 5px;
+  border-radius: 10px;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.comment-image-preview img {
+  height: 80px;
+  width: auto;
+  border-radius: 5px;
+  display: block;
+}
+
+.comment-image-preview button {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #e84e3a;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Fixes default button styling for the little icons */
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- NEW TEXTAREA STYLING --- */
+.comment-text-area {
+  flex-grow: 1; /* Makes it take up the available space */
+  border: none;
+  background: transparent;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  color: #000000;
+  resize: none; /* Removes the ugly drag-to-resize corner */
+  outline: none;
+  padding: 5px 0;
+  line-height: 1.4;
+  margin-right: 10px;
+}
+
+/* Optional: Pushes the action icons nicely to the right side if the text area gets tall */
+.input-actions {
+  align-items: flex-end; 
+  padding-bottom: 5px;
+}
+
+
+/* --- MUSEUM ARCHIVE OVERLAY --- */
+.archive-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #BDD717;
+  z-index: 300; /* Ensure it floats above the dollhouse and other modals */
+  display: flex;
+  flex-direction: column;
+}
+
+.archive-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid #333;
+}
+
+.archive-header h2 {
+  margin: 0;
+  font-size: 26px;
+  color: #333;
+  font-family: 'Itim';
+}
+
+/* The 2-Column Grid */
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 equal columns */
+  gap: 15px;
+  padding: 20px;
+  overflow-y: auto; /* Allows scrolling if there are lots of toys */
+  padding-bottom: 100px; /* Safe space for the bottom of the screen */
+}
+
+/* Individual Toy Cards */
+.archive-card {
+  background-color: #fffadf;
+  border: 1px solid #333;
+  border-radius: 16px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0px 2px 0px #404040; /* Gives it that fun, clickable retro button look */
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.archive-card:active {
+  transform: translateY(4px); /* Pushes down when tapped */
+  box-shadow: 0px 0px 0px #333;
+}
+
+.archive-img-container {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* Keeps images perfectly square */
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.archive-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Ensures the whole toy fits without cropping */
+}
+
+.archive-card p {
+  margin: 0;
+  font-size: 16px;
+  font-family: 'Itim';
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+}
+
+/* --- Moderation Mode Overlay --- */
+.admin-dark-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 50;
+}
+
+.btn-exit-moderation {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 20px 30px;
+  background-color: #c414;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: bold;
+  z-index: 100;
+  cursor: pointer;
+}
+
+/* --- Moderation Mode Delete Button --- */
+.btn-delete-toy {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #e84e3a;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 100;
+}
+
+/* --- Admin Panel Styles --- */
+.admin-panel-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  margin-bottom: 40px;
+}
+
+.btn-select-toys {
+  background-color: #f9d854;
+  margin-bottom: 20px;
+}
+
+.btn-wipe-dollhouse {
+  border-color: black;
+  background-color: #e84e3a;
+  color: white;
+  margin-bottom: 20px;
+}
