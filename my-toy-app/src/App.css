@@ -267,7 +267,7 @@ body {
 }
 
 .create-button {
-  background-color: #a8ea35;
+  background-color: #EA4335;
   color: #FFFFFF;
   font-size: 60px; /* A smaller font fits beautifully inside a 60px button */
   line-height: 1;  /* Removes automatic browser text padding */
@@ -280,7 +280,7 @@ body {
   align-items: center;
   cursor: pointer;
   box-shadow: 0px 3px 3px #f59f2e;
-  padding-bottom: 1px;
+  padding-bottom: 7px;
 }
 
 /* --- POP-UP MODAL STYLES --- */
