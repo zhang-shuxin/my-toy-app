@@ -37,10 +37,10 @@ import Furby5 from './assets/maa-Furby-5.jpeg'
 import Nancy1 from './assets/maa-Nancy-1.jpeg'
 import Nancy2 from './assets/maa-Nancy-2.jpeg'
 import Nancy3 from './assets/maa-Nancy-3.jpeg'
-import Playmobil1 from './assets/maa-Playmobil-1.jpeg'
+import Playmobil1 from './assets/maa-Playmobil-1.jpg'
 import Playmobil2 from './assets/maa-Playmobil-2.jpeg'
 import Playmobil3 from './assets/maa-Playmobil-3.jpeg'
-import Pokémon from './assets/maa-Pokémon.jpeg'
+import Pokemon from './assets/maa-Pokemon.jpeg'
 import PollyPocket1 from './assets/maa-Polly Pocket-1.jpeg'
 import PollyPocket2 from './assets/maa-Polly Pocket-2.jpeg'
 import PollyPocket3 from './assets/maa-Polly Pocket-3.jpeg'
@@ -79,7 +79,7 @@ const archiveToys = [
   { id: 25, name: "Playmobil", image: Playmobil1 },
   { id: 26, name: "Playmobil", image: Playmobil2 },
   { id: 27, name: "Playmobil", image: Playmobil3 },
-  { id: 28, name: "Pokémon", image: Pokémon },
+  { id: 28, name: "Pokémon", image: Pokemon },
   { id: 29, name: "Polly Pocket", image: PollyPocket1 },
   { id: 30, name: "Polly Pocket", image: PollyPocket2 },
   { id: 31, name: "Polly Pocket", image: PollyPocket3 },
