@@ -13,22 +13,81 @@ import worldBg from './assets/world-bg.png'
 import buildingBg from './assets/building-bg.png';
 import infoIcon from './assets/info-icon.png'
 
-import babyoctopus from './assets/pt1-babyoctopus.png'
-import butterbear from './assets/pt2-butterbear.png'
-import doraemon from './assets/pt3-doraemon.png'
-import furby from './assets/pt4-furby.png'
-import miky from './assets/pt5-mickeymouse.png'
-import teddybear from './assets/pt6-teddybear.png'
-import yolk from './assets/pt7-yolk.png'
+import Actionman1 from './assets/maa-Action Man-1.jpeg'
+import Actionman2 from './assets/maa-Action Man-2.jpeg'
+import Actionman3 from './assets/maa-Action Man-3.jpeg'
+import BabyBorn1 from './assets/maa-Baby Born-1.jpeg'
+import BabyBorn2 from './assets/maa-Baby Born-2.jpeg'
+import BabyBorn3 from './assets/maa-Baby Born-3.jpeg'
+import Barbie1 from './assets/maa-Barbie-1.jpeg'
+import Barbie2 from './assets/maa-Barbie-2.jpeg'
+import Barbie3 from './assets/maa-Barbie-3.jpeg'
+import Barriguitas1 from './assets/maa-Barriguitas-1.jpeg'
+import Barriguitas2 from './assets/maa-Barriguitas-2.jpeg'
+import Barriguitas3 from './assets/maa-Barriguitas-3.jpeg'
+import Bratz1 from './assets/maa-Bratz-1.jpeg'
+import Bratz2 from './assets/maa-Bratz-2.jpeg'
+import Bratz3 from './assets/maa-Bratz-3.jpeg'
+import Bratz4 from './assets/maa-Bratz-4.jpeg'
+import Furby1 from './assets/maa-Furby-1.jpeg'
+import Furby2 from './assets/maa-Furby-2.jpeg'
+import Furby3 from './assets/maa-Furby-3.jpeg'
+import Furby4 from './assets/maa-Furby-4.jpeg'
+import Furby5 from './assets/maa-Furby-5.jpeg'
+import Nancy1 from './assets/maa-Nancy-1.jpeg'
+import Nancy2 from './assets/maa-Nancy-2.jpeg'
+import Nancy3 from './assets/maa-Nancy-3.jpeg'
+import Playmobil1 from './assets/maa-Playmobil-1.jpeg'
+import Playmobil2 from './assets/maa-Playmobil-2.jpeg'
+import Playmobil3 from './assets/maa-Playmobil-3.jpeg'
+import Pokémon from './assets/maa-Pokémon.jpeg'
+import PollyPocket1 from './assets/maa-Polly Pocket-1.jpeg'
+import PollyPocket2 from './assets/maa-Polly Pocket-2.jpeg'
+import PollyPocket3 from './assets/maa-Polly Pocket-3.jpeg'
+import PollyPocket4 from './assets/maa-Polly Pocket-4.jpeg'
+import TSBuzzLightyear from './assets/maa-Toy Story-Buzz Lightyear.jpeg'
+import TSJessie from './assets/maa-Toy Story-Jessie.jpeg'
+import TSMrPotatoHead from './assets/maa-Toy Story-Mr. Potato Head.jpeg'
+import TSWoody from './assets/maa-Toy Story-Woody.jpeg'
+
 
 const archiveToys = [
-  { id: 1, name: "Baby Octopus", image: babyoctopus }, 
-  { id: 2, name: "Butter Bear", image: butterbear },
-  { id: 3, name: "Doraemon", image: doraemon },
-  { id: 4, name: "Furby", image: furby },
-  { id: 5, name: "Mickey Mouse", image: miky },
-  { id: 6, name: "Teddy Bear", image: teddybear },
-  { id: 7, name: "Yolk", image: yolk }
+  { id: 1, name: "Action Man", image: Actionman1 },
+  { id: 2, name: "Action Man", image: Actionman2 },
+  { id: 3, name: "Action Man", image: Actionman3 },
+  { id: 4, name: "Baby Born", image: BabyBorn1 },
+  { id: 5, name: "Baby Born", image: BabyBorn2 },
+  { id: 6, name: "Baby Born", image: BabyBorn3 },
+  { id: 7, name: "Barbie", image: Barbie1 },
+  { id: 8, name: "Barbie", image: Barbie2 },
+  { id: 9, name: "Barbie", image: Barbie3 },
+  { id: 10, name: "Barriguitas", image: Barriguitas1 },
+  { id: 11, name: "Barriguitas", image: Barriguitas2 },
+  { id: 12, name: "Barriguitas", image: Barriguitas3 },
+  { id: 13, name: "Bratz", image: Bratz1 },
+  { id: 14, name: "Bratz", image: Bratz2 },
+  { id: 15, name: "Bratz", image: Bratz3 },
+  { id: 16, name: "Bratz", image: Bratz4 },
+  { id: 17, name: "Furby", image: Furby1 },
+  { id: 18, name: "Furby", image: Furby2 },
+  { id: 19, name: "Furby", image: Furby3 },
+  { id: 20, name: "Furby", image: Furby4 },
+  { id: 21, name: "Furby", image: Furby5 },
+  { id: 22, name: "Nancy", image: Nancy1 },
+  { id: 23, name: "Nancy", image: Nancy2 },
+  { id: 24, name: "Nancy", image: Nancy3 },
+  { id: 25, name: "Playmobil", image: Playmobil1 },
+  { id: 26, name: "Playmobil", image: Playmobil2 },
+  { id: 27, name: "Playmobil", image: Playmobil3 },
+  { id: 28, name: "Pokémon", image: Pokémon },
+  { id: 29, name: "Polly Pocket", image: PollyPocket1 },
+  { id: 30, name: "Polly Pocket", image: PollyPocket2 },
+  { id: 31, name: "Polly Pocket", image: PollyPocket3 },
+  { id: 32, name: "Polly Pocket", image: PollyPocket4 },
+  { id: 33, name: "Toy Story-Buzz Lightyear", image: TSBuzzLightyear },
+  { id: 34, name: "Toy Story-Jessie", image: TSJessie },
+  { id: 35, name: "Toy Story-Mr. Potato Head", image: TSMrPotatoHead },
+  { id: 36, name: "Toy Story-Woody", image: TSWoody },
 ];
 
 function App() {
