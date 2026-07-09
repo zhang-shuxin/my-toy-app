@@ -334,7 +334,7 @@ function App() {
           <img src={logoBubble} alt="Toy Community Logo" className="logo" />
           <div className="intro-text">
             <p>👋 Hey, welcome to the toy community!</p>
-            <p>We invite you to share your plush toys in the community and engage in dialogue around them.</p>
+            <p>We invite you to share your character toys in the community and engage in dialogue around them.</p>
           </div>
           <button className="start-button" onClick={() => setCurrentPage('dollhouse')}>
             LET'S GO!
@@ -431,8 +431,8 @@ function App() {
             {/* The white text box */}
             <div className="info-modal-content" onClick={(e) => e.stopPropagation()}>
               <h3>Welcome to the Toy Community!</h3>
-              <p>Here, you can place your plush toys in this dollhouse using your mobile device; at the same time, your toys are also displayed on the real dollhouse model.</p>           
-              <p>We engage you to share your plush toys' story, allowing others to know them more and start a conversation.</p>
+              <p>Here, you can place your character toys in this dollhouse using your mobile device; at the same time, your toys are also displayed on the real dollhouse model.</p>           
+              <p>We engage you to share your toys' story, allowing others to know them more and start a conversation.</p>
               <p>You can also click the icons next to other toys to discover their stories and join their dialogues.</p>
             </div>
           </div>
@@ -563,7 +563,7 @@ function App() {
               <button className="close-btn" onClick={handleCloseModal}>X</button>
               
               <div className="upload-section">
-                <div className="sticker-header yellow-sticker">Upload a photo of your plush toy</div>
+                <div className="sticker-header yellow-sticker">Upload a photo of your character toy</div>
                 {!selectedImage ? (
                   <div className="upload-box custom-dash-red" onClick={() => setShowUploadModal(true)}>
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#e84e3a" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4m4-5 5-5 5 5m-5-5v12"/></svg>
@@ -588,7 +588,7 @@ function App() {
               </div>
 
               <div className="story-section">
-                <div className={`sticker-header ${isBgRemoved ? 'yellow-sticker' : 'gray-sticker-disabled'}`}>Share a story about your plush toy</div>
+                <div className={`sticker-header ${isBgRemoved ? 'yellow-sticker' : 'gray-sticker-disabled'}`}>Share a story about your character toy</div>
                 {isBgRemoved && (
                   <div>
                     <textarea placeholder="A maximum of 100 words." value={storyText} onChange={(e) => setStoryText(e.target.value)} />
