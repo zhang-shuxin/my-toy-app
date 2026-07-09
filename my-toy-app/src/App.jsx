@@ -33,7 +33,6 @@ import Furby1 from './assets/maa-Furby-1.jpg'
 import Furby2 from './assets/maa-Furby-2.jpeg'
 import Furby3 from './assets/maa-Furby-3.jpg'
 import Furby4 from './assets/maa-Furby-4.jpeg'
-import Furby5 from './assets/maa-Furby-5.jpeg'
 import Nancy1 from './assets/maa-Nancy-1.jpeg'
 import Nancy2 from './assets/maa-Nancy-2.jpeg'
 import Nancy3 from './assets/maa-Nancy-3.jpeg'
@@ -72,7 +71,6 @@ const archiveToys = [
   { id: 18, name: "Furby", image: Furby2 },
   { id: 19, name: "Furby", image: Furby3 },
   { id: 20, name: "Furby", image: Furby4 },
-  { id: 21, name: "Furby", image: Furby5 },
   { id: 22, name: "Nancy", image: Nancy1 },
   { id: 23, name: "Nancy", image: Nancy2 },
   { id: 24, name: "Nancy", image: Nancy3 },
@@ -130,10 +128,8 @@ function App() {
     setSelectedImage(toy.image); 
     setIsBgRemoved(false); 
     setShowArchive(false);
-    
     // 1. Force the small 2-option menu to close
     setShowUploadModal(false); 
-    
     // 2. Force the main form (with the dashed box) to open
     setIsModalOpen(true); 
   };
