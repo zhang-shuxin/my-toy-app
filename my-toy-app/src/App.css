@@ -32,21 +32,6 @@ body {
   touch-action: pan-y;
 }
 
-/* --- WELCOME SCREEN STYLES --- */
-.welcome-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  /* Pushes everything down so it fits inside the drawn museum archway */
-  padding-top: 120px; 
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-bottom: 40px;
-  
-  height: 100%;
-  box-sizing: border-box;
-}
 
 /* Building Image Background */
 .building-bg-img {
@@ -77,12 +62,13 @@ body {
   z-index: 10;       /* Keeps it floating above the background */
   pointer-events: none; /* Ensures it doesn't accidentally block you from clicking anything else */
 }
+
 .welcome-content {
   display: flex;
-  flex-direction: column; /* This stacks your logo, text, and button vertically */
-  justify-content: center; /* This pushes the whole stack to the vertical center */
-  align-items: center; /* This keeps them centered side-to-side */
-  height: 100vh; /* This tells the box to be exactly the height of the phone screen */
+  flex-direction: column;
+  align-items: center; 
+  height: 100vh; 
+  padding-top: 25vh; /* Change this number to push the content exactly where you want it inside the building! */
 }
 
 .logo {
