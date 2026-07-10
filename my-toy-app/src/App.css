@@ -64,7 +64,7 @@ body {
 
 /* Make sure your interactive content safely floats above the building */
 .welcome-content, .paper-plane-decoration, .seagull-banner {
-  position: absolute;
+  position: relative;
   z-index: 1;
 }
 
@@ -79,14 +79,11 @@ body {
 }
 
 .logo {
-  margin-top: -12px;
   width: 75%;
   max-width: 280px;
-  object-fit: contain; /* Keeps the image perfectly proportioned inside the box */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 15px;
+  object-fit: contain;
+  display: block; 
+  margin: -12px auto 15px auto; /* Top: -12px, Right: auto, Bottom: 15px, Left: auto */
 }
 
 .intro-text {
@@ -106,11 +103,13 @@ body {
 }
 
 .start-button {
-  display: inline-flex;
+  display: flex;
+  margin: 0 auto; /* This forces it to the center horizontally */
   padding: 20px 50px;
   justify-content: center;
   align-items: center;
   gap: 10px;
+  
   border-radius: 40px;
   background: #EA4335;
   box-shadow: -2px -2px 2px 0 rgba(0, 0, 0, 0.25) inset;
