@@ -94,11 +94,11 @@ body {
   line-height: 20px;
   width: 100%;
   max-width: 250px; 
-  margin: 0 auto 30px auto; /* Centers the text and adds space above the button */
+  margin: 0 auto 20px auto; /* Centers the text and adds space above the button */
 }
 
 .intro-text p {
-  margin-bottom: 20px;
+  margin-bottom: 17px;
 }
 
 .start-button {
