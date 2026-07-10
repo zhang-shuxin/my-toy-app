@@ -329,8 +329,8 @@ function App() {
         <div className="welcome-content">
           <img src={logoBubble} alt="Toy Community Logo" className="logo" />
           <div className="intro-text">
-            <p>👋 Hey, welcome to the toy community!</p>
-            <p>We invite you to share your character toys in the community and engage in dialogue around them.</p>
+            <p>👋 Hey, welcome to Toy Community!</p>
+            <p>Right now, we invite you to share your character toys in the community and engage in dialogue around them.</p>
           </div>
           <button className="start-button" onClick={() => setCurrentPage('dollhouse')}>
             LET'S GO!
