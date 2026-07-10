@@ -39,7 +39,7 @@ body {
   align-items: center;
   justify-content: flex-start;
   /* Pushes everything down so it fits inside the drawn museum archway */
-  padding-top: 25vh;
+  padding-top: 20vh;
   padding-left: 25px;
   padding-right: 25px;
   padding-bottom: 40px;
