@@ -64,7 +64,7 @@ body {
 
 /* Make sure your interactive content safely floats above the building */
 .welcome-content, .paper-plane-decoration, .seagull-banner {
-  position: relative;
+  position: absolute;
   z-index: 1;
 }
 
