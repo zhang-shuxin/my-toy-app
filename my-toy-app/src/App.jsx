@@ -331,7 +331,7 @@ function App() {
     setIsModalOpen(true)
   }
 
-  const handleDoneClick = () => {
+  const handleDoneClick = async () => {
     const toyEl = document.querySelector('.draggable-toy')
     const x = toyEl ? (parseFloat(toyEl.getAttribute('data-x')) || 0) : 0
     const y = toyEl ? (parseFloat(toyEl.getAttribute('data-y')) || 0) : 0
