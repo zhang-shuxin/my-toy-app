@@ -366,7 +366,7 @@ function App() {
     formData.append('toyImage', selectedFile); 
 
     try {
-      const response = await fetch('http://localhost:5000/api/upload', {
+      const response = await fetch('http://localhost:5001/api/upload', {
         method: 'POST',
         body: formData, 
       });
@@ -711,10 +711,20 @@ function App() {
                   accept="image/*" 
                   ref={fileInputRef} 
                   style={{ display: 'none' }} 
-                  onChange={(event) => { 
-                    handleImageUpload(event); // Keeps your existing visual preview working
-                    handleFileChange(event);  // Catches the heavy file for the Node.js server
-                  }} 
+
+                  onChange={(event) => {
+                    // 1. Grab the file data immediately!
+                    const caughtFile = event.target.files[0]; 
+                    
+                    // 2. Safely lock it into your state
+                    setSelectedFile(caughtFile); 
+                    
+                    // 3. Print it to prove we have it
+                    console.log("File safely caught by React:", caughtFile); 
+                    
+                    // 4. NOW run your visual preview
+                    handleImageUpload(event); 
+                  }}
                 />
 
                 {/* 2. YOUR BEAUTIFUL BUTTON */}
