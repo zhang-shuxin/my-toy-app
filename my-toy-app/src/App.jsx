@@ -94,6 +94,8 @@ function App() {
   const [secretTaps, setSecretTaps] = useState(0);
   const [showAdminPanel, setShowAdminPanel] = useState(false);
   const [isAdminMode, setIsAdminMode] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadMessage, setUploadMessage] = useState('');
 
   const handleSecretTap = () => {
    const newCount = secretTaps + 1;
@@ -119,6 +121,41 @@ function App() {
     if (confirmWipe) {
       setSavedToys([]); 
       setShowAdminPanel(false); 
+    }
+  };
+  const handleFileChange = (event) => {
+  // Grabs the exact file the visitor tapped in their camera roll
+  setSelectedFile(event.target.files[0]);
+  };
+
+  const handleUpload = async () => {
+    if (!selectedFile) {
+      setUploadMessage('Please select a photo of your character toy!');
+      return;
+    }
+
+    setUploadMessage('Uploading to the dollhouse...');
+
+    const formData = new FormData();
+    formData.append('toyImage', selectedFile); 
+
+    try {
+      const response = await fetch('http://localhost:5000/api/upload', {
+        method: 'POST',
+        body: formData, 
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setUploadMessage('Success! The image is saved.');
+        console.log('Your public URL is:', data.imageUrl);
+      } else {
+        setUploadMessage('Upload failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setUploadMessage('Could not connect to the server.');
     }
   };
 
@@ -315,6 +352,40 @@ function App() {
 
     setPlacedToy(null)
     setToySize(50)
+
+    // 2. NEW UPLOAD LOGIC BEGINS HERE
+    if (!selectedFile) {
+    setUploadMessage('No photo selected, but position saved!');
+    return; // Stops the upload if they didn't pick a photo
+    }
+
+    setUploadMessage('Uploading to the dollhouse...');
+
+    // Package the heavy file for the server
+    const formData = new FormData();
+    formData.append('toyImage', selectedFile); 
+
+    try {
+      const response = await fetch('http://localhost:5000/api/upload', {
+        method: 'POST',
+        body: formData, 
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setUploadMessage('Success! The image is saved.');
+        console.log('Ready for MySQL. Public URL is:', data.imageUrl);
+        
+        // Right here is where we will eventually send the MySQL data!
+        
+      } else {
+        setUploadMessage('Upload failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setUploadMessage('Could not connect to the server.');
+    }
   }
 
   if (currentPage === 'welcome') {
@@ -414,11 +485,25 @@ function App() {
           {!placedToy ? (
             <button className="create-button" onClick={() => setIsModalOpen(true)}>+</button>
           ) : (
+          <> {/* 1. ADD THIS INVISIBLE OPENING TAG */}
             <div className="bottom-actions">
               <button className="nav-btn btn-outline" onClick={handleBackToEdit}>BACK</button>
               <button className="nav-btn btn-solid-active" onClick={handleDoneClick}>DONE</button>
             </div>
-          )}
+            
+            {uploadMessage && (
+              <p style={{
+                textAlign: 'center',
+                marginTop: '12px',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                color: '#d9534f'
+              }}>
+                {uploadMessage}
+              </p>
+            )}
+          </>
+        )}
         </div>
 
         {/* --- INFO MODAL OVERLAY --- */}
@@ -626,7 +711,10 @@ function App() {
                   accept="image/*" 
                   ref={fileInputRef} 
                   style={{ display: 'none' }} 
-                  onChange={handleImageUpload} 
+                  onChange={(event) => { 
+                    handleImageUpload(event); // Keeps your existing visual preview working
+                    handleFileChange(event);  // Catches the heavy file for the Node.js server
+                  }} 
                 />
 
                 {/* 2. YOUR BEAUTIFUL BUTTON */}
