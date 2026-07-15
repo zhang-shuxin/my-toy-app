@@ -88,6 +88,36 @@ const archiveToys = [
   { id: 36, name: "Toy Story-Woody", image: TSWoody },
 ];
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || `${window.location.protocol}//${window.location.hostname}:5001/api`;
+
+const formatDate = (value) => {
+  const date = value ? new Date(value) : new Date();
+
+  if (Number.isNaN(date.getTime())) {
+    return '2026.07.15';
+  }
+
+  return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
+};
+
+const normalizeComment = (comment) => ({
+  id: comment.id,
+  text: comment.description,
+  image: comment.imageUrl,
+  date: formatDate(comment.dateCreated),
+});
+
+const normalizeToy = (toy) => ({
+  id: toy.id,
+  image: toy.imageUrl,
+  story: toy.story,
+  size: Math.max(50, Math.round((toy.scale || 1) * 50)),
+  x: toy.positionX || 0,
+  y: toy.positionY || 0,
+  comments: Array.isArray(toy.comments) ? toy.comments.map(normalizeComment) : [],
+  date: formatDate(toy.dateCreated),
+});
+
 function App() {
   const [showArchive, setShowArchive] = useState(false);
   // hidden "staff-only" unlock trigger
@@ -96,6 +126,11 @@ function App() {
   const [isAdminMode, setIsAdminMode] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadMessage, setUploadMessage] = useState('');
+  const [savedToys, setSavedToys] = useState([])
+  const [activeToyIndex, setActiveToyIndex] = useState(null)
+  const [newComment, setNewComment] = useState('')
+  const [commentImage, setCommentImage] = useState(null);
+  const [commentImageFile, setCommentImageFile] = useState(null);
 
   const handleSecretTap = () => {
    const newCount = secretTaps + 1;
@@ -111,17 +146,47 @@ function App() {
       }, 1000);
   };
 
-  const handleDeleteSingleToy = (indexToRemove) => {
-  // Keeps every toy EXCEPT the one that matches the index we clicked
-  const updatedToys = savedToys.filter((_, index) => index !== indexToRemove);
-  setSavedToys(updatedToys);
-  };
-  const handleWipeDollhouse = () => {
-  const confirmWipe = window.confirm("Are you sure you want to delete all toys from the exhibition?");
-    if (confirmWipe) {
-      setSavedToys([]); 
-      setShowAdminPanel(false); 
+  const fetchToys = async () => {
+    const response = await fetch(`${API_BASE_URL}/toys`);
+    if (!response.ok) {
+      throw new Error('Could not load toys from the server.');
     }
+
+    const data = await response.json();
+    setSavedToys(data.map(normalizeToy));
+  };
+
+  const handleDeleteSingleToy = async (indexToRemove) => {
+    const toyToDelete = savedToys[indexToRemove];
+    if (!toyToDelete) return;
+
+    const response = await fetch(`${API_BASE_URL}/toys/${toyToDelete.id}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok || response.status === 204) {
+      await fetchToys();
+
+      if (activeToyIndex === toyToDelete.id) {
+        setActiveToyIndex(null);
+      }
+    }
+  };
+
+  const handleWipeDollhouse = async () => {
+    const confirmWipe = window.confirm("Are you sure you want to delete all toys from the exhibition?");
+
+    if (!confirmWipe) {
+      return;
+    }
+
+    await Promise.all(
+      savedToys.map((toy) => fetch(`${API_BASE_URL}/toys/${toy.id}`, { method: 'DELETE' }))
+    );
+
+    setShowAdminPanel(false);
+    setActiveToyIndex(null);
+    await fetchToys();
   };
   const handleFileChange = (event) => {
   // Grabs the exact file the visitor tapped in their camera roll
@@ -140,7 +205,7 @@ function App() {
     formData.append('toyImage', selectedFile); 
 
     try {
-      const response = await fetch('http://localhost:5000/api/upload', {
+      const response = await fetch(`${API_BASE_URL}/upload`, {
         method: 'POST',
         body: formData, 
       });
@@ -163,6 +228,7 @@ function App() {
     console.log("User selected:", toy.name);
     
     setSelectedImage(toy.image); 
+    setSelectedFile(null);
     setIsBgRemoved(false); 
     setShowArchive(false);
     // 1. Force the small 2-option menu to close
@@ -191,15 +257,10 @@ function App() {
   const [placedToy, setPlacedToy] = useState(null)
   const [toySize, setToySize] = useState(50) 
 
-  // --- UPDATED MEMORY: Tracking the active toy for the new details page ---
-  const [savedToys, setSavedToys] = useState([])
-  const [activeToyIndex, setActiveToyIndex] = useState(null)
-  const [newComment, setNewComment] = useState('')
-
   const wordCount = storyText.trim() === '' ? 0 : storyText.trim().split(/\s+/).length
   const isNextValid = isBgRemoved && wordCount > 0 && wordCount <= 100
-  
-  const [commentImage, setCommentImage] = useState(null);
+
+  const activeToy = savedToys.find((toy) => toy.id === activeToyIndex) || null;
   
 
   useEffect(() => {
@@ -226,6 +287,13 @@ function App() {
     })
   }, [placedToy]) 
 
+  useEffect(() => {
+    fetchToys().catch((error) => {
+      console.error(error);
+      setUploadMessage('Could not load toys from the server.');
+    });
+  }, []);
+
   const handleResizeClick = (e) => {
     e.preventDefault(); 
     setToySize(prevSize => {
@@ -236,22 +304,38 @@ function App() {
   }
 
   const handleAddComment = () => {
-    // Now it allows sending if there is text OR an image!
-    if (!newComment.trim() && !commentImage) return; 
-    
-    const today = new Date();
-    const formattedDate = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`;
+    // Comments now persist through the backend.
+    if (!newComment.trim() || !activeToy) return;
 
-    const updatedToys = [...savedToys];
-    updatedToys[activeToyIndex].comments.push({
-      text: newComment,
-      date: formattedDate,
-      image: commentImage // <--- Saves the image URL to the comment!
+    const submitComment = async () => {
+      const formData = new FormData();
+      formData.append('description', newComment.trim());
+      formData.append('toyId', String(activeToy.id));
+
+      if (commentImageFile) {
+        formData.append('commentImage', commentImageFile);
+      }
+
+      const response = await fetch(`${API_BASE_URL}/comments`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || 'Could not save comment.');
+      }
+
+      await fetchToys();
+      setNewComment('');
+      setCommentImage(null);
+      setCommentImageFile(null);
+    };
+
+    submitComment().catch((error) => {
+      console.error(error);
+      setUploadMessage(error.message);
     });
-
-    setSavedToys(updatedToys);
-    setNewComment('');
-    setCommentImage(null); // <--- Clears the attachment preview after sending
   };
 
   const handleImageUpload = (event) => {
@@ -269,6 +353,7 @@ function App() {
   const handleCommentImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
+      setCommentImageFile(file);
       setCommentImage(URL.createObjectURL(file));
     }
     // This resets the input so they can pick the same photo again if they change their mind
@@ -307,9 +392,11 @@ function App() {
   const handleCloseModal = () => {
     setIsModalOpen(false)
     setSelectedImage(null)
+    setSelectedFile(null)
     setIsBgRemoved(false)
     setIsRemovingBg(false)
     setStoryText('')
+    setUploadMessage('')
   }
 
   const handleNextClick = () => {
@@ -336,55 +423,62 @@ function App() {
     const x = toyEl ? (parseFloat(toyEl.getAttribute('data-x')) || 0) : 0
     const y = toyEl ? (parseFloat(toyEl.getAttribute('data-y')) || 0) : 0
 
-    // Get today's date in YYYY.MM.DD format for the mockup
-    const today = new Date();
-    const dateString = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`;
+    if (!placedToy) return;
 
-    setSavedToys([...savedToys, {
-      image: placedToy.image,
-      story: placedToy.story,
-      size: toySize,
-      x: x,
-      y: y,
-      comments: [], // Ready to hold user comments
-      date: dateString
-    }])
-
-    setPlacedToy(null)
-    setToySize(50)
-
-    // 2. NEW UPLOAD LOGIC BEGINS HERE
-    if (!selectedFile) {
-    setUploadMessage('No photo selected, but position saved!');
-    return; // Stops the upload if they didn't pick a photo
-    }
-
-    setUploadMessage('Uploading to the dollhouse...');
-
-    // Package the heavy file for the server
-    const formData = new FormData();
-    formData.append('toyImage', selectedFile); 
+    setUploadMessage('Saving your toy...');
 
     try {
-      const response = await fetch('http://localhost:5001/api/upload', {
+      let imageUrl = selectedImage;
+
+      if (selectedFile) {
+        const formData = new FormData();
+        formData.append('toyImage', selectedFile);
+
+        const uploadResponse = await fetch(`${API_BASE_URL}/upload`, {
+          method: 'POST',
+          body: formData,
+        });
+
+        const uploadData = await uploadResponse.json();
+
+        if (!uploadResponse.ok) {
+          throw new Error(uploadData.message || 'Upload failed.');
+        }
+
+        imageUrl = uploadData.imageUrl;
+      }
+
+      const saveResponse = await fetch(`${API_BASE_URL}/toys`, {
         method: 'POST',
-        body: formData, 
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          story: placedToy.story,
+          positionX: x,
+          positionY: y,
+          scale: toySize / 50,
+          imageUrl,
+        }),
       });
 
-      const data = await response.json();
+      const saveData = await saveResponse.json();
 
-      if (response.ok) {
-        setUploadMessage('Success! The image is saved.');
-        console.log('Ready for MySQL. Public URL is:', data.imageUrl);
-        
-        // Right here is where we will eventually send the MySQL data!
-        
-      } else {
-        setUploadMessage('Upload failed. Please try again.');
+      if (!saveResponse.ok) {
+        throw new Error(saveData.message || 'Could not save toy.');
       }
+
+      await fetchToys();
+      setUploadMessage('Toy saved successfully!');
+      setPlacedToy(null)
+      setSelectedFile(null)
+      setSelectedImage(null)
+      setIsBgRemoved(false)
+      setStoryText('')
+      setToySize(50)
     } catch (error) {
       console.error('Error:', error);
-      setUploadMessage('Could not connect to the server.');
+      setUploadMessage(error.message || 'Could not connect to the server.');
     }
   }
 
@@ -447,7 +541,7 @@ function App() {
         <div className="house-display" style={{ backgroundImage: `url(${dollhouseBg})` }}>
           {savedToys.map((toy, index) => (
             <div 
-              key={index} 
+              key={toy.id} 
               className="saved-toy" 
               style={{ 
                 width: `${toy.size}px`, 
@@ -467,7 +561,7 @@ function App() {
                 </button>
               )}
               {/* Clicking now passes the exact index of this toy */}
-              <button className="story-bubble-btn" onClick={() => setActiveToyIndex(index)}>
+              <button className="story-bubble-btn" onClick={() => setActiveToyIndex(toy.id)}>
                 <img src={customBubble} alt="Read Story" />
               </button>
             </div>
@@ -520,7 +614,7 @@ function App() {
         )}
 
         {/* --- NEW DETAILS & COMMENTS PAGE --- */}
-        {activeToyIndex !== null && (
+        {activeToy && (
           <div className="details-overlay" onClick={() => setActiveToyIndex(null)}>
             {/* 1. The dark overlay that covers the whole screen */}
             
@@ -540,13 +634,13 @@ function App() {
                 
                 {/* Toy Image Box */}
                 <div className="details-image-box">
-                  <img src={savedToys[activeToyIndex].image} alt="Toy detail" />
+                  <img src={activeToy.image} alt="Toy detail" />
                 </div>
 
                 {/* Story Box */}
                 <div className="details-story-box">
-                  <p>{savedToys[activeToyIndex].story}</p>
-                  <span className="details-date">{savedToys[activeToyIndex].date}</span>
+                  <p>{activeToy.story}</p>
+                  <span className="details-date">{activeToy.date}</span>
                 </div>
 
                 {/* Comments Section */}
@@ -555,10 +649,10 @@ function App() {
                 </div>
                 
                 <div className="comments-list">
-                {savedToys[activeToyIndex].comments.length === 0 ? (
+                {activeToy.comments.length === 0 ? (
                   <p className="no-comments">No comments yet. Be the first to start the dialogue!</p>
                 ) : (
-                  savedToys[activeToyIndex].comments.map((comment, i) => (
+                  activeToy.comments.map((comment, i) => (
                     <div key={i} className="comment-item">
                       {/* 1. Show the image if the comment has one! */}
                       {comment.image && <img src={comment.image} alt="attached" className="comment-attached-image" />}
@@ -582,7 +676,10 @@ function App() {
               {commentImage && (
                 <div className="comment-image-preview">
                   <img src={commentImage} alt="Attachment preview" />
-                  <button onClick={() => setCommentImage(null)}>X</button>
+                  <button onClick={() => {
+                    setCommentImage(null);
+                    setCommentImageFile(null);
+                  }}>X</button>
                 </div>
               )}
 
@@ -680,7 +777,7 @@ function App() {
 
               <div className="modal-actions">
                 <button className="nav-btn btn-outline" onClick={() => {
-                 if (selectedImage) {
+                if (selectedImage) {
                  // Clear the toy and stay on this screen
                  setSelectedImage(null);
                  setIsBgRemoved(false);
