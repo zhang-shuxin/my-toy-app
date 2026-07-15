@@ -380,6 +380,7 @@ function App() {
       
       const url = URL.createObjectURL(imageBlob);
       setSelectedImage(url); 
+      //removed background
       setIsBgRemoved(true);  
       
     } catch (error) {
@@ -430,7 +431,25 @@ function App() {
     try {
       let imageUrl = selectedImage;
 
-      if (selectedFile) {
+      if (selectedImage) {
+        const response = await fetch(selectedImage);
+        const imageBlob = await response.blob();
+        const formData = new FormData();
+        formData.append('toyImage', imageBlob, 'toy-image.png');
+
+        const uploadResponse = await fetch(`${API_BASE_URL}/upload`, {
+          method: 'POST',
+          body: formData,
+        });
+
+        const uploadData = await uploadResponse.json();
+
+        if (!uploadResponse.ok) {
+          throw new Error(uploadData.message || 'Upload failed.');
+        }
+
+        imageUrl = uploadData.imageUrl;
+      } else if (selectedFile) {
         const formData = new FormData();
         formData.append('toyImage', selectedFile);
 
