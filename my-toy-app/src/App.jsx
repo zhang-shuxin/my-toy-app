@@ -380,7 +380,7 @@ function App() {
       
       const url = URL.createObjectURL(imageBlob);
       setSelectedImage(url); 
-      //removed background
+      setSelectedFile(new File([imageBlob], 'transparent-toy.png', { type: 'image/png' }));
       setIsBgRemoved(true);  
       
     } catch (error) {
