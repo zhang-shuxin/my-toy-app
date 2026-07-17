@@ -429,7 +429,6 @@ function App() {
       setIsModalOpen(false)
       setSelectedImage(null)
       setIsBgRemoved(false)
-      setStoryText('')
       setToySize(50) 
     }
   }
@@ -443,18 +442,27 @@ function App() {
   }
 
   const handleDoneClick = async () => {
-    const toyEl = document.querySelector('.draggable-toy')
-    const x = toyEl ? (parseFloat(toyEl.getAttribute('data-x')) || 0) : 0
-    const y = toyEl ? (parseFloat(toyEl.getAttribute('data-y')) || 0) : 0
+    // 1. Find the toy and the house
+    const toyEl = document.querySelector('.draggable-toy');
+    const container = document.querySelector('.dollhouse-screen');
 
-    if (!placedToy) return;
+    // Safety check
+    if (!placedToy || !toyEl || !container) return;
 
     setUploadMessage('Saving your toy...');
 
-    const container = document.querySelector('.dollhouse-screen');
-    const percentX = (x / container.clientWidth) * 100;
-    const percentY = (y / container.clientHeight) * 100;
+    // 2. Get their exact physical rectangles on your screen
+    const toyBox = toyEl.getBoundingClientRect();
+    const containerBox = container.getBoundingClientRect();
 
+    // 3. Calculate the true pixel distance from the top-left corner of the house
+    const realX = toyBox.left - containerBox.left;
+    const realY = toyBox.top - containerBox.top;
+
+    // 4. Convert those true pixels into flawless percentages
+    const percentX = (realX / containerBox.width) * 100;
+    const percentY = (realY / containerBox.height) * 100;
+    
     try {
       let imageUrl = selectedImage;
 
@@ -505,6 +513,7 @@ function App() {
           positionY: percentY, // <-- Make sure it uses percentY
           scale: toySize / 50,
           imageUrl, // (or whatever your image variable is)
+          story: storyText, 
         }),
       });
 
