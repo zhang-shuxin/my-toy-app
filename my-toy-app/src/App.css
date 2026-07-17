@@ -1137,3 +1137,12 @@ textarea {
   color: white;
   margin-bottom: 20px;
 }
+
+/* --- DOLLHOUSE ASPECT RATIO LOCK --- */
+.dollhouse-screen {
+  width: 100%;
+  max-width: 56.25vh; /* Forces the width to be exactly 9/16 of the screen height */
+  max-height: 100dvh;
+  margin: 0 auto !important; /* Centers the mobile app on wider screens like iPads */
+  aspect-ratio: 9 / 16;
+}

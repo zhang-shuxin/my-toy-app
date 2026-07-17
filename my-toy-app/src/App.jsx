@@ -120,6 +120,7 @@ const normalizeToy = (toy) => ({
 
 function App() {
   const [showArchive, setShowArchive] = useState(false);
+  const [isProjectorMode, setIsProjectorMode] = useState(false);
   // hidden "staff-only" unlock trigger
   const [secretTaps, setSecretTaps] = useState(0);
   const [showAdminPanel, setShowAdminPanel] = useState(false);
@@ -131,6 +132,13 @@ function App() {
   const [newComment, setNewComment] = useState('')
   const [commentImage, setCommentImage] = useState(null);
   const [commentImageFile, setCommentImageFile] = useState(null);
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    if (queryParams.get('view') === 'projector') {
+      setIsProjectorMode(true);
+    }
+  }, []);
 
   const handleSecretTap = () => {
    const newCount = secretTaps + 1;
@@ -155,6 +163,21 @@ function App() {
     const data = await response.json();
     setSavedToys(data.map(normalizeToy));
   };
+
+  useEffect(() => {
+    if (!isProjectorMode) return;
+
+    // Fetch toys immediately when projector mode starts
+    fetchToys(); 
+
+    // Set an interval to fetch them every 3 seconds
+    const interval = setInterval(() => {
+      fetchToys();
+    }, 3000);
+
+    // Clean up the interval
+    return () => clearInterval(interval);
+  }, [isProjectorMode]);
 
   const handleDeleteSingleToy = async (indexToRemove) => {
     const toyToDelete = savedToys[indexToRemove];
@@ -499,6 +522,43 @@ function App() {
       console.error('Error:', error);
       setUploadMessage(error.message || 'Could not connect to the server.');
     }
+  }
+
+  if (isProjectorMode) {
+    return (
+      <div className="projector-container" style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden', background: '#000', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        
+        {/* We create a "canvas" that mimics the mobile screen shape (e.g., max 500px wide, or matching your app's aspect ratio) */}
+        <div className="projector-canvas" style={{ position: 'relative', height: '100vh', aspectRatio: '9/16' }}>
+            
+            <img 
+              src={dollhouseImg} // (Use your actual variable name)
+              alt="Dollhouse Alignment Guide" 
+              style={{ width: '100%', height: '100%', opacity: 0.1 }} 
+            />
+      
+            {/* Render the saved toys perfectly aligned over the house */}
+            <div className="projector-toys" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
+              {savedToys.map((toy, index) => (
+                <img
+                  key={toy.id || index}
+                  src={toy.image}
+                  alt={toy.story || "Toy"}
+                  style={{
+                    position: 'absolute',
+                    left: toy.x + '%',
+                    top: toy.y + '%',
+                    width: toy.size + 'px',
+                    height: 'auto',
+                    transform: 'translate(-50%, -50%)'
+                  }}
+                />
+              ))}
+            </div>
+
+        </div>
+      </div>
+    );
   }
 
   if (currentPage === 'welcome') {
