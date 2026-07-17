@@ -532,7 +532,7 @@ function App() {
         <div className="projector-canvas" style={{ position: 'relative', height: '100vh', aspectRatio: '9/16' }}>
             
             <img 
-              src={dollhouseImg} // (Use your actual variable name)
+              src={dollhouseBg}
               alt="Dollhouse Alignment Guide" 
               style={{ width: '100%', height: '100%', opacity: 0.1 }} 
             />
