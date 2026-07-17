@@ -451,6 +451,10 @@ function App() {
 
     setUploadMessage('Saving your toy...');
 
+    const container = document.querySelector('.dollhouse-screen');
+    const percentX = (x / container.clientWidth) * 100;
+    const percentY = (y / container.clientHeight) * 100;
+
     try {
       let imageUrl = selectedImage;
 
@@ -495,12 +499,12 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
+
         body: JSON.stringify({
-          story: placedToy.story,
-          positionX: x,
-          positionY: y,
+          positionX: percentX, // <-- Make sure it uses percentX
+          positionY: percentY, // <-- Make sure it uses percentY
           scale: toySize / 50,
-          imageUrl,
+          imageUrl, // (or whatever your image variable is)
         }),
       });
 
@@ -528,8 +532,7 @@ function App() {
     return (
       <div className="projector-container" style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden', background: '#000', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         
-        {/* We create a "canvas" that mimics the mobile screen shape (e.g., max 500px wide, or matching your app's aspect ratio) */}
-        <div className="projector-canvas" style={{ position: 'relative', height: '100vh', aspectRatio: '9/16' }}>
+        <div className="dollhouse-screen" style={{ position: 'relative', height: '100vh', margin: '0 auto', overflow: 'hidden' }}>
             
             <img 
               src={dollhouseBg}
@@ -546,11 +549,10 @@ function App() {
                   alt={toy.story || "Toy"}
                   style={{
                     position: 'absolute',
-                    left: toy.x + '%',
-                    top: toy.y + '%',
-                    width: toy.size + 'px',
-                    height: 'auto',
-                    transform: 'translate(-50%, -50%)'
+                    left: `${toy.x}%`, 
+                    top: `${toy.y}%`,  
+                    width: `${toy.size}px`,
+                    height: `${toy.size}px`
                   }}
                 />
               ))}
@@ -622,12 +624,13 @@ function App() {
             <div 
               key={toy.id} 
               className="saved-toy" 
-              style={{ 
-                width: `${toy.size}px`, 
-                height: `${toy.size}px`, 
-                transform: `translate(${toy.x}px, ${toy.y}px)`,
-                position: 'absolute', /* Ensures z-index works properly */
-                zIndex: isAdminMode ? 60 : 1 /* 60 puts it above the 50 overlay! */
+              style={{
+                position: 'absolute',
+                left: `${toy.x}%`, 
+                top: `${toy.y}%`,  
+                width: `${toy.size}px`,
+                height: `${toy.size}px`,
+                zIndex: isAdminMode ? 60 : 1
               }}
             >
               <img src={toy.image} alt="Saved toy" />
