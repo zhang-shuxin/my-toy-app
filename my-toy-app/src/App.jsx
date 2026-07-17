@@ -563,7 +563,7 @@ function App() {
 
   if (currentPage === 'welcome') {
     return (
-      <div className="mobile-container" style={{ backgroundImage: `url(${worldBg})` }}>
+      <div className="mobile-container dollhouse-screen" style={{ backgroundImage: `url(${worldBg})` }}>
         
         {/* --- DECORATIVE ELEMENTS --- */}
         <img src={buildingBg} alt="Museum Frame" className="building-bg-img" />
