@@ -442,26 +442,24 @@ function App() {
   }
 
   const handleDoneClick = async () => {
-    // 1. Find the toy and the house
-    const toyEl = document.querySelector('.draggable-toy');
-    const container = document.querySelector('.dollhouse-screen');
+   const toyEl = document.querySelector('.draggable-toy');
+    
+    // 1. Check for the mobile container first, fallback to projector container
+    const container = document.querySelector('.house-display') || document.querySelector('.dollhouse-screen');
 
-    // Safety check
     if (!placedToy || !toyEl || !container) return;
 
     setUploadMessage('Saving your toy...');
 
-    // 2. Get their exact physical rectangles on your screen
     const toyBox = toyEl.getBoundingClientRect();
     const containerBox = container.getBoundingClientRect();
 
-    // 3. Calculate the true pixel distance from the top-left corner of the house
     const realX = toyBox.left - containerBox.left;
     const realY = toyBox.top - containerBox.top;
 
-    // 4. Convert those true pixels into flawless percentages
+    // 2. Divide BOTH by containerBox.width! 
     const percentX = (realX / containerBox.width) * 100;
-    const percentY = (realY / containerBox.height) * 100;
+    const percentY = (realY / containerBox.width) * 100;
     
     try {
       let imageUrl = selectedImage;
@@ -558,10 +556,11 @@ function App() {
                   alt={toy.story || "Toy"}
                   style={{
                     position: 'absolute',
-                    left: `${toy.x}%`, 
-                    top: `${toy.y}%`,  
-                    width: `${toy.size}px`,
-                    height: `${toy.size}px`
+                    left: `${toy.x}%`,
+                    top: 0,
+                    marginTop: `${toy.y}%`,
+                    width: `${(toy.size / 400) * 100}%`,
+                    height: 'auto'
                   }}
                 />
               ))}
@@ -635,11 +634,12 @@ function App() {
               className="saved-toy" 
               style={{
                 position: 'absolute',
-                left: `${toy.x}%`, 
-                top: `${toy.y}%`,  
-                width: `${toy.size}px`,
-                height: `${toy.size}px`,
-                zIndex: isAdminMode ? 60 : 1
+                left: `${toy.x}%`,
+                top: 0,
+                marginTop: `${toy.y}%`,
+                width: `${(toy.size / 400) * 100}%`,
+                height: 'auto',
+                zIndex: isAdminMode ? 60 : 1 // Keep your mobile zIndex!
               }}
             >
               <img src={toy.image} alt="Saved toy" />
