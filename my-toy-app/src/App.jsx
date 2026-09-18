@@ -280,7 +280,7 @@ function App() {
   const [storyText, setStoryText] = useState('')
 
   const [placedToy, setPlacedToy] = useState(null)
-  const [toySize, setToySize] = useState(50) 
+  const [toySize, setToySize] = useState(15) 
 
   const wordCount = storyText.trim() === '' ? 0 : storyText.trim().split(/\s+/).length
   const isNextValid = isBgRemoved && wordCount > 0 && wordCount <= 100
@@ -320,11 +320,12 @@ function App() {
   }, []);
 
   const handleResizeClick = (e) => {
-    e.preventDefault(); 
-    setToySize(prevSize => {
-      if (prevSize === 50) return 65;
-      if (prevSize === 65) return 80;
-      return 50;
+    e.preventDefault();
+
+    setToySize((previousSize) => {
+      if (previousSize === 15) return 20;
+      if (previousSize === 20) return 25;
+      return 15;
     });
   }
 
@@ -436,7 +437,7 @@ function App() {
       setIsModalOpen(false);
       setSelectedImage(null);
       setIsBgRemoved(false);
-      setToySize(50);
+      setToySize(15);
     }
   }
 
@@ -666,7 +667,18 @@ function App() {
           ))}
 
           {placedToy && (
-            <div className="draggable-toy" style={{ width: `${toySize}px`, height: `${toySize}px` }}>
+            <div
+              className="draggable-toy"
+              data-x="0"
+              data-y="0"
+              style={{
+                position: 'absolute',
+                left: '0%',
+                top: '0%',
+                width: `${toySize}%`,
+                height: 'auto',
+              }}
+            >
               <img src={placedToy.image} alt="Placed toy" />
               <button className="resize-btn" onPointerDown={handleResizeClick}>⤢</button>
             </div>
