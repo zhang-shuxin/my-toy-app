@@ -510,7 +510,7 @@ function App() {
         body: JSON.stringify({
           positionX: percentX, // <-- Make sure it uses percentX
           positionY: percentY, // <-- Make sure it uses percentY
-          scale: percentWidth,
+          size: percentWidth,
           imageUrl, // (or whatever your image variable is)
           story: storyText, 
         }),
@@ -635,12 +635,12 @@ function App() {
               className="saved-toy" 
               style={{
                 position: 'absolute',
-                left: `${toy.x}%`,
+                left: `${toy.positionX}%`, // 或者是 toy.x，取决于你实际获取到的键名
                 top: 0,
-                marginTop: `${toy.y}%`,
-                width: `${toy.scale}%`, // (Change .scale to .width or .size if your backend uses that)
+                marginTop: `${toy.positionY}%`, // 或者是 toy.y
+                width: `${toy.size}%`, // 直接使用百分比
                 height: 'auto',
-                zIndex: isAdminMode ? 60 : 1 // Keep your mobile zIndex!
+                zIndex: isAdminMode ? 60 : 1
               }}
             >
               <img src={toy.image} alt="Saved toy" />
