@@ -111,10 +111,12 @@ const normalizeToy = (toy) => ({
   id: toy.id,
   image: toy.imageUrl,
   story: toy.story,
-  size: Math.max(50, Math.round((toy.scale || 1) * 50)),
-  x: toy.positionX || 0,
-  y: toy.positionY || 0,
-  comments: Array.isArray(toy.comments) ? toy.comments.map(normalizeComment) : [],
+  scale: Number(toy.scale || 0),
+  x: Number(toy.positionX || 0),
+  y: Number(toy.positionY || 0),
+  comments: Array.isArray(toy.comments)
+    ? toy.comments.map(normalizeComment)
+    : [],
   date: formatDate(toy.dateCreated),
 });
 
@@ -425,11 +427,16 @@ function App() {
 
   const handleNextClick = () => {
     if (isNextValid) {
-      setPlacedToy({ image: selectedImage, story: storyText })
-      setIsModalOpen(false)
-      setSelectedImage(null)
-      setIsBgRemoved(false)
-      setToySize(50) 
+      setPlacedToy({
+        image: selectedImage,
+        story: storyText,
+        file: selectedFile,
+      });
+
+      setIsModalOpen(false);
+      setSelectedImage(null);
+      setIsBgRemoved(false);
+      setToySize(50);
     }
   }
 
@@ -463,10 +470,10 @@ function App() {
     const percentWidth = (toyBox.width / containerBox.width) * 100;
     
     try {
-      let imageUrl = selectedImage;
+      let imageUrl = placedToy.image;
 
-      if (selectedImage) {
-        const response = await fetch(selectedImage);
+      if (placedToy.image) {
+        const response = await fetch(placedToy.image);
         const imageBlob = await response.blob();
         const formData = new FormData();
         formData.append('toyImage', imageBlob, 'toy-image.png');
@@ -557,11 +564,11 @@ function App() {
                   alt={toy.story || "Toy"}
                   style={{
                    position: 'absolute',
-                   left: `${toy.positionX}%`,
-                   top: 0,
-                   marginTop: `${toy.positionY}%`,
+                   left: `${toy.x}%`,
+                   top: `${toy.y}%`,
                    width: `${toy.scale}%`,
-                   height: 'auto'
+                   height: 'auto',
+                   zIndex: isAdminMode ? 60 : 1
                   }}
                 />
               ))}
@@ -635,10 +642,9 @@ function App() {
               className="saved-toy" 
               style={{
                 position: 'absolute',
-                left: `${toy.positionX}%`, // 或者是 toy.x，取决于你实际获取到的键名
-                top: 0,
-                marginTop: `${toy.positionY}%`, // 或者是 toy.y
-                width: `${toy.scale}%`, // 直接使用百分比
+                left: `${toy.x}%`,
+                top: `${toy.y}%`,
+                width: `${toy.scale}%`,
                 height: 'auto',
                 zIndex: isAdminMode ? 60 : 1
               }}
