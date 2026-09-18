@@ -556,12 +556,12 @@ function App() {
                   src={toy.image}
                   alt={toy.story || "Toy"}
                   style={{
-                    position: 'absolute',
-                    left: `${toy.x}%`,
-                    top: 0,
-                    marginTop: `${toy.y}%`,
-                    width: `${(toy.size / 400) * 100}%`,
-                    height: 'auto'
+                   position: 'absolute',
+                   left: `${toy.positionX}%`,
+                   top: 0,
+                   marginTop: `${toy.positionY}%`,
+                   width: `${toy.scale}%`,
+                   height: 'auto'
                   }}
                 />
               ))}
