@@ -510,7 +510,7 @@ function App() {
         body: JSON.stringify({
           positionX: percentX, // <-- Make sure it uses percentX
           positionY: percentY, // <-- Make sure it uses percentY
-          size: percentWidth,
+          scale: percentWidth,
           imageUrl, // (or whatever your image variable is)
           story: storyText, 
         }),
@@ -638,7 +638,7 @@ function App() {
                 left: `${toy.positionX}%`, // 或者是 toy.x，取决于你实际获取到的键名
                 top: 0,
                 marginTop: `${toy.positionY}%`, // 或者是 toy.y
-                width: `${toy.size}%`, // 直接使用百分比
+                width: `${toy.scale}%`, // 直接使用百分比
                 height: 'auto',
                 zIndex: isAdminMode ? 60 : 1
               }}
