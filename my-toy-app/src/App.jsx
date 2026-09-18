@@ -459,7 +459,8 @@ function App() {
 
     // 2. Divide BOTH by containerBox.width! 
     const percentX = (realX / containerBox.width) * 100;
-    const percentY = (realY / containerBox.width) * 100;
+    const percentY = (realY / containerBox.height) * 100;
+    const percentWidth = (toyBox.width / containerBox.width) * 100;
     
     try {
       let imageUrl = selectedImage;
@@ -509,7 +510,7 @@ function App() {
         body: JSON.stringify({
           positionX: percentX, // <-- Make sure it uses percentX
           positionY: percentY, // <-- Make sure it uses percentY
-          scale: toySize / 50,
+          scale: percentWidth,
           imageUrl, // (or whatever your image variable is)
           story: storyText, 
         }),
