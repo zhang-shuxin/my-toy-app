@@ -638,7 +638,7 @@ function App() {
                 left: `${toy.x}%`,
                 top: 0,
                 marginTop: `${toy.y}%`,
-                width: `${(toy.size / 400) * 100}%`,
+                width: `${toy.scale}%`, // (Change .scale to .width or .size if your backend uses that)
                 height: 'auto',
                 zIndex: isAdminMode ? 60 : 1 // Keep your mobile zIndex!
               }}
