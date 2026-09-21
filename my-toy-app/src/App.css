@@ -250,6 +250,15 @@ body {
   position: relative; 
 }
 
+.dollhouse-bg-scope {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 110%;
+  aspect-ratio: 630 / 668;
+  transform: translate(-50%, -50%);
+}
+
 /* Bottom panel container */
 .bottom-panel {
   height: 80px;
