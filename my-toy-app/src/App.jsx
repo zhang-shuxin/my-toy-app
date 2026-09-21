@@ -725,16 +725,18 @@ function App() {
         {/* --- NEW DETAILS & COMMENTS PAGE --- */}
         {activeToy && (
           <div className="details-overlay" onClick={() => setActiveToyIndex(null)}>
-            {/* 1. The dark overlay that covers the whole screen */}
-            
-            {/* 2. The actual pop-up card that sits at the bottom */}
             <div className="details-bottom-sheet" onClick={(e) => e.stopPropagation()}>
               
               {/* Header */}
               <div className="details-header">
                 <div style={{ width: '30px' }}></div> {/* Spacer for centering */}
-                <button className="details-close-btn" onClick={() => setActiveToyIndex(null)}>
-                  X
+                <button
+                  className="details-close-btn"
+                  onClick={() => setActiveToyIndex(null)}
+                  aria-label="Close comments"
+                  title="Close comments"
+                >
+                  &times;
                 </button>
               </div>
 

@@ -628,18 +628,32 @@ textarea {
 
 /* --- DETAILS & COMMENTS PAGE --- */
 .details-close-btn {
-  background-color: white;
-  color: #e84e3a;
-  border: 1px solid #000000;
+  background: #fff7ed;
+  color: #d94f3d;
+  border: 2px solid #d94f3d;
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  font-size: 16px;
-  font-weight: bold;
+  width: 36px;
+  height: 36px;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 1;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 3px 0 #f2b29f, 0 6px 12px rgba(92, 48, 37, 0.16);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.details-close-btn:hover {
+  background: #ffe5d8;
+  transform: translateY(-2px) rotate(4deg);
+  box-shadow: 0 5px 0 #f2b29f, 0 8px 14px rgba(92, 48, 37, 0.18);
+}
+
+.details-close-btn:active {
+  transform: translateY(2px) rotate(0deg);
+  box-shadow: 0 1px 0 #f2b29f, 0 3px 6px rgba(92, 48, 37, 0.14);
 }
 
 .details-content {
