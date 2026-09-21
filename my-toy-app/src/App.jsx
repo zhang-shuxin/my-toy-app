@@ -645,52 +645,52 @@ function App() {
 
         <div className="house-display" style={{ backgroundImage: `url(${dollhouseBg})` }}>
           <div className="dollhouse-bg-scope">
-          {savedToys.map((toy, index) => (
-            <div 
-              key={toy.id} 
-              className="saved-toy" 
-              style={{
-                position: 'absolute',
-                left: `${toy.x}%`,
-                top: `${toy.y}%`,
-                width: `${toy.scale}%`,
-                height: 'auto',
-                zIndex: isAdminMode ? 60 : 1
-              }}
-            >
-              <img src={toy.image} alt="Saved toy" />
-              {isAdminMode && (
-                <button
-                  className="btn-delete-toy"
-                  onClick={() => handleDeleteSingleToy(index)}
-                >
-                  X
+            {savedToys.map((toy, index) => (
+              <div 
+                key={toy.id} 
+                className="saved-toy" 
+                style={{
+                  position: 'absolute',
+                  left: `${toy.x}%`,
+                  top: `${toy.y}%`,
+                  width: `${toy.scale}%`,
+                  height: 'auto',
+                  zIndex: isAdminMode ? 60 : 1
+                }}
+              >
+                <img src={toy.image} alt="Saved toy" />
+                {isAdminMode && (
+                  <button
+                    className="btn-delete-toy"
+                    onClick={() => handleDeleteSingleToy(index)}
+                  >
+                    X
+                  </button>
+                )}
+                {/* Clicking now passes the exact index of this toy */}
+                <button className="story-bubble-btn" onClick={() => setActiveToyIndex(toy.id)}>
+                  <img src={customBubble} alt="Read Story" />
                 </button>
-              )}
-              {/* Clicking now passes the exact index of this toy */}
-              <button className="story-bubble-btn" onClick={() => setActiveToyIndex(toy.id)}>
-                <img src={customBubble} alt="Read Story" />
-              </button>
-            </div>
-          ))}
+              </div>
+            ))}
 
-          {placedToy && (
-            <div
-              className="draggable-toy"
-              data-x="0"
-              data-y="0"
-              style={{
-                position: 'absolute',
-                left: '0%',
-                top: '0%',
-                width: `${toySize}%`,
-                height: 'auto',
-              }}
-            >
-              <img src={placedToy.image} alt="Placed toy" />
-              <button className="resize-btn" onPointerDown={handleResizeClick}>⤢</button>
-            </div>
-          )}
+            {placedToy && (
+              <div
+                className="draggable-toy"
+                data-x="0"
+                data-y="0"
+                style={{
+                  position: 'absolute',
+                  left: '0%',
+                  top: '0%',
+                  width: `${toySize}%`,
+                  height: 'auto',
+                }}
+              >
+                <img src={placedToy.image} alt="Placed toy" />
+                <button className="resize-btn" onPointerDown={handleResizeClick}>⤢</button>
+              </div>
+            )}
           </div>
         </div>
 
