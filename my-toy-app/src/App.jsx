@@ -277,6 +277,7 @@ function App() {
   const [selectedImage, setSelectedImage] = useState(null)
   const [isBgRemoved, setIsBgRemoved] = useState(false)
   const [isRemovingBg, setIsRemovingBg] = useState(false) 
+  const [backgroundRemovalError, setBackgroundRemovalError] = useState('')
   const [storyText, setStoryText] = useState('')
 
   const [placedToy, setPlacedToy] = useState(null)
@@ -371,6 +372,7 @@ function App() {
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setSelectedImage(imageUrl);
+      setBackgroundRemovalError('');
       setShowUploadModal(false); 
       event.target.value = null; 
     }
@@ -390,6 +392,7 @@ function App() {
     if (!selectedImage) return; 
 
     setIsRemovingBg(true); 
+    setBackgroundRemovalError('');
     
     // --- THE FIX: Force a tiny 50ms pause so the screen can paint the new text ---
     await new Promise(resolve => setTimeout(resolve, 50));
@@ -399,6 +402,9 @@ function App() {
 
       if (typeof selectedImage === 'string' && !selectedImage.startsWith('blob:')) {
         const response = await fetch(selectedImage);
+        if (!response.ok) {
+          throw new Error('Could not load the selected image.');
+        }
         imageSource = await response.blob();
       }
 
@@ -411,6 +417,7 @@ function App() {
       
     } catch (error) {
       console.error("Oops, background removal failed:", error);
+      setBackgroundRemovalError('Background removal failed. Please try again.');
     } finally {
       setIsRemovingBg(false); 
     }
@@ -422,6 +429,7 @@ function App() {
     setSelectedFile(null)
     setIsBgRemoved(false)
     setIsRemovingBg(false)
+    setBackgroundRemovalError('')
     setStoryText('')
     setUploadMessage('')
   }
@@ -868,6 +876,9 @@ function App() {
                   </button>
                 ) : (
                   <button className="remove-bg-btn disabled" disabled>BACKGROUND REMOVED ✓</button>
+                )}
+                {backgroundRemovalError && (
+                  <p className="background-removal-error" role="alert">{backgroundRemovalError}</p>
                 )}
               </div>
 

@@ -439,6 +439,14 @@ body {
   box-shadow: none;
 }
 
+.background-removal-error {
+  margin-top: 8px;
+  color: #e84e3a;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+}
+
 /* --- TEXT AREA --- */
 .story-section {
   text-align: left;
