@@ -628,9 +628,9 @@ textarea {
 
 /* --- DETAILS & COMMENTS PAGE --- */
 .details-close-btn {
-  background: #d94f3d;
+  background: #f1614e;
   color: white;
-  border: 2px solid white;
+  border: 1px solid black;
   border-radius: 50%;
   width: 34px;
   height: 34px;
