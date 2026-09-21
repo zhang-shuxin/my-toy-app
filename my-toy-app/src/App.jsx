@@ -618,7 +618,7 @@ function App() {
           <button className="pretty-back-btn" onClick={() => setCurrentPage('welcome')}>
             BACK
           </button>
-          
+          <img src={logoBubble} alt="Logo" className="small-logo" onClick={handleSecretTap} />
           {/* Right: The Info Icon */}
           <button className="info-btn" onClick={() => setShowInfoModal(true)}>
             <img src={infoIcon} alt="How to play" />
