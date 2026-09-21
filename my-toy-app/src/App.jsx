@@ -619,9 +619,6 @@ function App() {
             BACK
           </button>
           
-          {/* Small Logo */}
-          <img src={logoBubble} alt="Logo" className="small-logo" onClick={handleSecretTap} />
-          
           {/* Right: The Info Icon */}
           <button className="info-btn" onClick={() => setShowInfoModal(true)}>
             <img src={infoIcon} alt="How to play" />
