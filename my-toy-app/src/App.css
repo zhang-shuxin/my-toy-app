@@ -367,7 +367,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 3px dashed #e84e3a; 
+  border: 3px dashed green; 
   border-radius: 4px;
   height: 180px;
   width: 100%;
