@@ -248,6 +248,7 @@ body {
   background-position: center;
   background-repeat: no-repeat;  
   position: relative; 
+  z-index: 51;
 }
 
 .dollhouse-bg-scope {
@@ -1102,6 +1103,7 @@ textarea {
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 50;
+  pointer-events: none;
 }
 
 .btn-exit-moderation {
