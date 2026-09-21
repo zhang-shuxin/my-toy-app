@@ -294,7 +294,7 @@ function App() {
       inertia: true, 
       modifiers: [
         interact.modifiers.restrictRect({
-          restriction: 'parent', 
+          restriction: '.dollhouse-bg-scope', 
           endOnly: false 
         })
       ],
@@ -453,7 +453,7 @@ function App() {
    const toyEl = document.querySelector('.draggable-toy');
     
     // 1. Check for the mobile container first, fallback to projector container
-    const container = document.querySelector('.house-display') || document.querySelector('.dollhouse-screen');
+    const container = document.querySelector('.dollhouse-bg-scope') || document.querySelector('.dollhouse-screen');
 
     if (!placedToy || !toyEl || !container) return;
 
@@ -636,6 +636,7 @@ function App() {
         )}
 
         <div className="house-display" style={{ backgroundImage: `url(${dollhouseBg})` }}>
+          <div className="dollhouse-bg-scope">
           {savedToys.map((toy, index) => (
             <div 
               key={toy.id} 
@@ -682,6 +683,7 @@ function App() {
               <button className="resize-btn" onPointerDown={handleResizeClick}>⤢</button>
             </div>
           )}
+          </div>
         </div>
 
         <div className="bottom-panel">
