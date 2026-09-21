@@ -154,8 +154,8 @@ body {
   height: 60px;
   width: auto;
   position: absolute; /* 1. Breaks it out of the Flexbox relationship */
-  left: 15%;/* 2. Moves it exactly to the center horizontally */
-  transform: translateX(-20%);
+  left: 10%;/* 2. Moves it exactly to the center horizontally */
+  transform: translateX(-30%);
   top: 80px; /* 3. Adjust this number freely to move it up or down! */
   z-index: 20; /* Ensures it always stays on top of the background and other elements */
 }
@@ -240,16 +240,13 @@ body {
   margin-bottom: 0; /* Removes extra space at the very bottom */
 }
 
-/* The main house background */
+
 .house-display {
-  /* 1. Tell it to expand and fill the entire mobile-container */
   flex-grow: 1; 
   width: 100%; 
-  /* 2. Tell the background image to stretch with it! */
   background-size: 110% auto; 
   background-position: center;
   background-repeat: no-repeat;  
-  /* Keep any other rules you already had here, like position: relative! */
   position: relative; 
 }
 
