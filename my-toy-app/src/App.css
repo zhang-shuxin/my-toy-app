@@ -155,7 +155,7 @@ body {
   width: auto;
   position: absolute; /* 1. Breaks it out of the Flexbox relationship */
   left: 10%;/* 2. Moves it exactly to the center horizontally */
-  transform: translateX(-30%);
+  transform: translateX(-40%);
   top: 80px; /* 3. Adjust this number freely to move it up or down! */
   z-index: 20; /* Ensures it always stays on top of the background and other elements */
 }
