@@ -944,7 +944,7 @@ function App() {
                   }}
                 >
                   <span className="emoji-icon">🏛️</span> 
-                  Find a plush toy in the museum archive album
+                  Find a toy in the museum archive album
                 </button>
               </div>
 
