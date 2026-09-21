@@ -246,7 +246,7 @@ body {
   flex-grow: 1; 
   width: 100%; 
   /* 2. Tell the background image to stretch with it! */
-  background-size: 90% auto; 
+  background-size: 95% auto; 
   background-position: center;
   background-repeat: no-repeat;  
   /* Keep any other rules you already had here, like position: relative! */
