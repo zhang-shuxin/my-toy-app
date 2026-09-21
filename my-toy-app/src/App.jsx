@@ -843,8 +843,7 @@ function App() {
         {isModalOpen && (
           <div className="modal-overlay">
             <div className="modal-content">
-              <button className="close-btn" onClick={handleCloseModal}>X</button>
-              
+              <button className="close-btn" onClick={handleCloseModal}>&times;</button>
               <div className="upload-section">
                 <div className="sticker-header yellow-sticker">Upload a photo of your character toy</div>
                 {!selectedImage ? (
