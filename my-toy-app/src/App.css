@@ -1147,3 +1147,38 @@ textarea {
   margin: 0 auto !important; /* Centers the mobile app on wider screens like iPads */
   aspect-ratio: 9 / 16;
 }
+
+@media (max-width: 600px) {
+  /* Prevent iOS Safari from zooming the page when an input receives focus. */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+
+  .mobile-container,
+  .App {
+    height: 100dvh;
+    min-height: 100dvh;
+    overflow: hidden;
+  }
+
+  .modal-overlay,
+  .details-overlay,
+  .archive-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100dvh;
+  }
+
+  .modal-content,
+  .upload-modal-content {
+    max-height: calc(100dvh - 32px);
+    overflow-y: auto;
+  }
+
+  .details-bottom-sheet {
+    max-height: 100dvh;
+  }
+}
