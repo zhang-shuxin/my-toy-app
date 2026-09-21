@@ -154,7 +154,7 @@ body {
   height: 60px;
   width: auto;
   position: absolute; /* 1. Breaks it out of the Flexbox relationship */
-  left: 20%;/* 2. Moves it exactly to the center horizontally */
+  left: 12%;/* 2. Moves it exactly to the center horizontally */
   transform: translateX(-20%);
   top: 90px; /* 3. Adjust this number freely to move it up or down! */
   z-index: 20; /* Ensures it always stays on top of the background and other elements */
