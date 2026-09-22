@@ -569,19 +569,25 @@ function App() {
             {/* Render the saved toys perfectly aligned over the house */}
             <div className="projector-toys" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
               {savedToys.map((toy, index) => (
-                <img
+                <div
                   key={toy.id || index}
-                  src={toy.image}
-                  alt={toy.story || "Toy"}
+                  className="projector-toy"
                   style={{
                    position: 'absolute',
                    left: `${toy.x}%`,
                    top: `${toy.y}%`,
                    width: `${toy.scale}%`,
-                   height: 'auto',
+                   '--story-delay': `${index * -2}s`,
                    zIndex: isAdminMode ? 60 : 1
                   }}
-                />
+                >
+                  <img src={toy.image} alt={toy.story || "Toy"} />
+                  <img
+                    src={customBubble}
+                    alt="Toy story"
+                    className="projector-story-bubble"
+                  />
+                </div>
               ))}
             </div>
 

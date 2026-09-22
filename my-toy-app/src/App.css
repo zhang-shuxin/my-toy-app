@@ -1188,6 +1188,37 @@ textarea {
   opacity: 0.1;
 }
 
+.projector-toy {
+  height: auto;
+}
+
+.projector-toy > img:first-child {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.projector-story-bubble {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  animation: projector-story-cycle 10s linear infinite;
+  animation-delay: var(--story-delay);
+}
+
+@keyframes projector-story-cycle {
+  0%, 50% {
+    opacity: 1;
+  }
+
+  50.01%, 100% {
+    opacity: 0;
+  }
+}
+
 @media (max-width: 600px) {
   /* Prevent iOS Safari from zooming the page when an input receives focus. */
   input,
