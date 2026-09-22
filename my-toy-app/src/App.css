@@ -261,6 +261,12 @@ body {
   transform: translate(-50%, -50%);
 }
 
+.house-dollhouse-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 /* Only these six areas accept a toy. The gaps between them are shelves and dividers. */
 .room-drop-zones,
 .room-drop-zone {
