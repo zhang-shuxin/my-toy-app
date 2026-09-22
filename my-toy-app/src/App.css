@@ -1211,12 +1211,12 @@ textarea {
   max-height: 58px;
   overflow: hidden;
   padding: 6px 8px;
-  border: 1px solid #ff6a6a;
+  border: 2px solid rgb(252, 67, 67);
   border-radius: 9px;
   background: white;
   color: black;
   font-family: 'Itim', cursive, sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.25;
   overflow-wrap: anywhere;
   box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.28);
@@ -1232,9 +1232,9 @@ textarea {
   bottom: -7px;
   width: 10px;
   height: 10px;
-  background: black;
-  border-right: 1px solid white;
-  border-bottom: 1px solid white;
+  background: white;
+  border-right: 2px solid white;
+  border-bottom: 2px solid rgb(252, 67, 67);
   transform: rotate(45deg);
 }
 
@@ -1249,7 +1249,7 @@ textarea {
   justify-content: center;
   gap: 3px;
   border-radius: 8px;
-  background: rgb(255, 124, 124);
+  background: rgb(252, 67, 67);
   z-index: 0;
   animation: projector-story-cycle 10s linear infinite;
   animation-delay: var(--story-delay);
