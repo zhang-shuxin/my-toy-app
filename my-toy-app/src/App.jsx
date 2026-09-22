@@ -687,8 +687,14 @@ function App() {
           </>
         )}
 
-        <div className="house-display" style={{ backgroundImage: `url(${dollhouseBg})` }}>
+        <div className="house-display">
           <div className="dollhouse-bg-scope">
+            <img
+              src={dollhouseBg}
+              alt="Dollhouse"
+              className="house-dollhouse-image"
+            />
+
             <div className="room-drop-zones" aria-hidden="true">
               <div className="room-drop-zone room-top-left" />
               <div className="room-drop-zone room-top-center" />
