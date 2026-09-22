@@ -1235,6 +1235,21 @@ textarea {
   aspect-ratio: 9 / 16;
 }
 
+.projector-dollhouse-screen {
+  width: min(100vw, calc(100vh * 630 / 668));
+  max-width: none;
+  max-height: none;
+  aspect-ratio: 630 / 668;
+  overflow: hidden;
+}
+
+.projector-dollhouse-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity: 0.1;
+}
+
 @media (max-width: 600px) {
   /* Prevent iOS Safari from zooming the page when an input receives focus. */
   input,
