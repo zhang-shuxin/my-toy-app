@@ -491,21 +491,12 @@ function App() {
   }
 
   const handleDoneClick = async () => {
-    const toyEl = document.querySelector('.draggable-toy');
-    const isToyWithinRoom = toyEl && [...document.querySelectorAll('.room-drop-zone')].some((room) => {
-      const toyBox = toyEl.getBoundingClientRect()
-      const roomBox = room.getBoundingClientRect()
-      return toyBox.left >= roomBox.left
-        && toyBox.right <= roomBox.right
-        && toyBox.top >= roomBox.top
-        && toyBox.bottom <= roomBox.bottom
-    })
-
-    if (!isToyInRoom || !isToyWithinRoom) {
-      setIsToyInRoom(false)
+   if (!isToyInRoom) {
       setUploadMessage('Place your toy inside a room before saving.')
       return
     }
+
+   const toyEl = document.querySelector('.draggable-toy');
     
     // 1. Check for the mobile container first, fallback to projector container
     const container = document.querySelector('.dollhouse-bg-scope') || document.querySelector('.dollhouse-screen');
@@ -603,12 +594,12 @@ function App() {
     return (
       <div className="projector-container" style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden', background: '#000', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         
-        <div className="dollhouse-screen projector-dollhouse-screen">
+        <div className="dollhouse-screen" style={{ position: 'relative', height: '100vh', margin: '0 auto', overflow: 'hidden' }}>
             
             <img 
               src={dollhouseBg}
               alt="Dollhouse Alignment Guide" 
-              className="projector-dollhouse-image"
+              style={{ width: '100%', height: '100%', opacity: 0.1 }} 
             />
       
             {/* Render the saved toys perfectly aligned over the house */}
@@ -687,14 +678,8 @@ function App() {
           </>
         )}
 
-        <div className="house-display">
+        <div className="house-display" style={{ backgroundImage: `url(${dollhouseBg})` }}>
           <div className="dollhouse-bg-scope">
-            <img
-              src={dollhouseBg}
-              alt="Dollhouse"
-              className="house-dollhouse-image"
-            />
-
             <div className="room-drop-zones" aria-hidden="true">
               <div className="room-drop-zone room-top-left" />
               <div className="room-drop-zone room-top-center" />
