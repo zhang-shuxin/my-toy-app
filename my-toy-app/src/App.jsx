@@ -120,6 +120,13 @@ const normalizeToy = (toy) => ({
   date: formatDate(toy.dateCreated),
 });
 
+const getProjectorStoryPreview = (story) => {
+  const words = String(story || '').trim().split(/\s+/).filter(Boolean);
+  return words.length > 6
+    ? `${words.slice(0, 6).join(' ')}...`
+    : words.join(' ');
+};
+
 function App() {
   const [showArchive, setShowArchive] = useState(false);
   const [isProjectorMode, setIsProjectorMode] = useState(false);
@@ -581,9 +588,9 @@ function App() {
                    zIndex: isAdminMode ? 60 : 1
                   }}
                 >
-                  <img src={toy.image} alt={toy.story || "Toy"} />
+                  <img className="projector-toy-image" src={toy.image} alt={toy.story || "Toy"} />
                   <div className="projector-story-dialogue">
-                    {toy.story}
+                    {getProjectorStoryPreview(toy.story)}
                   </div>
                 </div>
               ))}

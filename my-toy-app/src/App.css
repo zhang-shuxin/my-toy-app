@@ -1198,6 +1198,11 @@ textarea {
   height: auto;
 }
 
+.projector-toy-image {
+  position: relative;
+  z-index: 1;
+}
+
 .projector-story-dialogue {
   position: absolute;
   top: -8px;
@@ -1215,6 +1220,7 @@ textarea {
   line-height: 1.25;
   overflow-wrap: anywhere;
   box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.28);
+  z-index: 0;
   animation: projector-story-cycle 10s linear infinite;
   animation-delay: var(--story-delay);
 }
