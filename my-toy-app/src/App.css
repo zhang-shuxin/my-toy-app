@@ -1243,11 +1243,36 @@ textarea {
   top: -30px;
   right: -30px;
   width: 24px;
-  height: 24px;
-  object-fit: contain;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  border-radius: 8px;
+  background: #000;
   z-index: 0;
   animation: projector-story-cycle 10s linear infinite;
   animation-delay: var(--story-delay);
+}
+
+.projector-comment-icon::after {
+  content: '';
+  position: absolute;
+  right: 3px;
+  bottom: -4px;
+  width: 6px;
+  height: 6px;
+  background: #000;
+  transform: rotate(45deg);
+}
+
+.projector-comment-icon > span {
+  position: relative;
+  z-index: 1;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #fff;
 }
 
 @keyframes projector-story-cycle {

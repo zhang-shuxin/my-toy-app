@@ -593,11 +593,15 @@ function App() {
                     {getProjectorStoryPreview(toy.story)}
                   </div>
                   {toy.comments.length > 0 && (
-                    <img
-                      src={customBubble}
-                      alt="Toy has comments"
+                    <span
                       className="projector-comment-icon"
-                    />
+                      role="img"
+                      aria-label="Toy has comments"
+                    >
+                      <span />
+                      <span />
+                      <span />
+                    </span>
                   )}
                 </div>
               ))}
