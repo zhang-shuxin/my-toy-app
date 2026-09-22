@@ -1238,6 +1238,18 @@ textarea {
   transform: rotate(45deg);
 }
 
+.projector-comment-icon {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  z-index: 0;
+  animation: projector-story-cycle 10s linear infinite;
+  animation-delay: var(--story-delay);
+}
+
 @keyframes projector-story-cycle {
   0%, 50% {
     opacity: 1;

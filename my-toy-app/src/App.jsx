@@ -592,6 +592,13 @@ function App() {
                   <div className="projector-story-dialogue">
                     {getProjectorStoryPreview(toy.story)}
                   </div>
+                  {toy.comments.length > 0 && (
+                    <img
+                      src={customBubble}
+                      alt="Toy has comments"
+                      className="projector-comment-icon"
+                    />
+                  )}
                 </div>
               ))}
             </div>
