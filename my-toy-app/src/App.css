@@ -1242,14 +1242,16 @@ textarea {
   position: absolute;
   top: -30px;
   right: -30px;
-  width: 24px;
-  height: 18px;
+  width: 28px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  border-radius: 8px;
+  gap: 4px;
+  border: 1px solid #fff;
+  border-radius: 9px;
   background: rgb(252, 67, 67);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.35);
   z-index: 0;
   animation: projector-story-cycle 10s linear infinite;
   animation-delay: var(--story-delay);
@@ -1258,19 +1260,21 @@ textarea {
 .projector-comment-icon::after {
   content: '';
   position: absolute;
-  right: 3px;
-  bottom: -4px;
-  width: 6px;
-  height: 6px;
-  background: #000;
+  right: 4px;
+  bottom: -5px;
+  width: 8px;
+  height: 8px;
+  background: rgb(252, 67, 67);
+  border-right: 1px solid #fff;
+  border-bottom: 1px solid #fff;
   transform: rotate(45deg);
 }
 
 .projector-comment-icon > span {
   position: relative;
   z-index: 1;
-  width: 3px;
-  height: 3px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
   background: #fff;
 }
