@@ -582,11 +582,9 @@ function App() {
                   }}
                 >
                   <img src={toy.image} alt={toy.story || "Toy"} />
-                  <img
-                    src={customBubble}
-                    alt="Toy story"
-                    className="projector-story-bubble"
-                  />
+                  <div className="projector-story-dialogue">
+                    {toy.story}
+                  </div>
                 </div>
               ))}
             </div>

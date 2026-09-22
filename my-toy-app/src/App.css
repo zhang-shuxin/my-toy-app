@@ -1198,15 +1198,38 @@ textarea {
   height: auto;
 }
 
-.projector-story-bubble {
+.projector-story-dialogue {
   position: absolute;
-  top: -15px;
-  right: -15px;
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
+  top: -8px;
+  right: -12px;
+  width: 180px;
+  max-height: 92px;
+  overflow: hidden;
+  padding: 10px 12px;
+  border: 2px solid #222;
+  border-radius: 14px;
+  background: #fffdf2;
+  color: #222;
+  font-family: 'Itim', cursive, sans-serif;
+  font-size: 14px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.28);
   animation: projector-story-cycle 10s linear infinite;
   animation-delay: var(--story-delay);
+}
+
+.projector-story-dialogue::after {
+  content: '';
+  position: absolute;
+  right: 18px;
+  bottom: -10px;
+  width: 16px;
+  height: 16px;
+  background: #fffdf2;
+  border-right: 2px solid #222;
+  border-bottom: 2px solid #222;
+  transform: rotate(45deg);
 }
 
 @keyframes projector-story-cycle {
