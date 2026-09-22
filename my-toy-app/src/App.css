@@ -1232,9 +1232,9 @@ textarea {
   bottom: -7px;
   width: 10px;
   height: 10px;
-  background: #000;
-  border-right: 1px solid #fff;
-  border-bottom: 1px solid #fff;
+  background: white;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
   transform: rotate(45deg);
 }
 
@@ -1249,7 +1249,7 @@ textarea {
   justify-content: center;
   gap: 3px;
   border-radius: 8px;
-  background: #000;
+  background: white;
   z-index: 0;
   animation: projector-story-cycle 10s linear infinite;
   animation-delay: var(--story-delay);
