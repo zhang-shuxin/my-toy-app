@@ -314,16 +314,12 @@ function App() {
         end(event) {
           const target = event.target
           const toyBox = target.getBoundingClientRect()
-          const toyCenter = {
-            x: toyBox.left + toyBox.width / 2,
-            y: toyBox.top + toyBox.height / 2,
-          }
           const isInRoom = [...document.querySelectorAll('.room-drop-zone')].some((room) => {
             const roomBox = room.getBoundingClientRect()
-            return toyCenter.x >= roomBox.left
-              && toyCenter.x <= roomBox.right
-              && toyCenter.y >= roomBox.top
-              && toyCenter.y <= roomBox.bottom
+            return toyBox.left >= roomBox.left
+              && toyBox.right <= roomBox.right
+              && toyBox.top >= roomBox.top
+              && toyBox.bottom <= roomBox.bottom
           })
 
           if (isInRoom) {
@@ -495,12 +491,21 @@ function App() {
   }
 
   const handleDoneClick = async () => {
-   if (!isToyInRoom) {
+    const toyEl = document.querySelector('.draggable-toy');
+    const isToyWithinRoom = toyEl && [...document.querySelectorAll('.room-drop-zone')].some((room) => {
+      const toyBox = toyEl.getBoundingClientRect()
+      const roomBox = room.getBoundingClientRect()
+      return toyBox.left >= roomBox.left
+        && toyBox.right <= roomBox.right
+        && toyBox.top >= roomBox.top
+        && toyBox.bottom <= roomBox.bottom
+    })
+
+    if (!isToyInRoom || !isToyWithinRoom) {
+      setIsToyInRoom(false)
       setUploadMessage('Place your toy inside a room before saving.')
       return
     }
-
-   const toyEl = document.querySelector('.draggable-toy');
     
     // 1. Check for the mobile container first, fallback to projector container
     const container = document.querySelector('.dollhouse-bg-scope') || document.querySelector('.dollhouse-screen');
@@ -686,6 +691,7 @@ function App() {
           <div className="dollhouse-bg-scope">
             <div className="room-drop-zones" aria-hidden="true">
               <div className="room-drop-zone room-top-left" />
+              <div className="room-drop-zone room-top-center" />
               <div className="room-drop-zone room-top-right" />
               <div className="room-drop-zone room-middle-left" />
               <div className="room-drop-zone room-middle-right" />

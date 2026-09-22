@@ -277,45 +277,52 @@ body {
 }
 
 .room-top-left {
-  left: 5%;
-  top: 14%;
-  width: 39%;
+  left: 8%;
+  top: 11%;
+  width: 34%;
+  height: 27%;
+}
+
+.room-top-center {
+  left: 43%;
+  top: 11%;
+  width: 18%;
   height: 27%;
 }
 
 .room-top-right {
-  left: 43%;
-  top: 14%;
-  width: 52%;
+  left: 62%;
+  top: 11%;
+  width: 34%;
   height: 27%;
 }
 
 .room-middle-left {
-  left: 6%;
-  top: 43%;
-  width: 54%;
-  height: 25%;
+  left: 8%;
+  top: 40%;
+  width: 52%;
+  height: 27%;
 }
 
 .room-middle-right {
   left: 62%;
-  top: 43%;
-  width: 33%;
-  height: 25%;
+  top: 40%;
+  width: 34%;
+  height: 27%;
 }
 
 .room-bottom-left {
-  left: 6%;
-  top: 70%;
-  width: 45%;
-  height: 26%;
+  left: 8%;
+  top: 69%;
+  width: 42%;
+  height: 27%;
 }
 
 .room-bottom-right {
-  left: 53%;
-  top: 70%;
-  width: 42%;
-  height: 26%;
+  left: 52%;
+  top: 69%;
+  width: 44%;
+  height: 27%;
 }
 
 /* Bottom panel container */
