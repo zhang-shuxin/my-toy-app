@@ -565,12 +565,12 @@ function App() {
     return (
       <div className="projector-container" style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden', background: '#000', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         
-        <div className="dollhouse-screen" style={{ position: 'relative', height: '100vh', margin: '0 auto', overflow: 'hidden' }}>
+        <div className="dollhouse-screen projector-dollhouse-screen">
             
             <img 
               src={dollhouseBg}
               alt="Dollhouse Alignment Guide" 
-              style={{ width: '100%', height: '100%', opacity: 0.1 }} 
+              className="projector-dollhouse-image"
             />
       
             {/* Render the saved toys perfectly aligned over the house */}
