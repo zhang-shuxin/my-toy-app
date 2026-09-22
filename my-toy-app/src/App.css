@@ -1242,6 +1242,7 @@ textarea {
 }
 
 .projector-dollhouse-screen {
+  position: relative;
   width: min(100vw, calc(100vh * 630 / 668));
   max-width: none;
   max-height: none;
