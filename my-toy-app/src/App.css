@@ -261,6 +261,63 @@ body {
   transform: translate(-50%, -50%);
 }
 
+/* Only these six areas accept a toy. The gaps between them are shelves and dividers. */
+.room-drop-zones,
+.room-drop-zone {
+  position: absolute;
+  pointer-events: none;
+}
+
+.room-drop-zones {
+  inset: 0;
+}
+
+.room-drop-zone {
+  z-index: 2;
+}
+
+.room-top-left {
+  left: 5%;
+  top: 14%;
+  width: 39%;
+  height: 27%;
+}
+
+.room-top-right {
+  left: 43%;
+  top: 14%;
+  width: 52%;
+  height: 27%;
+}
+
+.room-middle-left {
+  left: 6%;
+  top: 43%;
+  width: 54%;
+  height: 25%;
+}
+
+.room-middle-right {
+  left: 62%;
+  top: 43%;
+  width: 33%;
+  height: 25%;
+}
+
+.room-bottom-left {
+  left: 6%;
+  top: 70%;
+  width: 45%;
+  height: 26%;
+}
+
+.room-bottom-right {
+  left: 53%;
+  top: 70%;
+  width: 42%;
+  height: 26%;
+}
+
 /* Bottom panel container */
 .bottom-panel {
   height: 80px;
@@ -502,6 +559,11 @@ textarea {
   border: 1.5px solid #FFEE99;
   color: #FFEE99;
   cursor: pointer;
+}
+
+.btn-solid-active:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
 }
 
 /* --- WORD COUNTER --- */

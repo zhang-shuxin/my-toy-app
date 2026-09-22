@@ -282,6 +282,8 @@ function App() {
 
   const [placedToy, setPlacedToy] = useState(null)
   const [toySize, setToySize] = useState(15) 
+  const [isToyInRoom, setIsToyInRoom] = useState(true)
+  const lastValidPositionRef = useRef({ x: 0, y: 0 })
 
   const wordCount = storyText.trim() === '' ? 0 : storyText.trim().split(/\s+/).length
   const isNextValid = isBgRemoved && wordCount > 0 && wordCount <= 100
@@ -290,7 +292,7 @@ function App() {
   
 
   useEffect(() => {
-    interact('.draggable-toy').draggable({
+    const draggableToy = interact('.draggable-toy').draggable({
       ignoreFrom: '.resize-btn', 
       inertia: true, 
       modifiers: [
@@ -308,9 +310,42 @@ function App() {
           target.style.transform = `translate(${x}px, ${y}px)`
           target.setAttribute('data-x', x)
           target.setAttribute('data-y', y)
+        },
+        end(event) {
+          const target = event.target
+          const toyBox = target.getBoundingClientRect()
+          const toyCenter = {
+            x: toyBox.left + toyBox.width / 2,
+            y: toyBox.top + toyBox.height / 2,
+          }
+          const isInRoom = [...document.querySelectorAll('.room-drop-zone')].some((room) => {
+            const roomBox = room.getBoundingClientRect()
+            return toyCenter.x >= roomBox.left
+              && toyCenter.x <= roomBox.right
+              && toyCenter.y >= roomBox.top
+              && toyCenter.y <= roomBox.bottom
+          })
+
+          if (isInRoom) {
+            lastValidPositionRef.current = {
+              x: parseFloat(target.getAttribute('data-x')) || 0,
+              y: parseFloat(target.getAttribute('data-y')) || 0,
+            }
+            setIsToyInRoom(true)
+            return
+          }
+
+          const { x, y } = lastValidPositionRef.current
+          target.style.transform = `translate(${x}px, ${y}px)`
+          target.setAttribute('data-x', x)
+          target.setAttribute('data-y', y)
+          setIsToyInRoom(true)
+          setUploadMessage('Place your toy inside a room, not on the shelves.')
         }
       }
     })
+
+    return () => draggableToy.unset()
   }, [placedToy]) 
 
   useEffect(() => {
@@ -436,6 +471,8 @@ function App() {
 
   const handleNextClick = () => {
     if (isNextValid) {
+      lastValidPositionRef.current = { x: 0, y: 0 }
+      setIsToyInRoom(true)
       setPlacedToy({
         image: selectedImage,
         story: storyText,
@@ -458,6 +495,11 @@ function App() {
   }
 
   const handleDoneClick = async () => {
+   if (!isToyInRoom) {
+      setUploadMessage('Place your toy inside a room before saving.')
+      return
+    }
+
    const toyEl = document.querySelector('.draggable-toy');
     
     // 1. Check for the mobile container first, fallback to projector container
@@ -642,6 +684,15 @@ function App() {
 
         <div className="house-display" style={{ backgroundImage: `url(${dollhouseBg})` }}>
           <div className="dollhouse-bg-scope">
+            <div className="room-drop-zones" aria-hidden="true">
+              <div className="room-drop-zone room-top-left" />
+              <div className="room-drop-zone room-top-right" />
+              <div className="room-drop-zone room-middle-left" />
+              <div className="room-drop-zone room-middle-right" />
+              <div className="room-drop-zone room-bottom-left" />
+              <div className="room-drop-zone room-bottom-right" />
+            </div>
+
             {savedToys.map((toy, index) => (
               <div 
                 key={toy.id} 
@@ -678,8 +729,8 @@ function App() {
                 data-y="0"
                 style={{
                   position: 'absolute',
-                  left: '0%',
-                  top: '0%',
+                  left: '8%',
+                  top: '14%',
                   width: `${toySize}%`,
                   height: 'auto',
                 }}
@@ -698,7 +749,7 @@ function App() {
           <> {/* 1. ADD THIS INVISIBLE OPENING TAG */}
             <div className="bottom-actions">
               <button className="nav-btn btn-outline" onClick={handleBackToEdit}>BACK</button>
-              <button className="nav-btn btn-solid-active" onClick={handleDoneClick}>DONE</button>
+              <button className="nav-btn btn-solid-active" onClick={handleDoneClick} disabled={!isToyInRoom}>DONE</button>
             </div>
             
             {uploadMessage && (
