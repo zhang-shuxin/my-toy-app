@@ -1216,7 +1216,7 @@ textarea {
   background: white;
   color: black;
   font-family: 'Itim', cursive, sans-serif;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.25;
   overflow-wrap: anywhere;
   box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.28);
@@ -1249,7 +1249,7 @@ textarea {
   justify-content: center;
   gap: 3px;
   border-radius: 8px;
-  background: black;
+  background: rgb(255, 124, 124);
   z-index: 0;
   animation: projector-story-cycle 10s linear infinite;
   animation-delay: var(--story-delay);
