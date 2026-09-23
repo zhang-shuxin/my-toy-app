@@ -288,7 +288,7 @@ function App() {
   const [storyText, setStoryText] = useState('')
 
   const [placedToy, setPlacedToy] = useState(null)
-  const [toySize, setToySize] = useState(15) 
+  const [toySize, setToySize] = useState(10) 
 
   const wordCount = storyText.trim() === '' ? 0 : storyText.trim().split(/\s+/).length
   const isNextValid = isBgRemoved && wordCount > 0 && wordCount <= 100
@@ -333,9 +333,9 @@ function App() {
     e.preventDefault();
 
     setToySize((previousSize) => {
+      if (previousSize === 10) return 15;
       if (previousSize === 15) return 20;
-      if (previousSize === 20) return 25;
-      return 15;
+      return 10;
     });
   }
 
