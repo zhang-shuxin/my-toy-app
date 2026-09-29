@@ -289,7 +289,7 @@ function App() {
   const [storyText, setStoryText] = useState('')
 
   const [placedToy, setPlacedToy] = useState(null)
-  const [toySize, setToySize] = useState(8) 
+  const [toySize, setToySize] = useState(10) 
 
   const wordCount = storyText.trim() === '' ? 0 : storyText.trim().split(/\s+/).length
   const isNextValid = isBgRemoved && wordCount > 0 && wordCount <= 100
@@ -334,9 +334,9 @@ function App() {
     e.preventDefault();
 
     setToySize((previousSize) => {
-      if (previousSize === 8) return 10;
-      if (previousSize === 10) return 12;
-      return 8;
+      if (previousSize === 10) return 15;
+      if (previousSize === 15) return 20;
+      return 10;
     });
   }
 
@@ -455,7 +455,7 @@ function App() {
       setIsModalOpen(false);
       setSelectedImage(null);
       setIsBgRemoved(false);
-      setToySize(15);
+      setToySize(10);
     }
   }
 
@@ -555,7 +555,7 @@ function App() {
       setSelectedImage(null)
       setIsBgRemoved(false)
       setStoryText('')
-      setToySize(50)
+      setToySize(10)
     } catch (error) {
       console.error('Error:', error);
       setUploadMessage(error.message || 'Could not connect to the server.');
