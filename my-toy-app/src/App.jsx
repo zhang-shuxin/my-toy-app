@@ -6,6 +6,7 @@ import './App.css'
 import landingBg from './assets/landing-bg.png'
 import logoBubble from './assets/logo-bubble.png'
 import dollhouseBg from './assets/dollhouse-bg.png'
+import dollhouseBgProjector from './assets/dollhouse-bg-projector.png'
 import customBubble from './assets/custom-bubble.png'
 import paperPlane from './assets/paper-plane.png'
 import seagullBanner from './assets/seagull-banner.png'
@@ -568,7 +569,7 @@ function App() {
         <div className="dollhouse-screen projector-dollhouse-screen">
             
             <img 
-              src={dollhouseBg}
+              src={dollhouseBgProjector}
               alt="Dollhouse Alignment Guide" 
               className="projector-dollhouse-image"
             />
