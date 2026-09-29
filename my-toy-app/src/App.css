@@ -1211,7 +1211,7 @@ textarea {
   max-height: 42px;
   overflow: hidden;
   padding: 4px 6px;
-  border: 2px solid rgb(252, 67, 67);
+  border: 1px solid black;
   border-radius: 9px;
   background: white;
   color: black;
