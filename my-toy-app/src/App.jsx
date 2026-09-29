@@ -334,8 +334,8 @@ function App() {
     e.preventDefault();
 
     setToySize((previousSize) => {
-      if (previousSize === 10) return 13;
-      if (previousSize === 13) return 16;
+      if (previousSize === 10) return 12;
+      if (previousSize === 12) return 15;
       return 10;
     });
   }
