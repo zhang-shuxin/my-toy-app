@@ -586,6 +586,7 @@ function App() {
                    top: `${toy.y}%`,
                    width: `${toy.scale}%`,
                    '--story-delay': `${index * -2}s`,
+                   '--walk-delay': `${index * -0.7}s`,
                    zIndex: isAdminMode ? 60 : 1
                   }}
                 >

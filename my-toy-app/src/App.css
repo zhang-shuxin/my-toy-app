@@ -1190,6 +1190,9 @@ textarea {
 
 .projector-toy {
   height: auto;
+  animation: projector-toy-walk 4s ease-in-out infinite;
+  animation-delay: var(--walk-delay);
+  will-change: transform;
 }
 
 .projector-toy > img:first-child {
@@ -1286,6 +1289,22 @@ textarea {
 
   50.01%, 100% {
     opacity: 0;
+  }
+}
+
+@keyframes projector-toy-walk {
+  0%, 100% {
+    transform: translateX(-4px);
+  }
+
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projector-toy {
+    animation: none;
   }
 }
 
