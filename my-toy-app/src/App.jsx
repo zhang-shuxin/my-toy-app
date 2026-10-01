@@ -487,6 +487,16 @@ function App() {
     const percentX = (realX / containerBox.width) * 100;
     const percentY = (realY / containerBox.height) * 100;
     const percentWidth = (toyBox.width / containerBox.width) * 100;
+
+    const positionConflict = savedToys.some((toy) => (
+      Math.abs(toy.x - percentX) < 0.25 &&
+      Math.abs(toy.y - percentY) < 0.25
+    ));
+
+    if (positionConflict) {
+      setUploadMessage('Your creation will be covered up by an existing creation. Please replace it.');
+      return;
+    }
     
     try {
       let imageUrl = placedToy.image;
