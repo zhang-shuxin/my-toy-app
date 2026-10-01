@@ -1224,7 +1224,7 @@ textarea {
   overflow-wrap: anywhere;
   box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.28);
   z-index: 0;
-  animation: projector-story-cycle 10s linear infinite;
+  animation: projector-story-cycle 13s linear infinite;
   animation-delay: var(--story-delay);
 }
 
@@ -1256,7 +1256,7 @@ textarea {
   background: rgb(252, 67, 67);
   box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.35);
   z-index: 0;
-  animation: projector-story-cycle 10s linear infinite;
+  animation: projector-story-cycle 13s linear infinite;
   animation-delay: var(--story-delay);
 }
 
@@ -1283,11 +1283,11 @@ textarea {
 }
 
 @keyframes projector-story-cycle {
-  0%, 30% {
+  0%, 23.08% {
     opacity: 1;
   }
 
-  30.01%, 100% {
+  23.09%, 100% {
     opacity: 0;
   }
 }
