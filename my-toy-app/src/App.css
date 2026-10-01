@@ -1294,11 +1294,11 @@ textarea {
 
 @keyframes projector-toy-walk {
   0%, 100% {
-    transform: translateX(-12px);
+    transform: translateX(-15px);
   }
 
   50% {
-    transform: translateX(12px);
+    transform: translateX(15px);
   }
 }
 
