@@ -587,7 +587,7 @@ function App() {
                    width: `${toy.scale}%`,
                    '--story-delay': `${index * -2}s`,
                    '--walk-delay': `${index * -0.7}s`,
-                   zIndex: isAdminMode ? 60 : 1
+                   zIndex: isAdminMode ? 60 : Math.round(toy.y * 100) + index
                   }}
                 >
                   <img className="projector-toy-image" src={toy.image} alt={toy.story || "Toy"} />
