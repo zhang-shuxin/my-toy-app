@@ -489,8 +489,8 @@ function App() {
     const percentWidth = (toyBox.width / containerBox.width) * 100;
 
     const positionConflict = savedToys.some((toy) => (
-      Math.abs(toy.x - percentX) < 2 &&
-      Math.abs(toy.y - percentY) < 2
+      Math.abs(toy.x - percentX) < 4 &&
+      Math.abs(toy.y - percentY) < 4
     ));
 
     if (positionConflict) {
