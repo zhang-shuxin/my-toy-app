@@ -382,6 +382,7 @@ function App() {
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setSelectedImage(imageUrl);
+      setSelectedFile(file);
       setBackgroundRemovalError('');
       setShowUploadModal(false); 
       event.target.value = null; 
@@ -408,21 +409,21 @@ function App() {
     await new Promise(resolve => setTimeout(resolve, 50));
     
     try {
-      let imageSource = selectedImage;
-
-      if (typeof selectedImage === 'string' && !selectedImage.startsWith('blob:')) {
-        const response = await fetch(selectedImage);
-        if (!response.ok) {
-          throw new Error('Could not load the selected image.');
-        }
-        imageSource = await response.blob();
+      const response = await fetch(selectedImage);
+      if (!response.ok) {
+        throw new Error('Could not load the selected image.');
       }
+      const imageBlob = await response.blob();
 
-      const imageBlob = await removeBackground(imageSource); 
+      const removedBackgroundBlob = await removeBackground(imageBlob, {
+        model: 'isnet_quint8',
+        device: 'cpu',
+        output: { format: 'image/png' },
+      });
       
-      const url = URL.createObjectURL(imageBlob);
+      const url = URL.createObjectURL(removedBackgroundBlob);
       setSelectedImage(url); 
-      setSelectedFile(new File([imageBlob], 'transparent-toy.png', { type: 'image/png' }));
+      setSelectedFile(new File([removedBackgroundBlob], 'transparent-toy.png', { type: 'image/png' }));
       setIsBgRemoved(true);  
       
     } catch (error) {
