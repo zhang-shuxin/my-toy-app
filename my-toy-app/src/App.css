@@ -1174,10 +1174,10 @@ textarea {
 
 .projector-dollhouse-screen {
   position: relative;
-  width: min(100vw, calc(100vh * 630 / 668));
+  width: min(100vw, calc(100vh * 1663 / 1819));
   max-width: none;
   max-height: none;
-  aspect-ratio: 630 / 668;
+  aspect-ratio: 1663 / 1819;
   overflow: hidden;
 }
 
