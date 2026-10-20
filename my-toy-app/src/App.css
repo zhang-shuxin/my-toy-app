@@ -47,6 +47,51 @@ body {
   box-sizing: border-box;
 }
 
+.language-picker {
+  align-items: center;
+  display: flex;
+  gap: 6px;
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  z-index: 20;
+}
+
+.language-picker span {
+  color: #333;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.language-picker select {
+  appearance: none;
+  background: #fff;
+  border: 1px solid #333;
+  border-radius: 14px;
+  color: #222;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 7px 22px 7px 9px;
+}
+
+.language-picker-compact {
+  right: 54px;
+  top: 18px;
+}
+
+.language-picker-compact span {
+  display: none;
+}
+
+.language-picker-compact select {
+  min-width: 48px;
+  padding-right: 8px;
+}
+
 /* Building Image Background */
 .building-bg-img {
   position: absolute;

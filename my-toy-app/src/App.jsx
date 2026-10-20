@@ -128,7 +128,157 @@ const getProjectorStoryPreview = (story) => {
     : words.join(' ');
 };
 
+const translations = {
+  en: {
+    language: 'Language',
+    welcome: '👋 Hey, welcome to Toy Community! We invite you to share your character toys in the community and engage in dialogue around them.',
+    letsGo: "LET'S GO!",
+    back: 'BACK',
+    done: 'DONE',
+    howToPlay: 'How to play',
+    infoTitle: 'Welcome to the Toy Community!',
+    infoOne: 'Here, you can place your character toys in this dollhouse using your mobile device; at the same time, your toys are also displayed on the real dollhouse model.',
+    infoTwo: "We engage you to share your toys' story, allowing others to know them more and start a conversation.",
+    infoThree: 'You can also click the icons next to other toys to discover their stories and join their dialogues.',
+    comments: 'COMMENTS',
+    noComments: 'No comments yet. Be the first to start the dialogue!',
+    commentPlaceholder: 'Make a comment...',
+    uploadPhoto: 'Upload a photo of your character toy',
+    dropFile: 'Drop jpeg or png',
+    maxFile: 'Max file size: 5 MB',
+    removeBackground: 'TO REMOVE BACKGROUND',
+    removing: 'REMOVING... (PLEASE WAIT)',
+    backgroundRemoved: 'BACKGROUND REMOVED ✓',
+    shareStory: 'Share a story about your character toy',
+    storyPlaceholder: 'A maximum of 100 words.',
+    next: 'NEXT',
+    uploadWays: 'We offer you two ways for uploading:',
+    personalAlbum: 'Access to your personal photo album',
+    museumArchive: 'Find a toy in the museum archive album',
+    cancel: 'CANCEL',
+    archiveTitle: 'Museum Archive',
+  },
+  ca: {
+    language: 'Idioma',
+    welcome: '👋 Hola, et donem la benvinguda a Toy Community! Comparteix les teves joguines personatge i participa en el diàleg de la comunitat.',
+    letsGo: 'COMENCEM!',
+    back: 'ENRERE',
+    done: 'FET',
+    howToPlay: 'Com jugar',
+    infoTitle: 'Benvingut/da a Toy Community!',
+    infoOne: 'Aquí pots col·locar les teves joguines personatge en aquesta casa amb el mòbil; alhora, també es mostren a la casa real.',
+    infoTwo: 'Comparteix la història de la teva joguina perquè els altres la coneguin i iniciïn una conversa.',
+    infoThree: 'També pots clicar les icones al costat de les joguines per descobrir les seves històries i unir-te als diàlegs.',
+    comments: 'COMENTARIS',
+    noComments: 'Encara no hi ha comentaris. Sigues el primer a iniciar el diàleg!',
+    commentPlaceholder: 'Escriu un comentari...',
+    uploadPhoto: 'Puja una foto de la teva joguina personatge',
+    dropFile: 'Arrossega un jpeg o png',
+    maxFile: 'Mida màxima: 5 MB',
+    removeBackground: 'ELIMINA EL FONS',
+    removing: 'ELIMINANT... (ESPERA)',
+    backgroundRemoved: 'FONS ELIMINAT ✓',
+    shareStory: 'Comparteix una història sobre la teva joguina',
+    storyPlaceholder: 'Màxim 100 paraules.',
+    next: 'SEGÜENT',
+    uploadWays: 'T’oferim dues maneres de pujar una imatge:',
+    personalAlbum: 'Accedeix al teu àlbum de fotos',
+    museumArchive: 'Troba una joguina a l’àlbum del museu',
+    cancel: 'CANCEL·LA',
+    archiveTitle: 'Arxiu del museu',
+  },
+  es: {
+    language: 'Idioma',
+    welcome: '👋 ¡Hola, bienvenido/a a Toy Community! Comparte tus juguetes personaje en la comunidad y participa en el diálogo.',
+    letsGo: '¡VAMOS!',
+    back: 'ATRÁS',
+    done: 'LISTO',
+    howToPlay: 'Cómo jugar',
+    infoTitle: '¡Bienvenido/a a Toy Community!',
+    infoOne: 'Aquí puedes colocar tus juguetes personaje en esta casa con tu móvil; al mismo tiempo, también se muestran en la casa real.',
+    infoTwo: 'Comparte la historia de tu juguete para que los demás lo conozcan y comiencen una conversación.',
+    infoThree: 'También puedes pulsar los iconos junto a otros juguetes para descubrir sus historias y unirte a sus diálogos.',
+    comments: 'COMENTARIOS',
+    noComments: 'Aún no hay comentarios. ¡Sé el primero en iniciar el diálogo!',
+    commentPlaceholder: 'Escribe un comentario...',
+    uploadPhoto: 'Sube una foto de tu juguete personaje',
+    dropFile: 'Arrastra un jpeg o png',
+    maxFile: 'Tamaño máximo: 5 MB',
+    removeBackground: 'ELIMINAR FONDO',
+    removing: 'ELIMINANDO... (ESPERA)',
+    backgroundRemoved: 'FONDO ELIMINADO ✓',
+    shareStory: 'Comparte una historia sobre tu juguete',
+    storyPlaceholder: 'Máximo 100 palabras.',
+    next: 'SIGUIENTE',
+    uploadWays: 'Te ofrecemos dos formas de subir una imagen:',
+    personalAlbum: 'Accede a tu álbum de fotos',
+    museumArchive: 'Busca un juguete en el álbum del museo',
+    cancel: 'CANCELAR',
+    archiveTitle: 'Archivo del museo',
+  },
+  fr: {
+    language: 'Langue',
+    welcome: '👋 Bonjour et bienvenue dans Toy Community ! Partage tes jouets personnages avec la communauté et participe au dialogue.',
+    letsGo: 'C’EST PARTI !',
+    back: 'RETOUR',
+    done: 'TERMINÉ',
+    howToPlay: 'Comment jouer',
+    infoTitle: 'Bienvenue dans Toy Community !',
+    infoOne: 'Ici, tu peux placer tes jouets personnages dans cette maison avec ton mobile ; ils sont aussi affichés sur la vraie maison.',
+    infoTwo: 'Partage l’histoire de ton jouet pour que les autres le découvrent et commencent une conversation.',
+    infoThree: 'Tu peux aussi cliquer sur les icônes près des jouets pour découvrir leurs histoires et rejoindre leurs dialogues.',
+    comments: 'COMMENTAIRES',
+    noComments: 'Aucun commentaire pour le moment. Sois le premier à lancer le dialogue !',
+    commentPlaceholder: 'Écris un commentaire...',
+    uploadPhoto: 'Ajoute une photo de ton jouet personnage',
+    dropFile: 'Dépose un jpeg ou png',
+    maxFile: 'Taille maximale : 5 Mo',
+    removeBackground: 'SUPPRIMER L’ARRIÈRE-PLAN',
+    removing: 'SUPPRESSION... (PATIENCE)',
+    backgroundRemoved: 'ARRIÈRE-PLAN SUPPRIMÉ ✓',
+    shareStory: 'Partage une histoire sur ton jouet',
+    storyPlaceholder: 'Maximum 100 mots.',
+    next: 'SUIVANT',
+    uploadWays: 'Nous te proposons deux façons d’ajouter une image :',
+    personalAlbum: 'Accéder à ton album photo',
+    museumArchive: 'Trouver un jouet dans l’album du musée',
+    cancel: 'ANNULER',
+    archiveTitle: 'Archives du musée',
+  },
+  zh: {
+    language: '语言',
+    welcome: '👋 嗨，欢迎来到 Toy Community！分享你的角色玩具，加入社区并参与对话。',
+    letsGo: '开始吧！',
+    back: '返回',
+    done: '完成',
+    howToPlay: '玩法介绍',
+    infoTitle: '欢迎来到 Toy Community！',
+    infoOne: '你可以使用手机把角色玩具放进这座玩具屋，同时它们也会显示在真实的玩具屋模型上。',
+    infoTwo: '分享玩具的故事，让其他人了解它并开始交流。',
+    infoThree: '你也可以点击其他玩具旁边的图标，发现它们的故事并加入对话。',
+    comments: '评论',
+    noComments: '还没有评论。成为第一个发起对话的人吧！',
+    commentPlaceholder: '发表评论……',
+    uploadPhoto: '上传角色玩具照片',
+    dropFile: '拖入 jpeg 或 png 文件',
+    maxFile: '最大文件：5 MB',
+    removeBackground: '移除背景',
+    removing: '正在移除……请稍候',
+    backgroundRemoved: '背景已移除 ✓',
+    shareStory: '分享你的角色玩具故事',
+    storyPlaceholder: '最多 100 个单词。',
+    next: '下一步',
+    uploadWays: '我们提供两种上传方式：',
+    personalAlbum: '访问你的手机相册',
+    museumArchive: '在博物馆收藏中寻找玩具',
+    cancel: '取消',
+    archiveTitle: '博物馆收藏',
+  },
+};
+
 function App() {
+  const [language, setLanguage] = useState(() => localStorage.getItem('toy-community-language') || 'en');
+  const t = translations[language] || translations.en;
   const [showArchive, setShowArchive] = useState(false);
   const [isProjectorMode, setIsProjectorMode] = useState(false);
   // hidden "staff-only" unlock trigger
@@ -144,6 +294,12 @@ function App() {
   const [newComment, setNewComment] = useState('')
   const [commentImage, setCommentImage] = useState(null);
   const [commentImageFile, setCommentImageFile] = useState(null);
+
+  const handleLanguageChange = (event) => {
+    const nextLanguage = event.target.value;
+    setLanguage(nextLanguage);
+    localStorage.setItem('toy-community-language', nextLanguage);
+  };
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
@@ -780,12 +936,22 @@ function App() {
         <img src={seagullBanner} alt="Partner logos and seagull" className="seagull-banner" />
 
         <div className="welcome-content">
+          <label className="language-picker">
+            <span>{t.language}</span>
+            <select value={language} onChange={handleLanguageChange} aria-label={t.language}>
+              <option value="ca">Català</option>
+              <option value="es">Español</option>
+              <option value="fr">Français</option>
+              <option value="en">English</option>
+              <option value="zh">中文</option>
+            </select>
+          </label>
           <img src={logoBubble} alt="Toy Community Logo" className="logo" />
           <div className="intro-text">
-            <p>👋 Hey, welcome to Toy Community! We invite you to share your character toys in the community and engage in dialogue around them.</p>
+            <p>{t.welcome}</p>
           </div>
           <button className="start-button" onClick={() => setCurrentPage('dollhouse')}>
-            LET'S GO!
+            {t.letsGo}
           </button>
         </div>
       </div>
@@ -798,12 +964,22 @@ function App() {
         <header className="dollhouse-header">
           {/* Left: Back Button */}
           <button className="pretty-back-btn" onClick={() => setCurrentPage('welcome')}>
-            BACK
+            {t.back}
           </button>
           <img src={logoBubble} alt="Logo" className="small-logo" onClick={handleSecretTap} />
           {/* Right: The Info Icon */}
+          <label className="language-picker language-picker-compact">
+            <span>{t.language}</span>
+            <select value={language} onChange={handleLanguageChange} aria-label={t.language}>
+              <option value="ca">CA</option>
+              <option value="es">ES</option>
+              <option value="fr">FR</option>
+              <option value="en">EN</option>
+              <option value="zh">中</option>
+            </select>
+          </label>
           <button className="info-btn" onClick={() => setShowInfoModal(true)}>
-            <img src={infoIcon} alt="How to play" />
+            <img src={infoIcon} alt={t.howToPlay} />
           </button>
         </header>
 
@@ -879,8 +1055,8 @@ function App() {
           ) : (
           <> {/* 1. ADD THIS INVISIBLE OPENING TAG */}
             <div className="bottom-actions">
-              <button className="nav-btn btn-outline" onClick={handleBackToEdit}>BACK</button>
-              <button className="nav-btn btn-solid-active" onClick={handleDoneClick}>DONE</button>
+              <button className="nav-btn btn-outline" onClick={handleBackToEdit}>{t.back}</button>
+              <button className="nav-btn btn-solid-active" onClick={handleDoneClick}>{t.done}</button>
             </div>
             
             {uploadMessage && (
@@ -903,10 +1079,10 @@ function App() {
           <div className="modal-overlay" onClick={() => setShowInfoModal(false)}>
             {/* The white text box */}
             <div className="info-modal-content" onClick={(e) => e.stopPropagation()}>
-              <h3>Welcome to the Toy Community!</h3>
-              <p>Here, you can place your character toys in this dollhouse using your mobile device; at the same time, your toys are also displayed on the real dollhouse model.</p>           
-              <p>We engage you to share your toys' story, allowing others to know them more and start a conversation.</p>
-              <p>You can also click the icons next to other toys to discover their stories and join their dialogues.</p>
+              <h3>{t.infoTitle}</h3>
+              <p>{t.infoOne}</p>
+              <p>{t.infoTwo}</p>
+              <p>{t.infoThree}</p>
             </div>
           </div>
         )}
@@ -945,12 +1121,12 @@ function App() {
 
                 {/* Comments Section */}
                 <div className="comments-divider">
-                  <span>— COMMENTS —</span>
+                  <span>— {t.comments} —</span>
                 </div>
                 
                 <div className="comments-list">
                 {activeToy.comments.length === 0 ? (
-                  <p className="no-comments">No comments yet. Be the first to start the dialogue!</p>
+                  <p className="no-comments">{t.noComments}</p>
                 ) : (
                   activeToy.comments.map((comment, i) => (
                     <div key={i} className="comment-item">
@@ -986,7 +1162,7 @@ function App() {
               <div className="input-wrapper">
                 <textarea 
                   className="comment-text-area"
-                  placeholder="Make a comment..." 
+                  placeholder={t.commentPlaceholder} 
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
                   onKeyDown={(e) => {
@@ -1034,12 +1210,12 @@ function App() {
             <div className="modal-content">
               <button className="close-btn" onClick={handleCloseModal}>&times;</button>
               <div className="upload-section">
-                <div className="sticker-header yellow-sticker">Upload a photo of your character toy</div>
+                <div className="sticker-header yellow-sticker">{t.uploadPhoto}</div>
                 {!selectedImage ? (
                   <div className="upload-box custom-dash-red" onClick={() => setShowUploadModal(true)}>
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#e84e3a" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4m4-5 5-5 5 5m-5-5v12"/></svg>
-                <p className="bold-text">Drop jpeg or png</p>
-                <p className="subtext">Max file size: 5 MB</p>
+                <p className="bold-text">{t.dropFile}</p>
+                <p className="subtext">{t.maxFile}</p>
               </div>
                 ) : (
                   <div className={`image-preview ${isBgRemoved ? 'no-dash' : 'custom-dash-brown'}`}>
@@ -1048,13 +1224,13 @@ function App() {
                 )}
                 
                 {!selectedImage ? (
-                  <button className="remove-bg-btn disabled" disabled>TO REMOVE BACKGROUND</button>
+                  <button className="remove-bg-btn disabled" disabled>{t.removeBackground}</button>
                 ) : !isBgRemoved ? (
                   <button className="remove-bg-btn active-red" onClick={handleRemoveBackground} disabled={isRemovingBg}>
-                    {isRemovingBg ? "REMOVING... (PLEASE WAIT)" : "TO REMOVE BACKGROUND"}
+                    {isRemovingBg ? t.removing : t.removeBackground}
                   </button>
                 ) : (
-                  <button className="remove-bg-btn disabled" disabled>BACKGROUND REMOVED ✓</button>
+                  <button className="remove-bg-btn disabled" disabled>{t.backgroundRemoved}</button>
                 )}
                 {backgroundRemovalError && (
                   <p className="background-removal-error" role="alert">{backgroundRemovalError}</p>
@@ -1062,10 +1238,10 @@ function App() {
               </div>
 
               <div className="story-section">
-                <div className={`sticker-header ${isBgRemoved ? 'yellow-sticker' : 'gray-sticker-disabled'}`}>Share a story about your character toy</div>
+                <div className={`sticker-header ${isBgRemoved ? 'yellow-sticker' : 'gray-sticker-disabled'}`}>{t.shareStory}</div>
                 {isBgRemoved && (
                   <div>
-                    <textarea placeholder="A maximum of 100 words." value={storyText} onChange={(e) => setStoryText(e.target.value)} />
+                    <textarea placeholder={t.storyPlaceholder} value={storyText} onChange={(e) => setStoryText(e.target.value)} />
                     <div className="word-count" style={{ color: wordCount > 100 ? '#e84e3a' : '#888' }}>{wordCount} / 100 words</div>
                   </div>
                 )}
@@ -1082,9 +1258,9 @@ function App() {
                 setIsModalOpen(false);
                 setShowUploadModal(true); 
                 }
-                }}>BACK</button>
+                }}>{t.back}</button>
                 
-                <button className={`nav-btn ${isNextValid ? 'btn-solid-active' : 'btn-solid-disabled'}`} onClick={handleNextClick} disabled={!isNextValid}>NEXT</button>
+                <button className={`nav-btn ${isNextValid ? 'btn-solid-active' : 'btn-solid-disabled'}`} onClick={handleNextClick} disabled={!isNextValid}>{t.next}</button>
               </div>
 
             </div>
@@ -1094,7 +1270,7 @@ function App() {
         {showUploadModal && (
           <div className="modal-overlay" onClick={() => setShowUploadModal(false)}>
             <div className="upload-modal-content" onClick={(e) => e.stopPropagation()}>
-              <h3>We offer you two ways for uploading:</h3>
+              <h3>{t.uploadWays}</h3>
               
               <div className="upload-options">
                 
@@ -1126,7 +1302,7 @@ function App() {
                   onClick={openPhotoAlbum}
                 >
                   <span className="emoji-icon">📱</span> 
-                  Access to your personal photo album
+                  {t.personalAlbum}
                 </button>
                 
                 <button 
@@ -1137,12 +1313,12 @@ function App() {
                   }}
                 >
                   <span className="emoji-icon">🏛️</span> 
-                  Find a toy in the museum archive album
+                  {t.museumArchive}
                 </button>
               </div>
 
               <button className="cancel-text-btn" onClick={() => setShowUploadModal(false)}>
-                CANCEL
+                {t.cancel}
               </button>
             </div>
           </div>
@@ -1153,9 +1329,9 @@ function App() {
           
           <div className="archive-header">
             <button className="pretty-back-btn" onClick={() => setShowArchive(false)}>
-              BACK
+              {t.back}
             </button>
-            <h2>Museum Archive</h2>
+            <h2>{t.archiveTitle}</h2>
             <div style={{ width: '60px' }}></div> {/* Spacer to keep title centered */}
           </div>
 

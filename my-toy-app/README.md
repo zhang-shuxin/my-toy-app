@@ -10,6 +10,12 @@ refreshing, and can delete a toy through the existing API.
 You can also open the control page directly at
 `http://localhost:5173/?page=control` while the frontend is running.
 
+## User languages
+
+The user-facing page includes a language selector for Catalan, Spanish,
+French, English, and Chinese. The selected language is remembered in the
+browser for the next visit.
+
 The frontend uses `VITE_API_BASE_URL` from `.env`. Set it to an API URL that is
 reachable from the teacher's computer before starting the app, for example:
 
