@@ -135,6 +135,8 @@ function App() {
   const [secretTaps, setSecretTaps] = useState(0);
   const [showAdminPanel, setShowAdminPanel] = useState(false);
   const [isAdminMode, setIsAdminMode] = useState(false);
+  const [adminSearch, setAdminSearch] = useState('');
+  const [adminError, setAdminError] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadMessage, setUploadMessage] = useState('');
   const [savedToys, setSavedToys] = useState([])
@@ -221,6 +223,35 @@ function App() {
     setActiveToyIndex(null);
     await fetchToys();
   };
+
+  const handleOpenDataControl = () => {
+    setAdminError('');
+    setShowAdminPanel(false);
+    setCurrentPage('admin');
+  };
+
+  const handleAdminDeleteToy = async (toy) => {
+    const confirmed = window.confirm(
+      `Delete this toy and its ${toy.comments.length} comment${toy.comments.length === 1 ? '' : 's'}?`
+    );
+
+    if (!confirmed) return;
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/toys/${toy.id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok && response.status !== 204) {
+        throw new Error('The toy could not be deleted.');
+      }
+
+      await fetchToys();
+    } catch (error) {
+      console.error(error);
+      setAdminError(error.message || 'Could not delete the toy.');
+    }
+  };
   const handleFileChange = (event) => {
   // Grabs the exact file the visitor tapped in their camera roll
   setSelectedFile(event.target.files[0]);
@@ -277,7 +308,11 @@ function App() {
     fileInputRef.current.click(); // This magically clicks the hidden input!
   }
 }
-  const [currentPage, setCurrentPage] = useState('welcome')
+  const [currentPage, setCurrentPage] = useState(() => (
+    new URLSearchParams(window.location.search).get('page') === 'control'
+      ? 'admin'
+      : 'welcome'
+  ))
   const [showInfoModal, setShowInfoModal] = useState(false)
   const [showUploadModal, setShowUploadModal] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false) 
@@ -295,6 +330,17 @@ function App() {
   const isNextValid = isBgRemoved && wordCount > 0 && wordCount <= 100
 
   const activeToy = savedToys.find((toy) => toy.id === activeToyIndex) || null;
+  const filteredAdminToys = savedToys.filter((toy) => {
+    const searchValue = adminSearch.trim().toLowerCase();
+    if (!searchValue) return true;
+
+    return [
+      toy.id,
+      toy.story,
+      toy.date,
+      ...toy.comments.map((comment) => comment.text),
+    ].some((value) => String(value || '').toLowerCase().includes(searchValue));
+  });
   
 
   useEffect(() => {
@@ -621,6 +667,98 @@ function App() {
             </div>
 
         </div>
+      </div>
+    );
+  }
+
+  if (currentPage === 'admin') {
+    return (
+      <div className="mobile-container data-control-page">
+        <header className="data-control-header">
+          <button
+            className="pretty-back-btn"
+            onClick={() => {
+              setAdminError('');
+              setCurrentPage('dollhouse');
+            }}
+          >
+            BACK
+          </button>
+          <div>
+            <p className="data-control-eyebrow">STAFF AREA</p>
+            <h1>Data Control</h1>
+          </div>
+          <button
+            className="data-control-refresh"
+            onClick={() => fetchToys().catch((error) => setAdminError(error.message))}
+            aria-label="Refresh data"
+          >
+            ↻
+          </button>
+        </header>
+
+        <main className="data-control-content">
+          <section className="data-control-summary">
+            <div>
+              <strong>{savedToys.length}</strong>
+              <span>toys</span>
+            </div>
+            <div>
+              <strong>{savedToys.reduce((total, toy) => total + toy.comments.length, 0)}</strong>
+              <span>comments</span>
+            </div>
+          </section>
+
+          <label className="data-control-search">
+            <span>Search records</span>
+            <input
+              type="search"
+              value={adminSearch}
+              onChange={(event) => setAdminSearch(event.target.value)}
+              placeholder="Search stories, comments, or dates"
+            />
+          </label>
+
+          {adminError && <p className="data-control-error" role="alert">{adminError}</p>}
+
+          <div className="data-control-records">
+            {filteredAdminToys.length === 0 ? (
+              <p className="data-control-empty">No matching records.</p>
+            ) : (
+              filteredAdminToys.map((toy) => (
+                <article className="data-control-card" key={toy.id}>
+                  <div className="data-control-card-header">
+                    <div>
+                      <h2>Toy #{toy.id}</h2>
+                      <p>{toy.date} · {toy.comments.length} comment{toy.comments.length === 1 ? '' : 's'}</p>
+                    </div>
+                    <button
+                      className="data-control-delete"
+                      onClick={() => handleAdminDeleteToy(toy)}
+                    >
+                      DELETE
+                    </button>
+                  </div>
+                  <p className="data-control-story">{toy.story || 'No story provided.'}</p>
+                  <dl className="data-control-meta">
+                    <div><dt>Position</dt><dd>{toy.x.toFixed(1)}%, {toy.y.toFixed(1)}%</dd></div>
+                    <div><dt>Scale</dt><dd>{toy.scale.toFixed(1)}%</dd></div>
+                  </dl>
+                  {toy.comments.length > 0 && (
+                    <ul className="data-control-comments">
+                      {toy.comments.map((comment) => (
+                        <li key={comment.id}>
+                          <span>{comment.date}</span>
+                          {comment.text}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </article>
+              ))
+            )}
+          </div>
+        </main>
       </div>
     );
   }
@@ -1045,6 +1183,13 @@ function App() {
               }}
             >
               SELECT TOYS TO DELETE
+            </button>
+
+            <button
+              className="nav-btn btn-solid btn-data-control"
+              onClick={handleOpenDataControl}
+            >
+              OPEN DATA CONTROL
             </button>
 
             <button 
