@@ -14,7 +14,7 @@ import seagullBanner from './assets/seagull-banner.png'
 import worldBg from './assets/world-bg.png'
 import buildingBg from './assets/building-bg.png';
 import infoIcon from './assets/info-icon.png'
-import DataControlPage from './pages/DataControlPage.jsx'
+import StaffControlPage from './pages/StaffControlPage.jsx'
 
 import Actionman1 from './assets/maa-Action Man-1.jpeg'
 import Actionman2 from './assets/maa-Action Man-2.jpeg'
@@ -284,12 +284,6 @@ function App() {
   const t = translations[language] || translations.en;
   const [showArchive, setShowArchive] = useState(false);
   const [isProjectorMode, setIsProjectorMode] = useState(false);
-  // hidden "staff-only" unlock trigger
-  const [secretTaps, setSecretTaps] = useState(0);
-  const [showAdminPanel, setShowAdminPanel] = useState(false);
-  const [isAdminMode, setIsAdminMode] = useState(false);
-  const [adminSearch, setAdminSearch] = useState('');
-  const [adminError, setAdminError] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadMessage, setUploadMessage] = useState('');
   const [savedToys, setSavedToys] = useState([])
@@ -310,20 +304,6 @@ function App() {
       setIsProjectorMode(true);
     }
   }, []);
-
-  const handleSecretTap = () => {
-   const newCount = secretTaps + 1;
-   setSecretTaps(newCount);
-
-    if (newCount >= 5) {
-      setShowAdminPanel(true);
-      setSecretTaps(0); 
-    }
-
-      setTimeout(() => {
-        setSecretTaps(0);
-      }, 1000);
-  };
 
   const fetchToys = async () => {
     const response = await fetch(`${API_BASE_URL}/toys`);
@@ -367,71 +347,6 @@ function App() {
     }
   };
 
-  const handleWipeDollhouse = async () => {
-    const confirmWipe = window.confirm("Are you sure you want to delete all toys from the exhibition?");
-
-    if (!confirmWipe) {
-      return;
-    }
-
-    await Promise.all(
-      savedToys.map((toy) => fetch(`${API_BASE_URL}/toys/${toy.id}`, { method: 'DELETE' }))
-    );
-
-    setShowAdminPanel(false);
-    setActiveToyIndex(null);
-    await fetchToys();
-  };
-
-  const handleOpenDataControl = () => {
-    setAdminError('');
-    setShowAdminPanel(false);
-    goToPage('admin');
-  };
-
-  const handleAdminDeleteToy = async (toy) => {
-    const confirmed = window.confirm(
-      `Delete this toy and its ${toy.comments.length} comment${toy.comments.length === 1 ? '' : 's'}?`
-    );
-
-    if (!confirmed) return;
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/toys/${toy.id}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok && response.status !== 204) {
-        throw new Error('The toy could not be deleted.');
-      }
-
-      await fetchToys();
-    } catch (error) {
-      console.error(error);
-      setAdminError(error.message || 'Could not delete the toy.');
-    }
-  };
-
-  const handleAdminDeleteComment = async (comment) => {
-    const confirmed = window.confirm('Delete this comment?');
-
-    if (!confirmed) return;
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/comments/${comment.id}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok && response.status !== 204) {
-        throw new Error('The comment could not be deleted.');
-      }
-
-      await fetchToys();
-    } catch (error) {
-      console.error(error);
-      setAdminError(error.message || 'Could not delete the comment.');
-    }
-  };
   const handleFileChange = (event) => {
   // Grabs the exact file the visitor tapped in their camera roll
   setSelectedFile(event.target.files[0]);
@@ -489,6 +404,7 @@ function App() {
   }
 }
   const [currentPage, setCurrentPage] = useState(() => {
+    if (window.location.pathname === '/staff-control') return 'staff-control';
     if (window.location.pathname === '/dollhouse') return 'dollhouse';
     return 'welcome';
   })
@@ -511,7 +427,7 @@ function App() {
   const activeToy = savedToys.find((toy) => toy.id === activeToyIndex) || null;
   const goToPage = (page) => {
     setCurrentPage(page);
-    navigate(page === 'admin' ? '/dollhouse' : `/${page === 'welcome' ? '' : page}`);
+    navigate(`/${page === 'welcome' ? '' : page}`);
   };
   
 
@@ -816,7 +732,7 @@ function App() {
                    width: `${toy.scale}%`,
                    '--story-delay': `${index * -2}s`,
                    '--walk-delay': `${index * -0.7}s`,
-                   zIndex: isAdminMode ? 60 : Math.round(toy.y * 100) + index
+                   zIndex: Math.round(toy.y * 100) + index
                   }}
                 >
                   <img className="projector-toy-image" src={toy.image} alt={toy.story || "Toy"} />
@@ -843,20 +759,11 @@ function App() {
     );
   }
 
-  if (currentPage === 'admin') {
+  if (currentPage === 'staff-control') {
     return (
-      <DataControlPage
-        savedToys={savedToys}
-        adminSearch={adminSearch}
-        setAdminSearch={setAdminSearch}
-        adminError={adminError}
-        fetchToys={fetchToys}
-        handleAdminDeleteToy={handleAdminDeleteToy}
-        handleAdminDeleteComment={handleAdminDeleteComment}
-        onBack={() => {
-          setAdminError('');
-          goToPage('dollhouse');
-        }}
+      <StaffControlPage
+        apiBaseUrl={API_BASE_URL}
+        onBack={() => goToPage('welcome')}
       />
     );
   }
@@ -901,27 +808,12 @@ function App() {
           <button className="pretty-back-btn" onClick={() => goToPage('welcome')}>
             {t.back}
           </button>
-          <img src={logoBubble} alt="Logo" className="small-logo" onClick={handleSecretTap} />
+          <img src={logoBubble} alt="Logo" className="small-logo" />
           {/* Right: The Info Icon */}
           <button className="info-btn" onClick={() => setShowInfoModal(true)}>
             <img src={infoIcon} alt={t.howToPlay} />
           </button>
         </header>
-
-        {isAdminMode && (
-          <>
-            {/* 1. The Dark Overlay */}
-            <div className="admin-dark-overlay" />
-
-            {/* 2. The Exit Button */}
-            <button
-              className="btn-exit-moderation"
-              onClick={() => setIsAdminMode(false)}
-            >
-              EXIT MODERATION MODE
-            </button>
-          </>
-        )}
 
         <div className="house-display" style={{ backgroundImage: `url(${dollhouseBg})` }}>
           <div className="dollhouse-bg-scope">
@@ -935,18 +827,10 @@ function App() {
                   top: `${toy.y}%`,
                   width: `${toy.scale}%`,
                   height: 'auto',
-                  zIndex: isAdminMode ? 60 : 1
+                  zIndex: 1
                 }}
               >
                 <img src={toy.image} alt="Saved toy" />
-                {isAdminMode && (
-                  <button
-                    className="btn-delete-toy"
-                    onClick={() => handleDeleteSingleToy(index)}
-                  >
-                    X
-                  </button>
-                )}
                 {/* Clicking now passes the exact index of this toy */}
                 <button className="story-bubble-btn" onClick={() => setActiveToyIndex(toy.id)}>
                   <img src={customBubble} alt="Read Story" />
@@ -1275,45 +1159,6 @@ function App() {
             ))}
           </div>
 
-        </div>
-      )}
-
-      {/* --- ADMIN PANEL CODE GOES HERE --- */}
-      {showAdminPanel && (
-        <div className="modal-overlay">
-          <div className="upload-modal-content">
-            <h3 className="admin-panel-title">STAFF CONTROLS</h3>
-            <button 
-              className="nav-btn btn-solid btn-select-toys"
-              onClick={() => {
-                setIsAdminMode(true);
-                setShowAdminPanel(false);
-              }}
-            >
-              SELECT TOYS TO DELETE
-            </button>
-
-            <button
-              className="nav-btn btn-solid btn-data-control"
-              onClick={handleOpenDataControl}
-            >
-              OPEN DATA CONTROL
-            </button>
-
-            <button 
-              className="nav-btn btn-outline btn-wipe-dollhouse"
-              onClick={handleWipeDollhouse}
-            >
-              WIPE ENTIRE DOLLHOUSE
-            </button>
-            
-            <button 
-              className="nav-btn btn-solid" 
-              onClick={() => setShowAdminPanel(false)}
-            >
-              CLOSE ADMIN
-            </button>
-          </div>
         </div>
       )}
 

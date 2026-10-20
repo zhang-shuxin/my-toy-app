@@ -1469,6 +1469,44 @@ textarea {
   text-align: center;
 }
 
+.staff-login-page {
+  align-items: center;
+  background: #f4f0e8;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.staff-login-card {
+  background: #fff;
+  border: 1px solid #252525;
+  border-radius: 18px;
+  box-shadow: 4px 4px 0 #252525;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 340px;
+  padding: 28px 22px;
+  text-align: center;
+  width: 100%;
+}
+
+.staff-login-card h1 {
+  font-size: 25px;
+}
+
+.staff-login-card > p:not(.data-control-eyebrow):not(.data-control-error) {
+  color: #666;
+  font-size: 13px;
+}
+
+.staff-login-card input {
+  border: 1px solid #252525;
+  border-radius: 10px;
+  font: inherit;
+  padding: 12px;
+}
+
 /* --- DOLLHOUSE ASPECT RATIO LOCK --- */
 .dollhouse-screen {
   width: 100%;

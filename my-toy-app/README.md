@@ -2,10 +2,10 @@
 
 ## Staff data control
 
-Open the existing staff controls by tapping the logo five times on the
-dollhouse page, then choose **OPEN DATA CONTROL**. The page reads the
+The staff data-control page is separate from the user-facing pages. Open
+`/staff-control` and sign in with the backend staff password. It reads the
 configured API, shows toy records and comments, supports searching and
-refreshing, and can delete a toy through the existing API.
+refreshing, and can delete records through authenticated staff endpoints.
 
 The app routes are:
 
@@ -14,9 +14,8 @@ The app routes are:
 - `/projector` — projector display
 
 The staff data-control view is intentionally not a public route. Open it from
-the dollhouse page by tapping the logo five times, then selecting **OPEN DATA
-CONTROL**. Direct visits to `/control` or `/?page=control` now open the welcome
-page instead.
+the separate `/staff-control` URL and sign in with the staff password. It is
+not linked from the user-facing pages.
 
 ## User languages
 
