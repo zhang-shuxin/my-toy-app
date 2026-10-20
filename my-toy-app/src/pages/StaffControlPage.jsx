@@ -63,6 +63,11 @@ function StaffControlPage({ apiBaseUrl, onBack }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password }),
       });
+      const responseType = response.headers.get('content-type') || '';
+      if (!responseType.includes('application/json')) {
+        throw new Error('Staff login is not available on the deployed backend. Deploy/restart the updated server first.');
+      }
+
       const data = await response.json();
 
       if (!response.ok) {
