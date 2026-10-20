@@ -78,20 +78,6 @@ body {
   padding: 7px 22px 7px 9px;
 }
 
-.language-picker-compact {
-  right: 54px;
-  top: 18px;
-}
-
-.language-picker-compact span {
-  display: none;
-}
-
-.language-picker-compact select {
-  min-width: 48px;
-  padding-right: 8px;
-}
-
 /* Building Image Background */
 .building-bg-img {
   position: absolute;

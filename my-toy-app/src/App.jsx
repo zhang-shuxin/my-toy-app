@@ -968,16 +968,6 @@ function App() {
           </button>
           <img src={logoBubble} alt="Logo" className="small-logo" onClick={handleSecretTap} />
           {/* Right: The Info Icon */}
-          <label className="language-picker language-picker-compact">
-            <span>{t.language}</span>
-            <select value={language} onChange={handleLanguageChange} aria-label={t.language}>
-              <option value="ca">CA</option>
-              <option value="es">ES</option>
-              <option value="fr">FR</option>
-              <option value="en">EN</option>
-              <option value="zh">中</option>
-            </select>
-          </label>
           <button className="info-btn" onClick={() => setShowInfoModal(true)}>
             <img src={infoIcon} alt={t.howToPlay} />
           </button>
