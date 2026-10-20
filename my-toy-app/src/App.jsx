@@ -728,6 +728,13 @@ function App() {
               filteredAdminToys.map((toy) => (
                 <article className="data-control-card" key={toy.id}>
                   <div className="data-control-card-header">
+                    <div className="data-control-image">
+                      {toy.image ? (
+                        <img src={toy.image} alt={`Toy ${toy.id}`} />
+                      ) : (
+                        <span aria-hidden="true">?</span>
+                      )}
+                    </div>
                     <div>
                       <h2>Toy #{toy.id}</h2>
                       <p>{toy.date} · {toy.comments.length} comment{toy.comments.length === 1 ? '' : 's'}</p>
