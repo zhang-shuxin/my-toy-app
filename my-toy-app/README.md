@@ -7,8 +7,16 @@ dollhouse page, then choose **OPEN DATA CONTROL**. The page reads the
 configured API, shows toy records and comments, supports searching and
 refreshing, and can delete a toy through the existing API.
 
-You can also open the control page directly at
-`http://localhost:5173/?page=control` while the frontend is running.
+The app routes are:
+
+- `/` — welcome page
+- `/dollhouse` — user dollhouse page
+- `/projector` — projector display
+
+The staff data-control view is intentionally not a public route. Open it from
+the dollhouse page by tapping the logo five times, then selecting **OPEN DATA
+CONTROL**. Direct visits to `/control` or `/?page=control` now open the welcome
+page instead.
 
 ## User languages
 

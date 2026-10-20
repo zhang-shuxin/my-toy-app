@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import interact from 'interactjs'
 import { removeBackground } from '@imgly/background-removal'
 import './App.css'
@@ -13,6 +14,7 @@ import seagullBanner from './assets/seagull-banner.png'
 import worldBg from './assets/world-bg.png'
 import buildingBg from './assets/building-bg.png';
 import infoIcon from './assets/info-icon.png'
+import DataControlPage from './pages/DataControlPage.jsx'
 
 import Actionman1 from './assets/maa-Action Man-1.jpeg'
 import Actionman2 from './assets/maa-Action Man-2.jpeg'
@@ -277,6 +279,7 @@ const translations = {
 };
 
 function App() {
+  const navigate = useNavigate();
   const [language, setLanguage] = useState(() => localStorage.getItem('toy-community-language') || 'en');
   const t = translations[language] || translations.en;
   const [showArchive, setShowArchive] = useState(false);
@@ -303,7 +306,7 @@ function App() {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
-    if (queryParams.get('view') === 'projector') {
+    if (queryParams.get('view') === 'projector' || window.location.pathname === '/projector') {
       setIsProjectorMode(true);
     }
   }, []);
@@ -383,7 +386,7 @@ function App() {
   const handleOpenDataControl = () => {
     setAdminError('');
     setShowAdminPanel(false);
-    setCurrentPage('admin');
+    goToPage('admin');
   };
 
   const handleAdminDeleteToy = async (toy) => {
@@ -406,6 +409,27 @@ function App() {
     } catch (error) {
       console.error(error);
       setAdminError(error.message || 'Could not delete the toy.');
+    }
+  };
+
+  const handleAdminDeleteComment = async (comment) => {
+    const confirmed = window.confirm('Delete this comment?');
+
+    if (!confirmed) return;
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/comments/${comment.id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok && response.status !== 204) {
+        throw new Error('The comment could not be deleted.');
+      }
+
+      await fetchToys();
+    } catch (error) {
+      console.error(error);
+      setAdminError(error.message || 'Could not delete the comment.');
     }
   };
   const handleFileChange = (event) => {
@@ -464,11 +488,10 @@ function App() {
     fileInputRef.current.click(); // This magically clicks the hidden input!
   }
 }
-  const [currentPage, setCurrentPage] = useState(() => (
-    new URLSearchParams(window.location.search).get('page') === 'control'
-      ? 'admin'
-      : 'welcome'
-  ))
+  const [currentPage, setCurrentPage] = useState(() => {
+    if (window.location.pathname === '/dollhouse') return 'dollhouse';
+    return 'welcome';
+  })
   const [showInfoModal, setShowInfoModal] = useState(false)
   const [showUploadModal, setShowUploadModal] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false) 
@@ -486,17 +509,10 @@ function App() {
   const isNextValid = isBgRemoved && wordCount > 0 && wordCount <= 100
 
   const activeToy = savedToys.find((toy) => toy.id === activeToyIndex) || null;
-  const filteredAdminToys = savedToys.filter((toy) => {
-    const searchValue = adminSearch.trim().toLowerCase();
-    if (!searchValue) return true;
-
-    return [
-      toy.id,
-      toy.story,
-      toy.date,
-      ...toy.comments.map((comment) => comment.text),
-    ].some((value) => String(value || '').toLowerCase().includes(searchValue));
-  });
+  const goToPage = (page) => {
+    setCurrentPage(page);
+    navigate(page === 'admin' ? '/dollhouse' : `/${page === 'welcome' ? '' : page}`);
+  };
   
 
   useEffect(() => {
@@ -829,100 +845,19 @@ function App() {
 
   if (currentPage === 'admin') {
     return (
-      <div className="mobile-container data-control-page">
-        <header className="data-control-header">
-          <button
-            className="pretty-back-btn"
-            onClick={() => {
-              setAdminError('');
-              setCurrentPage('dollhouse');
-            }}
-          >
-            BACK
-          </button>
-          <div>
-            <p className="data-control-eyebrow">STAFF AREA</p>
-            <h1>Data Control</h1>
-          </div>
-          <button
-            className="data-control-refresh"
-            onClick={() => fetchToys().catch((error) => setAdminError(error.message))}
-            aria-label="Refresh data"
-          >
-            ↻
-          </button>
-        </header>
-
-        <main className="data-control-content">
-          <section className="data-control-summary">
-            <div>
-              <strong>{savedToys.length}</strong>
-              <span>toys</span>
-            </div>
-            <div>
-              <strong>{savedToys.reduce((total, toy) => total + toy.comments.length, 0)}</strong>
-              <span>comments</span>
-            </div>
-          </section>
-
-          <label className="data-control-search">
-            <span>Search records</span>
-            <input
-              type="search"
-              value={adminSearch}
-              onChange={(event) => setAdminSearch(event.target.value)}
-              placeholder="Search stories, comments, or dates"
-            />
-          </label>
-
-          {adminError && <p className="data-control-error" role="alert">{adminError}</p>}
-
-          <div className="data-control-records">
-            {filteredAdminToys.length === 0 ? (
-              <p className="data-control-empty">No matching records.</p>
-            ) : (
-              filteredAdminToys.map((toy) => (
-                <article className="data-control-card" key={toy.id}>
-                  <div className="data-control-card-header">
-                    <div className="data-control-image">
-                      {toy.image ? (
-                        <img src={toy.image} alt={`Toy ${toy.id}`} />
-                      ) : (
-                        <span aria-hidden="true">?</span>
-                      )}
-                    </div>
-                    <div>
-                      <h2>Toy #{toy.id}</h2>
-                      <p>{toy.date} · {toy.comments.length} comment{toy.comments.length === 1 ? '' : 's'}</p>
-                    </div>
-                    <button
-                      className="data-control-delete"
-                      onClick={() => handleAdminDeleteToy(toy)}
-                    >
-                      DELETE
-                    </button>
-                  </div>
-                  <p className="data-control-story">{toy.story || 'No story provided.'}</p>
-                  <dl className="data-control-meta">
-                    <div><dt>Position</dt><dd>{toy.x.toFixed(1)}%, {toy.y.toFixed(1)}%</dd></div>
-                    <div><dt>Scale</dt><dd>{toy.scale.toFixed(1)}%</dd></div>
-                  </dl>
-                  {toy.comments.length > 0 && (
-                    <ul className="data-control-comments">
-                      {toy.comments.map((comment) => (
-                        <li key={comment.id}>
-                          <span>{comment.date}</span>
-                          {comment.text}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </article>
-              ))
-            )}
-          </div>
-        </main>
-      </div>
+      <DataControlPage
+        savedToys={savedToys}
+        adminSearch={adminSearch}
+        setAdminSearch={setAdminSearch}
+        adminError={adminError}
+        fetchToys={fetchToys}
+        handleAdminDeleteToy={handleAdminDeleteToy}
+        handleAdminDeleteComment={handleAdminDeleteComment}
+        onBack={() => {
+          setAdminError('');
+          goToPage('dollhouse');
+        }}
+      />
     );
   }
 
@@ -950,7 +885,7 @@ function App() {
           <div className="intro-text">
             <p>{t.welcome}</p>
           </div>
-          <button className="start-button" onClick={() => setCurrentPage('dollhouse')}>
+          <button className="start-button" onClick={() => goToPage('dollhouse')}>
             {t.letsGo}
           </button>
         </div>
@@ -963,7 +898,7 @@ function App() {
       <div className="mobile-container dollhouse-screen" style={{ backgroundImage: `url(${worldBg})` }}>
         <header className="dollhouse-header">
           {/* Left: Back Button */}
-          <button className="pretty-back-btn" onClick={() => setCurrentPage('welcome')}>
+          <button className="pretty-back-btn" onClick={() => goToPage('welcome')}>
             {t.back}
           </button>
           <img src={logoBubble} alt="Logo" className="small-logo" onClick={handleSecretTap} />

@@ -1429,6 +1429,28 @@ textarea {
   padding: 7px 0;
 }
 
+.data-control-comment-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.data-control-comment-header span {
+  margin-bottom: 0;
+}
+
+.data-control-comment-delete {
+  background: transparent;
+  border: 1px solid #e84e3a;
+  border-radius: 5px;
+  color: #c23824;
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 3px 5px;
+}
+
 .data-control-comments li:last-child {
   border-bottom: 0;
 }
