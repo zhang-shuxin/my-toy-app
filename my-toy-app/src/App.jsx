@@ -9,7 +9,6 @@ import logoBubble from './assets/logo-bubble.png'
 import dollhouseBg from './assets/dollhouse-bg.png'
 import dollhouseBgProjector from './assets/dollhouse-bg-projector.png'
 import customBubble from './assets/custom-bubble.png'
-import paperPlane from './assets/paper-plane.png'
 import seagullBanner from './assets/seagull-banner.png'
 import worldBg from './assets/world-bg.png'
 import buildingBg from './assets/building-bg.png';
@@ -775,7 +774,6 @@ function App() {
         
         {/* --- DECORATIVE ELEMENTS --- */}
         <img src={buildingBg} alt="Museum Frame" className="building-bg-img" />
-        <img src={paperPlane} alt="Decorative flight path" className="paper-plane-decoration" />
         <img src={seagullBanner} alt="Partner logos and seagull" className="seagull-banner" />
 
         <div className="welcome-content">

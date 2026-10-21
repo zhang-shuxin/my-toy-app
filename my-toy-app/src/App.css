@@ -50,7 +50,7 @@ body {
 .language-picker {
   align-items: center;
   display: flex;
-  gap: 6px;
+  gap: 8px;
   position: absolute;
   right: 18px;
   top: 18px;
@@ -60,7 +60,7 @@ body {
 .language-picker span {
   color: #333;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -69,13 +69,13 @@ body {
   appearance: none;
   background: #fff;
   border: 1px solid #333;
-  border-radius: 14px;
+  border-radius: 18px;
   color: #222;
   cursor: pointer;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 700;
-  padding: 7px 22px 7px 9px;
+  padding: 10px 26px 10px 12px;
 }
 
 /* Building Image Background */
@@ -93,19 +93,9 @@ body {
 }
 
 /* Make sure your interactive content safely floats above the building */
-.welcome-content, .paper-plane-decoration, .seagull-banner {
+.welcome-content, .seagull-banner {
   position: relative;
   z-index: 1;
-}
-
-.paper-plane-decoration {
-  position: absolute;
-  top: 10px;         /* Distance from the top */
-  left: -15px;       /* Pulls it slightly off the left screen edge */
-  width: 388px;      /* Exact width from Figma */
-  height: 67px;      /* Exact height from Figma */
-  z-index: 10;       /* Keeps it floating above the background */
-  pointer-events: none; /* Ensures it doesn't accidentally block you from clicking anything else */
 }
 
 .logo {
