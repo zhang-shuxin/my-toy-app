@@ -709,7 +709,7 @@ function App() {
 
   if (isProjectorMode) {
     return (
-      <div className="projector-container" style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden', background: '#000', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <div className="projector-container" style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden', background: '#000', display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
         
         <div className="dollhouse-screen projector-dollhouse-screen">
             
