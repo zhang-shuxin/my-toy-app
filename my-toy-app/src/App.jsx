@@ -112,9 +112,10 @@ const normalizeComment = (comment) => ({
 
 const normalizeToy = (toy) => ({
   id: toy.id,
-  image: toy.imageUrl,
+  image: String(toy.imageUrl || '').replace(/^http:\/\//i, 'https://'),
   story: toy.story,
-  scale: Number(toy.scale || 0),
+  // Older API responses expose this value as `size`; keep existing records visible.
+  scale: Math.max(Number(toy.scale ?? toy.size) || 0, 10),
   x: Number(toy.positionX || 0),
   y: Number(toy.positionY || 0),
   comments: Array.isArray(toy.comments)
