@@ -550,8 +550,8 @@ function App() {
       const imageBlob = await response.blob();
 
       const removedBackgroundBlob = await removeBackground(imageBlob, {
-        model: 'isnet',
-        device: 'cpu',
+        model: 'isnet_fp16',
+        device: navigator.gpu ? 'gpu' : 'cpu',
         output: { format: 'image/png' },
       });
       
