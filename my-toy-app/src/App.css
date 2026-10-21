@@ -1547,7 +1547,7 @@ textarea {
   max-height: none;
   aspect-ratio: 1663 / 1819;
   overflow: hidden;
-  transform: rotate(-90deg);
+  transform: rotate(90deg);
   transform-origin: center;
 }
 
