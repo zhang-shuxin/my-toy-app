@@ -67,15 +67,28 @@ body {
 
 .language-picker select {
   appearance: none;
-  background: #fff;
-  border: 1px solid #333;
+  background:
+    linear-gradient(45deg, transparent 50%, #222 50%) calc(100% - 16px) 50% / 6px 6px no-repeat,
+    linear-gradient(135deg, #222 50%, transparent 50%) calc(100% - 11px) 50% / 6px 6px no-repeat,
+    #fff;
+  border: 2px solid #1477d4;
   border-radius: 18px;
   color: #222;
   cursor: pointer;
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 14px;
   font-weight: 700;
-  padding: 10px 26px 10px 12px;
+  letter-spacing: 0.2px;
+  min-width: 98px;
+  padding: 9px 30px 9px 13px;
+  text-transform: uppercase;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.language-picker select:focus {
+  border-color: #0d5fae;
+  box-shadow: 0 0 0 3px rgba(20, 119, 212, 0.2);
+  outline: none;
 }
 
 /* Building Image Background */
