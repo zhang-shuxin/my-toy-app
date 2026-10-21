@@ -4,12 +4,13 @@ import DataControlPage from './DataControlPage.jsx';
 const normalizeComment = (comment) => ({
   id: comment.id,
   text: comment.description,
+  image: String(comment.imageUrl || '').replace(/^http:\/\//i, 'https://'),
   date: comment.dateCreated,
 });
 
 const normalizeToy = (toy) => ({
   id: toy.id,
-  image: toy.imageUrl,
+  image: String(toy.imageUrl || '').replace(/^http:\/\//i, 'https://'),
   story: toy.story,
   scale: Number(toy.scale || 0),
   x: Number(toy.positionX || 0),

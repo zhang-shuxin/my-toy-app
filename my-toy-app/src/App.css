@@ -1440,6 +1440,27 @@ textarea {
   margin-bottom: 0;
 }
 
+.data-control-comment-text {
+  margin: 0;
+}
+
+.data-control-comment-image {
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  display: block;
+  margin-top: 8px;
+  max-width: 180px;
+  overflow: hidden;
+}
+
+.data-control-comment-image img {
+  display: block;
+  height: auto;
+  max-height: 180px;
+  object-fit: contain;
+  width: 100%;
+}
+
 .data-control-comment-delete {
   background: transparent;
   border: 1px solid #e84e3a;

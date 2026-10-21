@@ -103,7 +103,17 @@ function DataControlPage({
                             DELETE
                           </button>
                         </div>
-                        {comment.text}
+                        {comment.text && <p className="data-control-comment-text">{comment.text}</p>}
+                        {comment.image && (
+                          <a
+                            className="data-control-comment-image"
+                            href={comment.image}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <img src={comment.image} alt="Comment attachment" />
+                          </a>
+                        )}
                       </li>
                     ))}
                   </ul>
