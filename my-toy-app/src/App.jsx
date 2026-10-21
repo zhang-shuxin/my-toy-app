@@ -551,7 +551,7 @@ function App() {
       const imageBlob = await response.blob();
 
       const removedBackgroundBlob = await removeBackground(imageBlob, {
-        model: 'isnet_quint8',
+        model: 'isnet',
         device: 'cpu',
         output: { format: 'image/png' },
       });
