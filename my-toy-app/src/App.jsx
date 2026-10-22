@@ -549,11 +549,39 @@ function App() {
       }
       const imageBlob = await response.blob();
 
-      const removedBackgroundBlob = await removeBackground(imageBlob, {
-        model: 'isnet_fp16',
-        device: navigator.gpu ? 'gpu' : 'cpu',
-        output: { format: 'image/png' },
-      });
+      const output = { format: 'image/png' };
+      let removedBackgroundBlob;
+
+      // The FP16 model is not supported by every WebGPU implementation.
+      // Use the WebGPU-specific model when an adapter is available, then
+      // retry with the CPU model for browsers with incomplete WebGPU support.
+      let gpuAvailable = false;
+      if (navigator.gpu) {
+        try {
+          gpuAvailable = Boolean(await navigator.gpu.requestAdapter());
+        } catch (error) {
+          console.warn('WebGPU is unavailable for background removal.', error);
+        }
+      }
+
+      try {
+        removedBackgroundBlob = await removeBackground(imageBlob, {
+          model: gpuAvailable ? 'isnet' : 'isnet_fp16',
+          device: gpuAvailable ? 'gpu' : 'cpu',
+          output,
+        });
+      } catch (error) {
+        if (!gpuAvailable) {
+          throw error;
+        }
+
+        console.warn('WebGPU background removal failed; retrying on CPU.', error);
+        removedBackgroundBlob = await removeBackground(imageBlob, {
+          model: 'isnet_fp16',
+          device: 'cpu',
+          output,
+        });
+      }
       
       const url = URL.createObjectURL(removedBackgroundBlob);
       setSelectedImage(url); 
