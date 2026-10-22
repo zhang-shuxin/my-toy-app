@@ -551,12 +551,15 @@ function App() {
 
       const output = { format: 'image/png' };
       let removedBackgroundBlob;
+      const isMobileDevice = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+        || navigator.userAgentData?.mobile
+        || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      const cpuModel = isMobileDevice ? 'isnet_quint8' : 'isnet_fp16';
 
-      // The FP16 model is not supported by every WebGPU implementation.
-      // Use the WebGPU-specific model when an adapter is available, then
-      // retry with the CPU model for browsers with incomplete WebGPU support.
+      // Mobile devices use the smaller quantized model to avoid exhausting
+      // memory while loading or running the CPU inference session.
       let gpuAvailable = false;
-      if (navigator.gpu) {
+      if (!isMobileDevice && navigator.gpu) {
         try {
           gpuAvailable = Boolean(await navigator.gpu.requestAdapter());
         } catch (error) {
@@ -566,7 +569,7 @@ function App() {
 
       try {
         removedBackgroundBlob = await removeBackground(imageBlob, {
-          model: gpuAvailable ? 'isnet' : 'isnet_fp16',
+          model: gpuAvailable ? 'isnet' : cpuModel,
           device: gpuAvailable ? 'gpu' : 'cpu',
           output,
         });
@@ -577,7 +580,7 @@ function App() {
 
         console.warn('WebGPU background removal failed; retrying on CPU.', error);
         removedBackgroundBlob = await removeBackground(imageBlob, {
-          model: 'isnet_fp16',
+          model: cpuModel,
           device: 'cpu',
           output,
         });
