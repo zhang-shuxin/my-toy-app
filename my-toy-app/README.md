@@ -33,6 +33,15 @@ VITE_API_BASE_URL=http://TEACHER_COMPUTER_IP:5001/api
 The backend must be running and configured to accept connections from the
 computer hosting the frontend.
 
+When a user selects **UPLOAD & REMOVE BACKGROUND**, the original image is sent
+to the server as multipart form data instead of being processed on the phone.
+The background-removal endpoint is `${VITE_API_BASE_URL}/remove-background` by
+default and must return the processed transparent image as an image response
+(normally `image/png`). Set `VITE_BACKGROUND_REMOVAL_URL` when the endpoint is
+hosted at a different URL. The endpoint should use HTTPS in production and
+enforce the same upload size and image validation rules as the regular upload
+endpoint.
+
 ## Development
 
 Run the app from this directory with `npm run dev`.

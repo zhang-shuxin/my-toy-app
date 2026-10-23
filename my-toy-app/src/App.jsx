@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import interact from 'interactjs'
-import { removeBackground } from '@imgly/background-removal'
 import './App.css'
 
 import landingBg from './assets/landing-bg.png'
@@ -91,6 +90,7 @@ const archiveToys = [
 ];
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || `${window.location.protocol}//${window.location.hostname}:5001/api`;
+const BACKGROUND_REMOVAL_URL = import.meta.env.VITE_BACKGROUND_REMOVAL_URL || `${API_BASE_URL}/remove-background`;
 
 const formatDate = (value) => {
   const date = value ? new Date(value) : new Date();
@@ -148,7 +148,7 @@ const translations = {
     uploadPhoto: 'Upload a photo of your character toy',
     dropFile: 'Drop jpeg or png',
     maxFile: 'Max file size: 5 MB',
-    removeBackground: 'TO REMOVE BACKGROUND',
+    removeBackground: 'UPLOAD & REMOVE BACKGROUND',
     removing: 'REMOVING... (PLEASE WAIT)',
     backgroundRemoved: 'BACKGROUND REMOVED ✓',
     shareStory: 'Share a story about your character toy',
@@ -177,7 +177,7 @@ const translations = {
     uploadPhoto: 'Puja una foto de la teva joguina personatge',
     dropFile: 'Arrossega un jpeg o png',
     maxFile: 'Mida màxima: 5 MB',
-    removeBackground: 'ELIMINA EL FONS',
+    removeBackground: 'PUJA I ELIMINA EL FONS',
     removing: 'ELIMINANT... (ESPERA)',
     backgroundRemoved: 'FONS ELIMINAT ✓',
     shareStory: 'Comparteix una història sobre la teva joguina',
@@ -206,7 +206,7 @@ const translations = {
     uploadPhoto: 'Sube una foto de tu juguete personaje',
     dropFile: 'Arrastra un jpeg o png',
     maxFile: 'Tamaño máximo: 5 MB',
-    removeBackground: 'ELIMINAR FONDO',
+    removeBackground: 'SUBIR Y ELIMINAR FONDO',
     removing: 'ELIMINANDO... (ESPERA)',
     backgroundRemoved: 'FONDO ELIMINADO ✓',
     shareStory: 'Comparte una historia sobre tu juguete',
@@ -235,7 +235,7 @@ const translations = {
     uploadPhoto: 'Ajoute une photo de ton jouet personnage',
     dropFile: 'Dépose un jpeg ou png',
     maxFile: 'Taille maximale : 5 Mo',
-    removeBackground: 'SUPPRIMER L’ARRIÈRE-PLAN',
+    removeBackground: 'ENVOYER ET SUPPRIMER L’ARRIÈRE-PLAN',
     removing: 'SUPPRESSION... (PATIENCE)',
     backgroundRemoved: 'ARRIÈRE-PLAN SUPPRIMÉ ✓',
     shareStory: 'Partage une histoire sur ton jouet',
@@ -264,7 +264,7 @@ const translations = {
     uploadPhoto: '上传角色玩具照片',
     dropFile: '拖入 jpeg 或 png 文件',
     maxFile: '最大文件：5 MB',
-    removeBackground: '移除背景',
+    removeBackground: '上传并移除背景',
     removing: '正在移除……请稍候',
     backgroundRemoved: '背景已移除 ✓',
     shareStory: '分享你的角色玩具故事',
@@ -534,68 +534,57 @@ function App() {
   };
 
   const handleRemoveBackground = async () => {
-    if (!selectedImage) return; 
+    if (!selectedImage) return;
 
-    setIsRemovingBg(true); 
+    setIsRemovingBg(true);
     setBackgroundRemovalError('');
-    
-    // --- THE FIX: Force a tiny 50ms pause so the screen can paint the new text ---
-    await new Promise(resolve => setTimeout(resolve, 50));
-    
+
     try {
-      const response = await fetch(selectedImage);
+      let sourceFile = selectedFile;
+      if (!sourceFile) {
+        const sourceResponse = await fetch(selectedImage);
+        if (!sourceResponse.ok) {
+          throw new Error('Could not load the selected image.');
+        }
+
+        const sourceBlob = await sourceResponse.blob();
+        sourceFile = new File([sourceBlob], 'toy-image', {
+          type: sourceBlob.type || 'image/jpeg',
+        });
+      }
+
+      const formData = new FormData();
+      formData.append('toyImage', sourceFile, sourceFile.name);
+
+      const response = await fetch(BACKGROUND_REMOVAL_URL, {
+        method: 'POST',
+        body: formData,
+      });
+
       if (!response.ok) {
-        throw new Error('Could not load the selected image.');
-      }
-      const imageBlob = await response.blob();
-
-      const output = { format: 'image/png' };
-      let removedBackgroundBlob;
-      const isMobileDevice = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
-        || navigator.userAgentData?.mobile
-        || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-      const cpuModel = isMobileDevice ? 'isnet_quint8' : 'isnet_fp16';
-
-      // Mobile devices use the smaller quantized model to avoid exhausting
-      // memory while loading or running the CPU inference session.
-      let gpuAvailable = false;
-      if (!isMobileDevice && navigator.gpu) {
-        try {
-          gpuAvailable = Boolean(await navigator.gpu.requestAdapter());
-        } catch (error) {
-          console.warn('WebGPU is unavailable for background removal.', error);
-        }
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || 'Background removal failed.');
       }
 
-      try {
-        removedBackgroundBlob = await removeBackground(imageBlob, {
-          model: gpuAvailable ? 'isnet' : cpuModel,
-          device: gpuAvailable ? 'gpu' : 'cpu',
-          output,
-        });
-      } catch (error) {
-        if (!gpuAvailable) {
-          throw error;
-        }
-
-        console.warn('WebGPU background removal failed; retrying on CPU.', error);
-        removedBackgroundBlob = await removeBackground(imageBlob, {
-          model: cpuModel,
-          device: 'cpu',
-          output,
-        });
+      const removedBackgroundBlob = await response.blob();
+      if (!removedBackgroundBlob.type.startsWith('image/')) {
+        throw new Error('The server returned an invalid image.');
       }
-      
+
       const url = URL.createObjectURL(removedBackgroundBlob);
-      setSelectedImage(url); 
-      setSelectedFile(new File([removedBackgroundBlob], 'transparent-toy.png', { type: 'image/png' }));
-      setIsBgRemoved(true);  
-      
+      setSelectedImage((previousUrl) => {
+        if (previousUrl?.startsWith('blob:')) URL.revokeObjectURL(previousUrl);
+        return url;
+      });
+      setSelectedFile(new File([removedBackgroundBlob], 'transparent-toy.png', {
+        type: removedBackgroundBlob.type || 'image/png',
+      }));
+      setIsBgRemoved(true);
     } catch (error) {
-      console.error("Oops, background removal failed:", error);
-      setBackgroundRemovalError('Background removal failed. Please try again.');
+      console.error('Server background removal failed:', error);
+      setBackgroundRemovalError(error.message || 'Background removal failed. Please try again.');
     } finally {
-      setIsRemovingBg(false); 
+      setIsRemovingBg(false);
     }
   };
 
