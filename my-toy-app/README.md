@@ -36,11 +36,12 @@ computer hosting the frontend.
 When a user selects **UPLOAD & REMOVE BACKGROUND**, the original image is sent
 to the server as multipart form data instead of being processed on the phone.
 The background-removal endpoint is `${VITE_API_BASE_URL}/remove-background` by
-default and must return the processed transparent image as an image response
-(normally `image/png`). Set `VITE_BACKGROUND_REMOVAL_URL` when the endpoint is
-hosted at a different URL. The endpoint should use HTTPS in production and
-enforce the same upload size and image validation rules as the regular upload
-endpoint.
+default and must accept `POST` multipart form data with a `toyImage` field.
+It may return the processed transparent image directly (normally `image/png`)
+or return JSON containing an `imageUrl` or `url` for the processed image. Set
+`VITE_BACKGROUND_REMOVAL_URL` when the endpoint is hosted at a different URL.
+The endpoint should use HTTPS in production and enforce the same upload size
+and image validation rules as the regular upload endpoint.
 
 ## Development
 

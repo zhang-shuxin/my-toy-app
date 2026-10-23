@@ -562,13 +562,41 @@ function App() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || 'Background removal failed.');
+        const responseText = await response.text();
+        let errorMessage = responseText;
+        try {
+          errorMessage = JSON.parse(responseText).message || responseText;
+        } catch {
+          // Keep the plain-text server response for useful diagnostics.
+        }
+
+        throw new Error(
+          `Background-removal service returned ${response.status}: ${
+            errorMessage || response.statusText || 'request failed'
+          }`,
+        );
       }
 
-      const removedBackgroundBlob = await response.blob();
+      const contentType = response.headers.get('content-type') || '';
+      let removedBackgroundBlob;
+      if (contentType.includes('application/json')) {
+        const result = await response.json();
+        const imageUrl = result.imageUrl || result.url;
+        if (!imageUrl) {
+          throw new Error('The server response did not include a processed image.');
+        }
+
+        const imageResponse = await fetch(imageUrl);
+        if (!imageResponse.ok) {
+          throw new Error('The processed image could not be downloaded from the server.');
+        }
+        removedBackgroundBlob = await imageResponse.blob();
+      } else {
+        removedBackgroundBlob = await response.blob();
+      }
+
       if (!removedBackgroundBlob.type.startsWith('image/')) {
-        throw new Error('The server returned an invalid image.');
+        throw new Error('The server returned an invalid processed image.');
       }
 
       const url = URL.createObjectURL(removedBackgroundBlob);
