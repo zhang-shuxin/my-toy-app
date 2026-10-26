@@ -135,6 +135,14 @@ const translations = {
     language: 'Language',
     welcome: '👋 Hey, welcome to Toy Community! We invite you to share your character toys in the community and engage in dialogue around them.',
     letsGo: "LET'S GO!",
+    consentText: 'I agree to the collection and use of my digital contributions and system interaction data for the research purposes.',
+    consentTitle: 'Research data consent',
+    consentDetails: 'Research data consent information',
+    consentIntro: 'Toy Community is part of a research project. Please read this information before continuing.',
+    consentData: 'The project may collect the digital contributions you choose to share, such as toy images, stories, and comments, together with system interaction data needed to understand how the experience is used.',
+    consentUse: 'This data will be used for the stated research purposes, such as studying participation and interaction with the Toy Community experience. Your contributions may be viewed by the research team and displayed within the project.',
+    consentChoice: 'Taking part is voluntary. You can choose not to continue, and you can stop participating by leaving the experience. Please contact the project team if you have questions about the research or your data.',
+    consentBack: 'BACK TO WELCOME',
     back: 'BACK',
     done: 'DONE',
     howToPlay: 'How to play',
@@ -166,6 +174,14 @@ const translations = {
     language: 'Idioma',
     welcome: '👋 Hola, et donem la benvinguda a Toy Community! Comparteix les teves joguines personatge i participa en el diàleg de la comunitat.',
     letsGo: 'COMENCEM!',
+    consentText: 'Accepto la recopilació i l’ús de les meves contribucions digitals i de les dades d’interacció amb el sistema amb finalitats de recerca.',
+    consentTitle: 'Consentiment per a les dades de recerca',
+    consentDetails: 'Informació sobre el consentiment de les dades de recerca',
+    consentIntro: 'Toy Community forma part d’un projecte de recerca. Llegeix aquesta informació abans de continuar.',
+    consentData: 'El projecte pot recopilar les contribucions digitals que decideixis compartir, com ara imatges, històries i comentaris sobre joguines, juntament amb les dades d’interacció necessàries per entendre com s’utilitza l’experiència.',
+    consentUse: 'Aquestes dades s’utilitzaran per a les finalitats de recerca indicades, com estudiar la participació i la interacció amb l’experiència Toy Community.',
+    consentChoice: 'Participar és voluntari. Pots decidir no continuar o deixar de participar sortint de l’experiència. Contacta amb l’equip del projecte si tens preguntes sobre la recerca o les teves dades.',
+    consentBack: 'TORNAR A L’INICI',
     back: 'ENRERE',
     done: 'FET',
     howToPlay: 'Com jugar',
@@ -197,6 +213,14 @@ const translations = {
     language: 'Idioma',
     welcome: '👋 ¡Hola, bienvenido/a a Toy Community! Comparte tus juguetes personaje en la comunidad y participa en el diálogo.',
     letsGo: '¡VAMOS!',
+    consentText: 'Acepto la recopilación y el uso de mis contribuciones digitales y de los datos de interacción con el sistema para fines de investigación.',
+    consentTitle: 'Consentimiento para los datos de investigación',
+    consentDetails: 'Información sobre el consentimiento de los datos de investigación',
+    consentIntro: 'Toy Community forma parte de un proyecto de investigación. Lee esta información antes de continuar.',
+    consentData: 'El proyecto puede recopilar las contribuciones digitales que decidas compartir, como imágenes, historias y comentarios sobre juguetes, junto con los datos de interacción necesarios para entender cómo se utiliza la experiencia.',
+    consentUse: 'Estos datos se utilizarán para las finalidades de investigación indicadas, como estudiar la participación y la interacción con la experiencia Toy Community.',
+    consentChoice: 'Participar es voluntario. Puedes decidir no continuar o dejar de participar saliendo de la experiencia. Contacta con el equipo del proyecto si tienes preguntas sobre la investigación o tus datos.',
+    consentBack: 'VOLVER AL INICIO',
     back: 'ATRÁS',
     done: 'LISTO',
     howToPlay: 'Cómo jugar',
@@ -228,6 +252,14 @@ const translations = {
     language: 'Langue',
     welcome: '👋 Bonjour et bienvenue dans Toy Community ! Partage tes jouets personnages avec la communauté et participe au dialogue.',
     letsGo: 'C’EST PARTI !',
+    consentText: 'J’accepte la collecte et l’utilisation de mes contributions numériques et de mes données d’interaction avec le système à des fins de recherche.',
+    consentTitle: 'Consentement aux données de recherche',
+    consentDetails: 'Informations sur le consentement aux données de recherche',
+    consentIntro: 'Toy Community fait partie d’un projet de recherche. Lis ces informations avant de continuer.',
+    consentData: 'Le projet peut collecter les contributions numériques que tu choisis de partager, comme des images, des histoires et des commentaires sur les jouets, ainsi que les données d’interaction nécessaires pour comprendre l’utilisation de l’expérience.',
+    consentUse: 'Ces données seront utilisées aux fins de recherche indiquées, notamment pour étudier la participation et l’interaction avec l’expérience Toy Community.',
+    consentChoice: 'La participation est volontaire. Tu peux choisir de ne pas continuer ou arrêter de participer en quittant l’expérience. Contacte l’équipe du projet si tu as des questions sur la recherche ou tes données.',
+    consentBack: 'RETOUR À L’ACCUEIL',
     back: 'RETOUR',
     done: 'TERMINÉ',
     howToPlay: 'Comment jouer',
@@ -259,6 +291,14 @@ const translations = {
     language: '语言',
     welcome: '👋 嗨，欢迎来到 Toy Community！分享你的角色玩具，加入社区并参与对话。',
     letsGo: '开始吧！',
+    consentText: '我同意收集和使用我的数字贡献以及系统交互数据，用于研究目的。',
+    consentTitle: '研究数据同意',
+    consentDetails: '研究数据同意信息',
+    consentIntro: 'Toy Community 是一个研究项目的一部分。请在继续之前阅读这些信息。',
+    consentData: '项目可能会收集你选择分享的数字贡献，例如玩具图片、故事和评论，以及了解体验使用方式所需的系统交互数据。',
+    consentUse: '这些数据将用于所述研究目的，例如研究参与情况以及与 Toy Community 体验的互动。',
+    consentChoice: '参与是自愿的。你可以选择不继续，也可以离开体验来停止参与。如果你对研究或自己的数据有疑问，请联系项目团队。',
+    consentBack: '返回欢迎页',
     back: '返回',
     done: '完成',
     howToPlay: '玩法介绍',
@@ -292,6 +332,7 @@ function App() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState(() => localStorage.getItem('toy-community-language') || 'en');
   const t = translations[language] || translations.en;
+  const [researchConsent, setResearchConsent] = useState(false);
   const [showArchive, setShowArchive] = useState(false);
   const [isProjectorMode, setIsProjectorMode] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -418,6 +459,7 @@ function App() {
 }
   const [currentPage, setCurrentPage] = useState(() => {
     if (window.location.pathname === '/staff-control') return 'staff-control';
+    if (window.location.pathname === '/research-consent') return 'research-consent';
     if (window.location.pathname === '/dollhouse') return 'dollhouse';
     return 'welcome';
   })
@@ -806,6 +848,25 @@ function App() {
     );
   }
 
+  if (currentPage === 'research-consent') {
+    return (
+      <div className="mobile-container dollhouse-screen" style={{ backgroundImage: `url(${worldBg})` }}>
+        <img src={buildingBg} alt="" className="building-bg-img" />
+        <main className="consent-page">
+          <h1>{t.consentTitle}</h1>
+          <p>{t.consentIntro}</p>
+          <h2>{t.consentDetails}</h2>
+          <p>{t.consentData}</p>
+          <p>{t.consentUse}</p>
+          <p>{t.consentChoice}</p>
+          <button className="nav-btn btn-outline consent-back-button" onClick={() => goToPage('welcome')}>
+            {t.consentBack}
+          </button>
+        </main>
+      </div>
+    );
+  }
+
   if (currentPage === 'welcome') {
     return (
       <div className="mobile-container dollhouse-screen" style={{ backgroundImage: `url(${worldBg})` }}>
@@ -829,7 +890,31 @@ function App() {
           <div className="intro-text">
             <p>{t.welcome}</p>
           </div>
-          <button className="start-button" onClick={() => goToPage('dollhouse')}>
+          <div className="consent-checkbox">
+            <input
+              id="research-consent"
+              type="checkbox"
+              checked={researchConsent}
+              onChange={(event) => setResearchConsent(event.target.checked)}
+            />
+            <span>
+              <a
+                href="/research-consent"
+                className="consent-link"
+                onClick={(event) => {
+                  event.preventDefault();
+                  goToPage('research-consent');
+                }}
+              >
+                {t.consentText}
+              </a>
+            </span>
+          </div>
+          <button
+            className="start-button"
+            disabled={!researchConsent}
+            onClick={() => goToPage('dollhouse')}
+          >
             {t.letsGo}
           </button>
         </div>

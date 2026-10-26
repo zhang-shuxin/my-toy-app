@@ -17,6 +17,13 @@ The staff data-control view is intentionally not a public route. Open it from
 the separate `/staff-control` URL and sign in with the staff password. It is
 not linked from the user-facing pages.
 
+## Research consent
+
+The welcome screen requires users to check the research-consent checkbox before
+entering the dollhouse. The consent sentence links to `/research-consent`,
+which explains the digital contributions and system interaction data covered
+by the consent and how they are used for the research project.
+
 ## User languages
 
 The user-facing page includes a language selector for Catalan, Spanish,
