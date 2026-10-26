@@ -25,7 +25,7 @@ which presents the user consent notice for digital contributions and system
 interaction logs, including academic research use, GDPR (EU 2016/679)
 processing, secure retention, voluntary participation, withdrawal until
 25 December 2026, applicable data-subject rights, and the research contact
-address.
+address. The consent notice follows the language selected by the user.
 
 ## User languages
 
