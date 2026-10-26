@@ -141,10 +141,10 @@ body {
   display: flex;
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 11px;
-  gap: 12px;
+  gap: 8px;
   line-height: 1.35;
   margin: 0 auto 18px;
-  max-width: 290px;
+  max-width: 250px;
   text-align: left;
 }
 
