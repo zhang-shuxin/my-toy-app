@@ -343,19 +343,6 @@ function App() {
     return () => clearInterval(interval);
   }, [isProjectorMode]);
 
-  useEffect(() => {
-    if (!shouldScrollCommentsToBottom || !activeToy) return;
-
-    const frame = requestAnimationFrame(() => {
-      if (commentsContentRef.current) {
-        commentsContentRef.current.scrollTop = commentsContentRef.current.scrollHeight;
-      }
-      setShouldScrollCommentsToBottom(false);
-    });
-
-    return () => cancelAnimationFrame(frame);
-  }, [activeToy, shouldScrollCommentsToBottom]);
-
   const handleDeleteSingleToy = async (indexToRemove) => {
     const toyToDelete = savedToys[indexToRemove];
     if (!toyToDelete) return;
@@ -451,6 +438,20 @@ function App() {
   const isNextValid = isBgRemoved && wordCount > 0 && wordCount <= 100
 
   const activeToy = savedToys.find((toy) => toy.id === activeToyIndex) || null;
+
+  useEffect(() => {
+    if (!shouldScrollCommentsToBottom || !activeToy) return;
+
+    const frame = requestAnimationFrame(() => {
+      if (commentsContentRef.current) {
+        commentsContentRef.current.scrollTop = commentsContentRef.current.scrollHeight;
+      }
+      setShouldScrollCommentsToBottom(false);
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [activeToy, shouldScrollCommentsToBottom]);
+
   const goToPage = (page) => {
     setCurrentPage(page);
     navigate(`/${page === 'welcome' ? '' : page}`);
