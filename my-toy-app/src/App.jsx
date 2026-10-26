@@ -133,7 +133,7 @@ const getProjectorStoryPreview = (story) => {
 const translations = {
   en: {
     language: 'Language',
-    welcome: '👋 Hey, welcome to Toy Community! We invite you to share your character toys in the community and engage in dialogue around them.',
+    welcome: '👋 Hey, we invite you to share your character toys and engage in dialogue around them.',
     letsGo: "LET'S GO!",
     consentText: 'Accepto la recopilació i l’ús de les meves contribucions digitals i de les dades d’interacció amb el sistema amb finalitats de recerca.',
     consentTitle: 'Consentiment per a les dades d’interacció amb el sistema (per a usuaris)',
