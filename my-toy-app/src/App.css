@@ -265,7 +265,7 @@ body {
   position: absolute; /* 1. Breaks it out of the Flexbox relationship */
   left: 12%;/* 2. Moves it exactly to the center horizontally */
   transform: translateX(-20%);
-  top: 90px; /* 3. Adjust this number freely to move it up or down! */
+  top: 70px; /* 3. Adjust this number freely to move it up or down! */
   z-index: 61; /* Keeps the logo above the dollhouse background */
 }
 
