@@ -937,13 +937,6 @@ function App() {
           <div className="intro-text">
             <p>{t.welcome}</p>
           </div>
-          <button
-            className="start-button"
-            disabled={!researchConsent}
-            onClick={() => goToPage('dollhouse')}
-          >
-            {t.letsGo}
-          </button>
           <div className="consent-checkbox">
             <input
               id="research-consent"
@@ -964,6 +957,13 @@ function App() {
               </a>
             </span>
           </div>
+          <button
+            className="start-button"
+            disabled={!researchConsent}
+            onClick={() => goToPage('dollhouse')}
+          >
+            {t.letsGo}
+          </button>
         </div>
       </div>
     )
