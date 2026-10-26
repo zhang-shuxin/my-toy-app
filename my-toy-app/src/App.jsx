@@ -491,6 +491,7 @@ function App() {
 
     const submitComment = async () => {
       setIsSubmittingComment(true);
+      setUploadMessage('');
       const formData = new FormData();
       formData.append('description', newComment.trim());
       formData.append('toyId', String(activeToy.id));
@@ -999,7 +1000,7 @@ function App() {
                   <p className="no-comments">{t.noComments}</p>
                 ) : (
                   activeToy.comments.map((comment, i) => (
-                    <div key={i} className="comment-item">
+                    <div key={comment.id || `comment-${i}`} className="comment-item">
                       {/* 1. Show the image if the comment has one! */}
                       {comment.image && <img src={comment.image} alt="attached" className="comment-attached-image" />}
                       
@@ -1034,6 +1035,7 @@ function App() {
                   className="comment-text-area"
                   placeholder={t.commentPlaceholder} 
                   value={newComment}
+                  aria-busy={isSubmittingComment}
                   onChange={(e) => setNewComment(e.target.value)}
                   onKeyDown={(e) => {
                     // This lets "Enter" send the message, but "Shift + Enter" make a new line!
