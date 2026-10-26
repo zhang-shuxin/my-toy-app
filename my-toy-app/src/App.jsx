@@ -136,12 +136,15 @@ const translations = {
     welcome: '👋 Hey, welcome to Toy Community! We invite you to share your character toys in the community and engage in dialogue around them.',
     letsGo: "LET'S GO!",
     consentText: 'I agree to the collection and use of my digital contributions and system interaction data for the research purposes.',
-    consentTitle: 'Research data consent',
-    consentDetails: 'Research data consent information',
-    consentIntro: 'Toy Community is part of a research project. Please read this information before continuing.',
-    consentData: 'The project may collect the digital contributions you choose to share, such as toy images, stories, and comments, together with system interaction data needed to understand how the experience is used.',
-    consentUse: 'This data will be used for the stated research purposes, such as studying participation and interaction with the Toy Community experience. Your contributions may be viewed by the research team and displayed within the project.',
-    consentChoice: 'Taking part is voluntary. You can choose not to continue, and you can stop participating by leaving the experience. Please contact the project team if you have questions about the research or your data.',
+    consentTitle: 'Consent for System Interaction Data (for users)',
+    consentDetails: 'How your data is collected and used',
+    consentIntro: 'During your interaction with the Toy Community interface, we may collect the digital content you create or submit (e.g., toy contributions, stories, and comments) and system interaction logs (e.g., timestamps and records of your interactions with the system).',
+    consentData: 'This data will be used exclusively for academic research to understand visitor participation and social interaction with the installation. The findings may be presented in academic publications, conferences, and other research outputs.',
+    consentUseBeforeGdpr: 'Your data will be processed in accordance with the ',
+    consentGdpr: 'General Data Protection Regulation (GDPR, EU 2016/679)',
+    consentUseAfterGdpr: ' and applicable data protection legislation. Access to the collected data will be restricted to authorized members of the research team, and the data will be stored securely and retained only for the period necessary for the research purposes or as required by applicable regulations.',
+    consentChoice: 'Participation is voluntary. You may refuse consent without affecting your museum visit or access to the installation. Where consent is the legal basis for processing, you may withdraw your consent at any time until 25 December 2026, without affecting the lawfulness of processing carried out before withdrawal. Please note that data that have already been irreversibly anonymized or incorporated into published research may no longer be identifiable or removable.',
+    consentRights: 'Under applicable data protection law, you may have the right to access, rectify, erase, or restrict the processing of your personal data, as well as other applicable rights. To exercise these rights or ask questions about how your data are processed, please contact shuxin.zhang@campus.eram.cat.',
     consentBack: 'BACK TO WELCOME',
     back: 'BACK',
     done: 'DONE',
@@ -857,8 +860,15 @@ function App() {
           <p>{t.consentIntro}</p>
           <h2>{t.consentDetails}</h2>
           <p>{t.consentData}</p>
-          <p>{t.consentUse}</p>
+          <p>
+            {t.consentUseBeforeGdpr ? (
+              <>
+                {t.consentUseBeforeGdpr}<strong>{t.consentGdpr}</strong>{t.consentUseAfterGdpr}
+              </>
+            ) : t.consentUse}
+          </p>
           <p>{t.consentChoice}</p>
+          {t.consentRights && <p>{t.consentRights}</p>}
           <button className="nav-btn btn-outline consent-back-button" onClick={() => goToPage('welcome')}>
             {t.consentBack}
           </button>

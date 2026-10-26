@@ -21,8 +21,11 @@ not linked from the user-facing pages.
 
 The welcome screen requires users to check the research-consent checkbox before
 entering the dollhouse. The consent sentence links to `/research-consent`,
-which explains the digital contributions and system interaction data covered
-by the consent and how they are used for the research project.
+which presents the user consent notice for digital contributions and system
+interaction logs, including academic research use, GDPR (EU 2016/679)
+processing, secure retention, voluntary participation, withdrawal until
+25 December 2026, applicable data-subject rights, and the research contact
+address.
 
 ## User languages
 
