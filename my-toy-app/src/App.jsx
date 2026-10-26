@@ -302,6 +302,8 @@ function App() {
   const [commentImage, setCommentImage] = useState(null);
   const [commentImageFile, setCommentImageFile] = useState(null);
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
+  const [shouldScrollCommentsToBottom, setShouldScrollCommentsToBottom] = useState(false);
+  const commentsContentRef = useRef(null);
 
   const handleLanguageChange = (event) => {
     const nextLanguage = event.target.value;
@@ -340,6 +342,19 @@ function App() {
     // Clean up the interval
     return () => clearInterval(interval);
   }, [isProjectorMode]);
+
+  useEffect(() => {
+    if (!shouldScrollCommentsToBottom || !activeToy) return;
+
+    const frame = requestAnimationFrame(() => {
+      if (commentsContentRef.current) {
+        commentsContentRef.current.scrollTop = commentsContentRef.current.scrollHeight;
+      }
+      setShouldScrollCommentsToBottom(false);
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [activeToy, shouldScrollCommentsToBottom]);
 
   const handleDeleteSingleToy = async (indexToRemove) => {
     const toyToDelete = savedToys[indexToRemove];
@@ -511,6 +526,7 @@ function App() {
       }
 
       await fetchToys();
+      setShouldScrollCommentsToBottom(true);
       setNewComment('');
       setCommentImage(null);
       setCommentImageFile(null);
@@ -977,7 +993,7 @@ function App() {
               </div>
 
               {/* Scrollable Content */}
-              <div className="details-content">
+              <div className="details-content" ref={commentsContentRef}>
                 
                 {/* Toy Image Box */}
                 <div className="details-image-box">
