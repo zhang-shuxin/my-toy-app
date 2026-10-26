@@ -105,7 +105,7 @@ const formatDate = (value) => {
 const normalizeComment = (comment) => ({
   id: comment.id,
   text: comment.description,
-  image: comment.imageUrl,
+  image: String(comment.imageUrl || '').replace(/^http:\/\//i, 'https://'),
   date: formatDate(comment.dateCreated),
 });
 
@@ -144,7 +144,9 @@ const translations = {
     infoThree: 'You can also click the icons next to other toys to discover their stories and join their dialogues.',
     comments: 'COMMENTS',
     noComments: 'No comments yet. Be the first to start the dialogue!',
-    commentPlaceholder: 'Make a comment...',
+    commentPlaceholder: 'Make a comment or attach a photo...',
+    attachPhoto: 'Attach a photo',
+    sendComment: 'Send comment',
     uploadPhoto: 'Upload a photo of your character toy',
     dropFile: 'Drop jpeg or png',
     maxFile: 'Max file size: 5 MB',
@@ -173,7 +175,9 @@ const translations = {
     infoThree: 'També pots clicar les icones al costat de les joguines per descobrir les seves històries i unir-te als diàlegs.',
     comments: 'COMENTARIS',
     noComments: 'Encara no hi ha comentaris. Sigues el primer a iniciar el diàleg!',
-    commentPlaceholder: 'Escriu un comentari...',
+    commentPlaceholder: 'Escriu un comentari o adjunta una foto...',
+    attachPhoto: 'Adjunta una foto',
+    sendComment: 'Envia el comentari',
     uploadPhoto: 'Puja una foto de la teva joguina personatge',
     dropFile: 'Arrossega un jpeg o png',
     maxFile: 'Mida màxima: 5 MB',
@@ -202,7 +206,9 @@ const translations = {
     infoThree: 'También puedes pulsar los iconos junto a otros juguetes para descubrir sus historias y unirte a sus diálogos.',
     comments: 'COMENTARIOS',
     noComments: 'Aún no hay comentarios. ¡Sé el primero en iniciar el diálogo!',
-    commentPlaceholder: 'Escribe un comentario...',
+    commentPlaceholder: 'Escribe un comentario o adjunta una foto...',
+    attachPhoto: 'Adjunta una foto',
+    sendComment: 'Enviar comentario',
     uploadPhoto: 'Sube una foto de tu juguete personaje',
     dropFile: 'Arrastra un jpeg o png',
     maxFile: 'Tamaño máximo: 5 MB',
@@ -231,7 +237,9 @@ const translations = {
     infoThree: 'Tu peux aussi cliquer sur les icônes près des jouets pour découvrir leurs histoires et rejoindre leurs dialogues.',
     comments: 'COMMENTAIRES',
     noComments: 'Aucun commentaire pour le moment. Sois le premier à lancer le dialogue !',
-    commentPlaceholder: 'Écris un commentaire...',
+    commentPlaceholder: 'Écris un commentaire ou ajoute une photo...',
+    attachPhoto: 'Ajouter une photo',
+    sendComment: 'Envoyer le commentaire',
     uploadPhoto: 'Ajoute une photo de ton jouet personnage',
     dropFile: 'Dépose un jpeg ou png',
     maxFile: 'Taille maximale : 5 Mo',
@@ -260,7 +268,9 @@ const translations = {
     infoThree: '你也可以点击其他玩具旁边的图标，发现它们的故事并加入对话。',
     comments: '评论',
     noComments: '还没有评论。成为第一个发起对话的人吧！',
-    commentPlaceholder: '发表评论……',
+    commentPlaceholder: '发表评论或附加照片……',
+    attachPhoto: '附加照片',
+    sendComment: '发送评论',
     uploadPhoto: '上传角色玩具照片',
     dropFile: '拖入 jpeg 或 png 文件',
     maxFile: '最大文件：5 MB',
@@ -291,6 +301,7 @@ function App() {
   const [newComment, setNewComment] = useState('')
   const [commentImage, setCommentImage] = useState(null);
   const [commentImageFile, setCommentImageFile] = useState(null);
+  const [isSubmittingComment, setIsSubmittingComment] = useState(false);
 
   const handleLanguageChange = (event) => {
     const nextLanguage = event.target.value;
@@ -476,9 +487,10 @@ function App() {
 
   const handleAddComment = () => {
     // Comments now persist through the backend.
-    if (!newComment.trim() || !activeToy) return;
+    if ((!newComment.trim() && !commentImageFile) || !activeToy || isSubmittingComment) return;
 
     const submitComment = async () => {
+      setIsSubmittingComment(true);
       const formData = new FormData();
       formData.append('description', newComment.trim());
       formData.append('toyId', String(activeToy.id));
@@ -506,6 +518,8 @@ function App() {
     submitComment().catch((error) => {
       console.error(error);
       setUploadMessage(error.message);
+    }).finally(() => {
+      setIsSubmittingComment(false);
     });
   };
 
@@ -1046,10 +1060,19 @@ function App() {
                   <button 
                     className="icon-btn" 
                     onClick={() => commentFileInputRef.current.click()}
+                    aria-label={t.attachPhoto}
+                    title={t.attachPhoto}
+                    disabled={isSubmittingComment}
                   >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
                   </button>
-                  <button className="send-btn" onClick={handleAddComment}>
+                  <button
+                    className="send-btn"
+                    onClick={handleAddComment}
+                    aria-label={t.sendComment}
+                    title={t.sendComment}
+                    disabled={isSubmittingComment || (!newComment.trim() && !commentImageFile)}
+                  >
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4a3b8c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 12l-4-4-4 4"/><path d="M12 16V8"/></svg>
                   </button>
                 </div>

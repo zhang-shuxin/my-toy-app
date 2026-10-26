@@ -848,6 +848,12 @@ textarea {
   align-items: center;
 }
 
+.send-btn:disabled,
+.icon-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
 
 /* --- UPLOAD MODAL STYLES --- */
 .upload-modal-content {
