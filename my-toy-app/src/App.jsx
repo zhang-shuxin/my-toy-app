@@ -610,35 +610,26 @@ function App() {
       }
 
       const contentType = response.headers.get('content-type') || '';
-      let removedBackgroundBlob;
-      if (contentType.includes('application/json')) {
-        const result = await response.json();
-        const imageUrl = result.imageUrl || result.url;
-        if (!imageUrl) {
-          throw new Error('The server response did not include a processed image.');
-        }
-
-        const imageResponse = await fetch(imageUrl);
-        if (!imageResponse.ok) {
-          throw new Error('The processed image could not be downloaded from the server.');
-        }
-        removedBackgroundBlob = await imageResponse.blob();
-      } else {
-        removedBackgroundBlob = await response.blob();
+      if (!contentType.includes('application/json')) {
+        throw new Error(
+          'The background-removal service must return JSON with the persisted image URL.',
+        );
       }
 
-      if (!removedBackgroundBlob.type.startsWith('image/')) {
-        throw new Error('The server returned an invalid processed image.');
+      const result = await response.json();
+      const processedImageUrl = result.processedImageUrl || result.imageUrl || result.url;
+      if (!processedImageUrl) {
+        throw new Error('The server response did not include a processed image URL.');
+      }
+      if (!result.originalImageUrl && !result.originalUrl) {
+        throw new Error('The server response did not include the original image URL.');
       }
 
-      const url = URL.createObjectURL(removedBackgroundBlob);
       setSelectedImage((previousUrl) => {
         if (previousUrl?.startsWith('blob:')) URL.revokeObjectURL(previousUrl);
-        return url;
+        return processedImageUrl;
       });
-      setSelectedFile(new File([removedBackgroundBlob], 'transparent-toy.png', {
-        type: removedBackgroundBlob.type || 'image/png',
-      }));
+      setSelectedFile(null);
       setIsBgRemoved(true);
     } catch (error) {
       console.error('Server background removal failed:', error);
@@ -663,8 +654,8 @@ function App() {
     if (isNextValid) {
       setPlacedToy({
         image: selectedImage,
+        imageUrl: selectedImage,
         story: storyText,
-        file: selectedFile,
       });
 
       setIsModalOpen(false);
@@ -714,42 +705,9 @@ function App() {
     }
     
     try {
-      let imageUrl = placedToy.image;
-
-      if (placedToy.image) {
-        const response = await fetch(placedToy.image);
-        const imageBlob = await response.blob();
-        const formData = new FormData();
-        formData.append('toyImage', imageBlob, 'toy-image.png');
-
-        const uploadResponse = await fetch(`${API_BASE_URL}/upload`, {
-          method: 'POST',
-          body: formData,
-        });
-
-        const uploadData = await uploadResponse.json();
-
-        if (!uploadResponse.ok) {
-          throw new Error(uploadData.message || 'Upload failed.');
-        }
-
-        imageUrl = uploadData.imageUrl;
-      } else if (selectedFile) {
-        const formData = new FormData();
-        formData.append('toyImage', selectedFile);
-
-        const uploadResponse = await fetch(`${API_BASE_URL}/upload`, {
-          method: 'POST',
-          body: formData,
-        });
-
-        const uploadData = await uploadResponse.json();
-
-        if (!uploadResponse.ok) {
-          throw new Error(uploadData.message || 'Upload failed.');
-        }
-
-        imageUrl = uploadData.imageUrl;
+      const imageUrl = placedToy.imageUrl || placedToy.image;
+      if (!imageUrl || imageUrl.startsWith('blob:')) {
+        throw new Error('The processed image has not been saved by the server yet.');
       }
 
       const saveResponse = await fetch(`${API_BASE_URL}/toys`, {
