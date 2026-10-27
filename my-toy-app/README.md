@@ -44,24 +44,24 @@ The backend must be running and configured to accept connections from the
 computer hosting the frontend.
 
 When a user selects **UPLOAD & REMOVE BACKGROUND**, the original image is sent
-to the server as multipart form data instead of being processed on the phone.
-The background-removal endpoint is `${VITE_API_BASE_URL}/remove-background` by
-default and must accept `POST` multipart form data with a `toyImage` field.
+to `${VITE_API_BASE_URL}/upload` as multipart form data. The server performs
+background removal instead of the browser and must accept `POST` multipart
+form data with a `toyImage` field.
 The server must save the original upload in its original-photos directory,
 run background removal on the server, save the result in its
 removed-background-photos directory, and return JSON containing both
 `originalImageUrl` and `processedImageUrl` (the frontend also accepts
-`originalUrl` and `imageUrl`/`url` aliases). Set `VITE_BACKGROUND_REMOVAL_URL`
-when the endpoint is hosted at a different URL.
+`originalUrl` and `imageUrl`/`url` aliases). Set `VITE_IMAGE_UPLOAD_URL` can override the upload endpoint when it is hosted at a
+different URL.
 
 The response's `processedImageUrl` is retained while the user positions the
 toy. Sharing the toy in the house sends only that existing URL to
 `POST /toys`; it does not upload the image again.
 
-The `/remove-background` endpoint should use HTTPS in production and enforce
-the same upload size and image validation rules as the regular upload
-endpoint. A direct binary image response is not sufficient because the
-frontend needs the persisted URLs for both files.
+The upload endpoint should use HTTPS in production and enforce the same upload
+size and image validation rules as the regular upload endpoint. A direct binary
+image response is not sufficient because the frontend needs the persisted URLs
+for both files.
 
 ## Development
 

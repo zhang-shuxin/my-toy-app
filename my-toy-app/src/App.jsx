@@ -90,7 +90,7 @@ const archiveToys = [
 ];
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || `${window.location.protocol}//${window.location.hostname}:5001/api`;
-const BACKGROUND_REMOVAL_URL = import.meta.env.VITE_BACKGROUND_REMOVAL_URL || `${API_BASE_URL}/remove-background`;
+const IMAGE_UPLOAD_URL = import.meta.env.VITE_IMAGE_UPLOAD_URL || `${API_BASE_URL}/upload`;
 
 const formatDate = (value) => {
   const date = value ? new Date(value) : new Date();
@@ -647,7 +647,7 @@ function App() {
     event.target.value = null; 
   };
 
-  const handleRemoveBackground = async () => {
+  const handleUploadImage = async () => {
     if (!selectedImage) return;
 
     setIsRemovingBg(true);
@@ -670,7 +670,7 @@ function App() {
       const formData = new FormData();
       formData.append('toyImage', sourceFile, sourceFile.name);
 
-      const response = await fetch(BACKGROUND_REMOVAL_URL, {
+      const response = await fetch(IMAGE_UPLOAD_URL, {
         method: 'POST',
         body: formData,
       });
@@ -1214,7 +1214,7 @@ function App() {
                 {!selectedImage ? (
                   <button className="remove-bg-btn disabled" disabled>{t.removeBackground}</button>
                 ) : !isBgRemoved ? (
-                  <button className="remove-bg-btn active-red" onClick={handleRemoveBackground} disabled={isRemovingBg}>
+                  <button className="remove-bg-btn active-red" onClick={handleUploadImage} disabled={isRemovingBg}>
                     {isRemovingBg ? t.removing : t.removeBackground}
                   </button>
                 ) : (
