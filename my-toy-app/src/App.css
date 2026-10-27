@@ -687,7 +687,7 @@ textarea {
   border-radius: 50%;
   width: 35px;
   height: 35px;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: bold;
   display: flex;
   justify-content: center;
@@ -729,7 +729,6 @@ textarea {
   font-size: 22px;
   height: 35px;
   justify-content: center;
-  line-height: 1;
   padding: 0;
   touch-action: none;
   width: 35px;
