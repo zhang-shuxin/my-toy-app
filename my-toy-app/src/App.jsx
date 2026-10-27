@@ -115,6 +115,7 @@ const normalizeToy = (toy) => ({
   story: toy.story,
   // Older API responses expose this value as `size`; keep existing records visible.
   scale: Math.max(Number(toy.scale ?? toy.size) || 0, 10),
+  rotation: Number(toy.rotation) || 0,
   x: Number(toy.positionX || 0),
   y: Number(toy.positionY || 0),
   comments: Array.isArray(toy.comments)
@@ -515,6 +516,7 @@ function App() {
 
   const [placedToy, setPlacedToy] = useState(null)
   const [toySize, setToySize] = useState(10) 
+  const [toyRotation, setToyRotation] = useState(0)
 
   const wordCount = storyText.trim() === '' ? 0 : storyText.trim().split(/\s+/).length
   const isNextValid = isBgRemoved && wordCount > 0 && wordCount <= 100
@@ -542,7 +544,7 @@ function App() {
 
   useEffect(() => {
     const draggableToy = interact('.draggable-toy').draggable({
-      ignoreFrom: '.resize-btn', 
+      ignoreFrom: '.resize-btn, .rotate-btn', 
       inertia: true, 
       modifiers: [
         interact.modifiers.restrictRect({
@@ -556,7 +558,8 @@ function App() {
           const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
           const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
 
-          target.style.transform = `translate(${x}px, ${y}px)`
+          target.style.setProperty('--toy-translate-x', `${x}px`)
+          target.style.setProperty('--toy-translate-y', `${y}px`)
           target.setAttribute('data-x', x)
           target.setAttribute('data-y', y)
         }
@@ -582,6 +585,11 @@ function App() {
       return 10;
     });
   }
+
+  const handleRotateClick = (e) => {
+    e.preventDefault();
+    setToyRotation((previousRotation) => (previousRotation + 270) % 360);
+  };
 
   const handleAddComment = () => {
     // Comments now persist through the backend.
@@ -738,18 +746,21 @@ function App() {
         image: selectedImage,
         imageUrl: selectedImage,
         story: storyText,
+        rotation: toyRotation,
       });
 
       setIsModalOpen(false);
       setSelectedImage(null);
       setIsBgRemoved(false);
       setToySize(10);
+      setToyRotation(0);
     }
   }
 
   const handleBackToEdit = () => {
     setSelectedImage(placedToy.image)
     setStoryText(placedToy.story)
+    setToyRotation(placedToy.rotation || 0)
     setIsBgRemoved(true) 
     setPlacedToy(null)
     setIsModalOpen(true)
@@ -802,6 +813,7 @@ function App() {
           positionX: percentX, // <-- Make sure it uses percentX
           positionY: percentY, // <-- Make sure it uses percentY
           scale: percentWidth,
+          rotation: toyRotation,
           imageUrl, // (or whatever your image variable is)
           story: storyText, 
         }),
@@ -996,7 +1008,8 @@ function App() {
                   top: `${toy.y}%`,
                   width: `${toy.scale}%`,
                   height: 'auto',
-                  zIndex: 1
+                  zIndex: 1,
+                  transform: `rotate(${toy.rotation || 0}deg)`
                 }}
               >
                 <img src={toy.image} alt="Saved toy" />
@@ -1018,10 +1031,15 @@ function App() {
                   top: '14%',
                   width: `${toySize}%`,
                   height: 'auto',
+                  transform: 'translate(var(--toy-translate-x, 0px), var(--toy-translate-y, 0px)) ' +
+                    `rotate(${toyRotation}deg)`,
                 }}
               >
                 <img src={placedToy.image} alt="Placed toy" />
-                <button className="resize-btn" onPointerDown={handleResizeClick}>⤢</button>
+               <div className="toy-control-buttons">
+                 <button className="resize-btn" onPointerDown={handleResizeClick}>⤢</button>
+                 <button className="rotate-btn" onPointerDown={handleRotateClick} aria-label="Rotate toy left">↺</button>
+               </div>
               </div>
             )}
           </div>

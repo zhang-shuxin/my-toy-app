@@ -703,6 +703,44 @@ textarea {
   transform: scale(0.9);
 }
 
+.toy-control-buttons {
+  bottom: -10px;
+  display: flex;
+  gap: 6px;
+  position: absolute;
+  right: -10px;
+  z-index: 60;
+}
+
+.toy-control-buttons .resize-btn,
+.toy-control-buttons .rotate-btn {
+  position: static;
+}
+
+.rotate-btn {
+  align-items: center;
+  background-color: #EA4335;
+  border: 2px solid white;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  font-size: 22px;
+  font-weight: bold;
+  height: 35px;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  touch-action: none;
+  width: 35px;
+}
+
+.rotate-btn:active {
+  background-color: #a12313;
+  transform: scale(0.9);
+}
+
 /* --- DYNAMIC BOTTOM PANEL ACTIONS --- */
 .bottom-actions {
   display: flex;
