@@ -687,11 +687,10 @@ textarea {
   border-radius: 50%;
   width: 35px;
   height: 35px;
-  font-size: 16px;
+  font-size: 22px;
   font-weight: bold;
   display: flex;
   justify-content: center;
-  line-height: 1;
   align-items: center;
   cursor: pointer;
   box-shadow: 0 4px 6px rgba(0,0,0,0.2);
@@ -738,7 +737,7 @@ textarea {
 }
 
 .rotate-btn:active {
-  background-color: #a12313;
+  background-color: #31139b;
   transform: scale(0.9);
 }
 
