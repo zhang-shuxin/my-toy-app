@@ -870,7 +870,7 @@ function App() {
                    width: `${toy.scale}%`,
                    '--story-delay': `${index * -2}s`,
                    '--walk-delay': `${index * -0.7}s`,
-                   zIndex: Math.round(toy.y * 100) + index
+                   zIndex: savedToys.length - index
                   }}
                 >
                   <img className="projector-toy-image" src={toy.image} alt={toy.story || "Toy"} />
@@ -1014,7 +1014,7 @@ function App() {
                   top: `${toy.y}%`,
                   width: `${toy.scale}%`,
                   height: 'auto',
-                  zIndex: 1,
+                  zIndex: savedToys.length - index,
                   transform: `rotate(${toy.rotation || 0}deg)`
                 }}
               >
@@ -1037,6 +1037,7 @@ function App() {
                   top: '14%',
                   width: `${toySize}%`,
                   height: 'auto',
+                  zIndex: savedToys.length + 1,
                   transform: 'translate(var(--toy-translate-x, 0px), var(--toy-translate-y, 0px)) ' +
                     `rotate(${toyRotation}deg)`,
                 }}
