@@ -753,7 +753,6 @@ function App() {
       setSelectedImage(null);
       setIsBgRemoved(false);
       setToySize(10);
-      setToyRotation(0);
     }
   }
 
@@ -833,6 +832,7 @@ function App() {
       setIsBgRemoved(false)
       setStoryText('')
       setToySize(10)
+      setToyRotation(0)
     } catch (error) {
       console.error('Error:', error);
       setUploadMessage(error.message || 'Could not connect to the server.');
