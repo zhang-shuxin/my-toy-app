@@ -779,13 +779,12 @@ function App() {
 
     setUploadMessage('Saving your toy...');
 
-    const toyBox = toyEl.getBoundingClientRect();
     const containerBox = container.getBoundingClientRect();
+    const dragX = parseFloat(toyEl.getAttribute('data-x')) || 0;
+    const dragY = parseFloat(toyEl.getAttribute('data-y')) || 0;
+    const realX = toyEl.offsetLeft + dragX;
+    const realY = toyEl.offsetTop + dragY;
 
-    const realX = toyBox.left - containerBox.left;
-    const realY = toyBox.top - containerBox.top;
-
-    // 2. Divide BOTH by containerBox.width! 
     const percentX = (realX / containerBox.width) * 100;
     const percentY = (realY / containerBox.height) * 100;
     const positionConflict = savedToys.some((toy) => (
