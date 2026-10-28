@@ -579,11 +579,11 @@ function App() {
   const handleResizeClick = (e) => {
     e.preventDefault();
 
-    setToySize((previousSize) => {
-      if (previousSize === 10) return 12;
-      if (previousSize === 12) return 15;
-      return 10;
-    });
+    const nextSize = toySize === 10 ? 12 : toySize === 12 ? 15 : 10;
+    setToySize(nextSize);
+    setPlacedToy((previousToy) => (
+      previousToy ? { ...previousToy, scale: nextSize } : previousToy
+    ));
   }
 
   const handleRotateClick = (e) => {
@@ -750,6 +750,7 @@ function App() {
         image: selectedImage,
         imageUrl: selectedImage,
         story: storyText,
+        scale: toySize,
         rotation: toyRotation,
       });
 
@@ -763,6 +764,7 @@ function App() {
   const handleBackToEdit = () => {
     setSelectedImage(placedToy.image)
     setStoryText(placedToy.story)
+    setToySize(placedToy.scale || 10)
     setToyRotation(placedToy.rotation || 0)
     setIsBgRemoved(true) 
     setPlacedToy(null)
@@ -812,7 +814,7 @@ function App() {
         body: JSON.stringify({
           positionX: percentX, // <-- Make sure it uses percentX
           positionY: percentY, // <-- Make sure it uses percentY
-          scale: toySize,
+          scale: placedToy.scale || toySize,
           rotation: toyRotation,
           imageUrl, // (or whatever your image variable is)
           story: storyText, 
