@@ -1658,19 +1658,19 @@ textarea {
 
 .projector-dollhouse-screen {
   position: relative;
-  width: min(100vh, calc(100vw * 1663 / 1819));
+  width: min(100vw, calc(100vh * 630 / 668));
   max-width: none;
   max-height: none;
-  aspect-ratio: 1663 / 1819;
+  aspect-ratio: 630 / 668;
   overflow: hidden;
-  transform: rotate(0deg);
+  transform: scale(1);
   transform-origin: center;
 }
 
 .projector-dollhouse-image {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   opacity: 0.9;
 }
 
