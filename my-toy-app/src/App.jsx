@@ -588,13 +588,11 @@ function App() {
 
   const handleRotateClick = (e) => {
     e.preventDefault();
-    setToyRotation((previousRotation) => {
-      const nextRotation = (previousRotation + 270) % 360;
-      setPlacedToy((previousToy) => (
-        previousToy ? { ...previousToy, rotation: nextRotation } : previousToy
-      ));
-      return nextRotation;
-    });
+    const nextRotation = (toyRotation + 270) % 360;
+    setToyRotation(nextRotation);
+    setPlacedToy((previousToy) => (
+      previousToy ? { ...previousToy, rotation: nextRotation } : previousToy
+    ));
   };
 
   const handleAddComment = () => {
@@ -818,7 +816,7 @@ function App() {
           positionX: percentX, // <-- Make sure it uses percentX
           positionY: percentY, // <-- Make sure it uses percentY
           scale: percentWidth,
-          rotation: placedToy.rotation || 0,
+          rotation: toyRotation,
           imageUrl, // (or whatever your image variable is)
           story: storyText, 
         }),
