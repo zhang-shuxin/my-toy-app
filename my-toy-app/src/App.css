@@ -1669,7 +1669,7 @@ textarea {
 
 .projector-dollhouse-image {
   display: block;
-  width: 110%;
+  width: 100%;
   height: auto;
   opacity: 0.9;
 }
