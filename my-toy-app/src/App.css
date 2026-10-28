@@ -1663,13 +1663,13 @@ textarea {
   max-height: none;
   aspect-ratio: 1663 / 1819;
   overflow: hidden;
-  transform: rotate(90deg);
+  transform: rotate(0deg);
   transform-origin: center;
 }
 
 .projector-dollhouse-image {
   display: block;
-  width: 100%;
+  width: 110%;
   height: auto;
   opacity: 0.9;
 }
