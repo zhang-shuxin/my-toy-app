@@ -1780,11 +1780,11 @@ textarea {
 
 @keyframes projector-toy-walk {
   0%, 100% {
-    transform: translateX(-15px);
+    transform: translateX(-15px) rotate(var(--toy-rotation, 0deg));
   }
 
   50% {
-    transform: translateX(15px);
+    transform: translateX(15px) rotate(var(--toy-rotation, 0deg));
   }
 }
 

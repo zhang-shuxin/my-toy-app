@@ -866,6 +866,7 @@ function App() {
                    left: `${toy.x}%`,
                    top: `${toy.y}%`,
                    width: `${toy.scale}%`,
+                   '--toy-rotation': `${toy.rotation || 0}deg`,
                    '--story-delay': `${index * -2}s`,
                    '--walk-delay': `${index * -0.7}s`,
                    zIndex: savedToys.length - index
