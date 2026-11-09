@@ -381,7 +381,7 @@ body {
 }
 
 .house-display.editing-dollhouse::before {
- background-color: rgba(0, 0, 0, 0.35);
+ background-color: rgba(0, 0, 0, 0.5);
  content: '';
  inset: 0;
  pointer-events: none;
