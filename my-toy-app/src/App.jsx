@@ -1000,7 +1000,10 @@ function App() {
           </button>
         </header>
 
-        <div className="house-display" style={{ backgroundImage: `url(${dollhouseBg})` }}>
+        <div
+          className={`house-display ${placedToy ? 'editing-dollhouse' : ''}`}
+          style={{ backgroundImage: `url(${dollhouseBg})` }}
+        >
           <div className="dollhouse-bg-scope">
             {savedToys.map((toy, index) => (
               <div 
