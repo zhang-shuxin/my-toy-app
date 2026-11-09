@@ -784,8 +784,8 @@ function App() {
     const containerBox = container.getBoundingClientRect();
     const dragX = parseFloat(toyEl.getAttribute('data-x')) || 0;
     const dragY = parseFloat(toyEl.getAttribute('data-y')) || 0;
-    const realX = toyEl.offsetLeft + dragX;
-    const realY = toyEl.offsetTop + dragY;
+    const realX = (containerBox.width - toyEl.offsetWidth) / 2 + dragX;
+    const realY = (containerBox.height - toyEl.offsetHeight) / 2 + dragY;
 
     const percentX = (realX / containerBox.width) * 100;
     const percentY = (realY / containerBox.height) * 100;
