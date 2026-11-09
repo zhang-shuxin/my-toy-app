@@ -990,11 +990,19 @@ function App() {
       <div className="mobile-container dollhouse-screen" style={{ backgroundImage: `url(${worldBg})` }}>
         <header className={`dollhouse-header ${placedToy ? 'editing-header' : ''}`}>
           {/* Left: Back Button */}
-          <button className="pretty-back-btn" onClick={() => goToPage('welcome')}>
+          <button
+            className="pretty-back-btn"
+            onClick={() => goToPage('welcome')}
+            disabled={Boolean(placedToy)}
+          >
             {t.back}
           </button>
           {/* Right: The Info Icon */}
-          <button className="info-btn" onClick={() => setShowInfoModal(true)}>
+          <button
+            className="info-btn"
+            onClick={() => setShowInfoModal(true)}
+            disabled={Boolean(placedToy)}
+          >
             <img src={infoIcon} alt={t.howToPlay} />
           </button>
         </header>
