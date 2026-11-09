@@ -1058,7 +1058,7 @@ function App() {
           </div>
         </div>
 
-        <div className="bottom-panel">
+        <div className={`bottom-panel ${placedToy ? 'editing-bottom-panel' : ''}`}>
           {!placedToy ? (
             <button className="create-button" onClick={() => setIsModalOpen(true)}>+</button>
           ) : (
