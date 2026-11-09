@@ -716,7 +716,7 @@ textarea {
   position: absolute;
   transform: scale(0);
   transform-origin: center;
-  animation: expanding-toy-frame 1200ms ease-out forwards;
+  animation: expanding-toy-frame 2000ms ease-out forwards;
   z-index: 0;
 }
 
