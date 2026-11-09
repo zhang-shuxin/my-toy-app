@@ -993,7 +993,6 @@ function App() {
           <button className="pretty-back-btn" onClick={() => goToPage('welcome')}>
             {t.back}
           </button>
-          <img src={logoBubble} alt="Logo" className="small-logo" />
           {/* Right: The Info Icon */}
           <button className="info-btn" onClick={() => setShowInfoModal(true)}>
             <img src={infoIcon} alt={t.howToPlay} />
