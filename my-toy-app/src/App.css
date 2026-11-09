@@ -267,9 +267,9 @@ body {
  z-index: 59;
 }
 
-.dollhouse-header.editing-header > *:not(.small-logo) {
+.dollhouse-header.editing-header > * {
  position: relative;
- z-index: 61;
+ z-index: 58;
 }
 
 /* --- THE LOGO (Freely Positioned) --- */
@@ -374,15 +374,6 @@ body {
   z-index: 1;
 }
 
-.house-display.editing-dollhouse::before {
- background-color: rgba(0, 0, 0, 0.35);
- content: '';
- inset: -85px 0 -80px;
- pointer-events: none;
- position: absolute;
- z-index: 45;
-}
-
 .dollhouse-bg-scope {
  position: absolute;
  top: 50%;
@@ -390,6 +381,20 @@ body {
  width: 110%;
  aspect-ratio: 630 / 668;
  transform: translate(-50%, -50%);
+}
+
+.dollhouse-bg-scope::before {
+ background-color: rgba(0, 0, 0, 0.35);
+ content: '';
+ display: none;
+ inset: 0;
+ pointer-events: none;
+ position: absolute;
+ z-index: 45;
+}
+
+.editing-dollhouse .dollhouse-bg-scope::before {
+ display: block;
 }
 
 .house-dollhouse-image {
