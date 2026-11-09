@@ -1018,7 +1018,12 @@ function App() {
               >
                 <img src={toy.image} alt="Saved toy" />
                 {/* Clicking now passes the exact index of this toy */}
-                <button className="story-bubble-btn" onClick={() => setActiveToyIndex(toy.id)}>
+                <button
+                  className="story-bubble-btn"
+                  onClick={() => setActiveToyIndex(toy.id)}
+                  disabled={Boolean(placedToy)}
+                  aria-disabled={Boolean(placedToy)}
+                >
                   <img src={customBubble} alt="Read Story" />
                 </button>
               </div>
@@ -1026,7 +1031,7 @@ function App() {
 
             {placedToy && (
               <div
-                className="draggable-toy"
+                className="draggable-toy editing-toy"
                 data-x="0"
                 data-y="0"
                 style={{

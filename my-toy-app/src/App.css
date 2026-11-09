@@ -657,6 +657,7 @@ textarea {
   position: absolute;
   top: 40%;
   left: 35%;
+  background-color: rgba(0, 0, 0, 0.35);
   cursor: grab;
   touch-action: none; 
   user-select: none;
@@ -681,7 +682,7 @@ textarea {
   position: absolute;
   bottom: -10px;
   right: -10px;
-  background-color: #fd2b18;
+  background-color: rgba(0, 0, 0, 0.65);
   color: white;
   border: 2px solid white;
   border-radius: 50%;
@@ -699,7 +700,7 @@ textarea {
 }
 
 .resize-btn:active {
-  background-color: #a12313; /* Flashes red when tapped */
+  background-color: rgba(0, 0, 0, 0.85);
   transform: scale(0.9);
 }
 
@@ -719,7 +720,7 @@ textarea {
 
 .rotate-btn {
   align-items: center;
-  background-color: #5c35ea;
+  background-color: rgba(0, 0, 0, 0.65);
   border: 2px solid white;
   border-radius: 50%;
   box-shadow: 0 4px 6px rgba(0,0,0,0.2);
@@ -735,7 +736,7 @@ textarea {
 }
 
 .rotate-btn:active {
-  background-color: #31139b;
+  background-color: rgba(0, 0, 0, 0.85);
   transform: scale(0.9);
 }
 
@@ -808,6 +809,11 @@ textarea {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.story-bubble-btn:disabled {
+  cursor: default;
+  pointer-events: none;
 }
 
 .details-content {
