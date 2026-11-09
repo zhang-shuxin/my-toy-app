@@ -1046,12 +1046,12 @@ function App() {
                 data-y="0"
                 style={{
                   position: 'absolute',
-                  left: '8%',
-                  top: '14%',
+                  left: '50%',
+                  top: '50%',
                   width: `${toySize}%`,
                   height: 'auto',
                   zIndex: savedToys.length + 1,
-                  transform: 'translate(var(--toy-translate-x, 0px), var(--toy-translate-y, 0px)) ' +
+                  transform: 'translate(calc(-50% + var(--toy-translate-x, 0px)), calc(-50% + var(--toy-translate-y, 0px))) ' +
                     `rotate(${toyRotation}deg)`,
                 }}
               >
