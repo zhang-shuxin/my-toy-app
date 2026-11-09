@@ -258,6 +258,20 @@ body {
   background-color: transparent;
 }
 
+.dollhouse-header.editing-header::after {
+ background-color: rgba(0, 0, 0, 0.35);
+ content: '';
+ inset: 0;
+ pointer-events: none;
+ position: absolute;
+ z-index: 59;
+}
+
+.dollhouse-header.editing-header > *:not(.small-logo) {
+ position: relative;
+ z-index: 61;
+}
+
 /* --- THE LOGO (Freely Positioned) --- */
 .small-logo {
   height: 60px;
@@ -357,7 +371,16 @@ body {
   background-position: center;
   background-repeat: no-repeat;  
   position: relative; 
-  z-index: 51;
+  z-index: 1;
+}
+
+.house-display.editing-dollhouse::before {
+ background-color: rgba(0, 0, 0, 0.35);
+ content: '';
+ inset: -85px 0 -80px;
+ pointer-events: none;
+ position: absolute;
+ z-index: 45;
 }
 
 .dollhouse-bg-scope {
@@ -367,21 +390,6 @@ body {
  width: 110%;
  aspect-ratio: 630 / 668;
  transform: translate(-50%, -50%);
- z-index: 2;
-}
-
-.dollhouse-bg-scope::before {
- background-color: rgba(0, 0, 0, 0.35);
- content: '';
- display: none;
- inset: 0;
- pointer-events: none;
- position: absolute;
- z-index: 45;
-}
-
-.editing-dollhouse .dollhouse-bg-scope::before {
- display: block;
 }
 
 .house-dollhouse-image {
@@ -399,24 +407,6 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 10;
-}
-
-.bottom-panel.editing-bottom-panel {
-  position: relative;
-}
-
-.bottom-panel.editing-bottom-panel::before {
-  background-color: rgba(0, 0, 0, 0.35);
-  content: '';
-  inset: 0;
-  pointer-events: none;
-  position: absolute;
-  z-index: 0;
-}
-
-.bottom-panel.editing-bottom-panel > * {
-  position: relative;
-  z-index: 1;
 }
 
 .create-button {
@@ -696,6 +686,10 @@ textarea {
   z-index: 50;
   filter: drop-shadow(0px 8px 12px rgba(0,0,0,0.25)); 
   transition: width 0.3s ease-in-out, height 0.3s ease-in-out; /* Smooth growing animation */
+}
+
+.editing-toy {
+  z-index: 50 !important;
 }
 
 .draggable-toy:active {

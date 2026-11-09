@@ -988,7 +988,7 @@ function App() {
   if (currentPage === 'dollhouse') {
     return (
       <div className="mobile-container dollhouse-screen" style={{ backgroundImage: `url(${worldBg})` }}>
-        <header className="dollhouse-header">
+        <header className={`dollhouse-header ${placedToy ? 'editing-header' : ''}`}>
           {/* Left: Back Button */}
           <button className="pretty-back-btn" onClick={() => goToPage('welcome')}>
             {t.back}
@@ -1058,7 +1058,7 @@ function App() {
           </div>
         </div>
 
-        <div className={`bottom-panel ${placedToy ? 'editing-bottom-panel' : ''}`}>
+        <div className="bottom-panel">
           {!placedToy ? (
             <button className="create-button" onClick={() => setIsModalOpen(true)}>+</button>
           ) : (
