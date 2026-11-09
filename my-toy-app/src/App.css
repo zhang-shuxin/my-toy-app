@@ -701,8 +701,9 @@ textarea {
 
 
 .editing-toy {
-  background-color: transparent;
-  box-shadow: 0 0 18px 8px rgba(255, 255, 255, 0.75);
+  background-color: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 50 !important;
 }
 
