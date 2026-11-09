@@ -701,7 +701,8 @@ textarea {
 
 
 .editing-toy {
-  background-color: #ffffff;
+  background-color: transparent;
+  box-shadow: 0 0 18px 8px rgba(255, 255, 255, 0.75);
   z-index: 50 !important;
 }
 
