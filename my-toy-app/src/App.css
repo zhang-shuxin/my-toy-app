@@ -396,6 +396,11 @@ body {
  width: 110%;
  aspect-ratio: 630 / 668;
  transform: translate(-50%, -50%);
+ z-index: 46;
+}
+
+.editing-dollhouse .saved-toy {
+ opacity: 0.65;
 }
 
 .house-dollhouse-image {
