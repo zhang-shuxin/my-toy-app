@@ -700,6 +700,7 @@ textarea {
 }
 
 .editing-toy {
+  background-color: #ffffff;
   z-index: 50 !important;
 }
 
