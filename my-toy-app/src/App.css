@@ -701,10 +701,47 @@ textarea {
 
 
 .editing-toy {
-  background-color: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background-color: transparent;
+  position: absolute;
   z-index: 50 !important;
+}
+
+.editing-toy::before {
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 18px 6px rgba(255, 255, 255, 0.65);
+  content: '';
+  inset: -8px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: scale(0);
+  transform-origin: center;
+  animation: expanding-toy-frame 900ms ease-out forwards;
+  z-index: 0;
+}
+
+.editing-toy > img {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes expanding-toy-frame {
+  0% {
+     filter: blur(5px);
+     opacity: 0;
+     transform: scale(0);
+  }
+
+  65% {
+     filter: blur(1px);
+     opacity: 0.95;
+  }
+
+  100% {
+     filter: blur(3px);
+     opacity: 0.75;
+     transform: scale(1);
+  }
 }
 
 .draggable-toy:active {
