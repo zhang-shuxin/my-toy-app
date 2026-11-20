@@ -163,7 +163,7 @@ const translations = {
     postcardEyebrow: 'A little thank-you',
     postcardTitle: 'Postcard received!',
     postcardCopy: 'Your kindness helped this story travel a little further.',
-    postcardSave: 'Save to photos',
+    postcardSave: 'SAVE',
     postcardSaving: 'Preparing postcard...',
     postcardLater: 'Maybe later',
     uploadPhoto: 'Upload a photo of your character toy',
