@@ -729,19 +729,11 @@ function App() {
       context.fillRect(54, 54, 972, 1242);
 
       context.fillStyle = '#3d315e';
-      context.font = '700 34px Georgia, serif';
-      context.fillText('TOY COMMUNITY', 104, 126);
-
-      context.strokeStyle = '#b68b73';
-      context.lineWidth = 4;
-      context.beginPath();
-      context.arc(910, 112, 46, 0, Math.PI * 2);
-      context.stroke();
-      context.fillStyle = '#b68b73';
-      context.font = '700 18px Georgia, serif';
+      context.font = '700 38px Georgia, serif';
       context.textAlign = 'center';
-      context.fillText('THANK', 910, 104);
-      context.fillText('YOU', 910, 128);
+      context.fillText('Greetings from', 540, 112);
+      context.font = '700 46px Georgia, serif';
+      context.fillText('the Toy Community!', 540, 166);
       context.textAlign = 'left';
 
       const postcardImage = await loadPostcardImage(postcard.toyImage);
@@ -768,14 +760,10 @@ function App() {
         context.fillRect(104, 170, 872, 760);
       }
 
-      context.fillStyle = '#4a3b62';
-      context.font = '700 46px Georgia, serif';
-      context.fillText('Thank you for joining the story.', 104, 1018);
-
       context.fillStyle = '#4f4a55';
-      context.font = '36px Georgia, serif';
-      const comment = postcard.comment || 'A kind new chapter.';
-      const words = comment.split(/\s+/);
+      context.font = '34px Georgia, serif';
+      const message = 'Thanks for playing and engaging in dialogue around these toys. You are now part of our museum community.';
+      const words = message.split(/\s+/);
       const lines = [];
       let line = '';
       words.forEach((word) => {
@@ -789,14 +777,14 @@ function App() {
       });
       if (line) lines.push(line);
 
-      lines.slice(0, 4).forEach((textLine, index) => {
-        context.fillText(`“${textLine}${index === Math.min(lines.length, 4) - 1 ? '”' : ''}`, 104, 1090 + index * 50);
+      lines.slice(0, 5).forEach((textLine, index) => {
+        context.fillText(textLine, 104, 1018 + index * 48);
       });
 
       context.fillStyle = '#b68b73';
-      context.font = '700 24px Georgia, serif';
-      context.textAlign = 'right';
-      context.fillText(new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'short', day: 'numeric' }).format(new Date()), 976, 1238);
+      context.font = '700 25px Georgia, serif';
+      context.textAlign = 'center';
+      context.fillText('Shared at Museu del Joguet de Catalunya', 540, 1238);
 
       const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
       if (!blob) throw new Error('Could not create postcard.');
@@ -1417,17 +1405,18 @@ function App() {
               <p className="postcard-copy">{t.postcardCopy}</p>
 
               <div className="postcard-preview">
-                <div className="postcard-preview-brand">TOY COMMUNITY</div>
-                <div className="postcard-preview-stamp" aria-hidden="true">
-                  <span>THANK</span>
-                  <span>YOU</span>
+                <div className="postcard-preview-header">
+                  <span>Greetings from</span>
+                  <strong>the Toy Community!</strong>
                 </div>
                 <div className="postcard-preview-image">
                   {postcard.toyImage && <img src={postcard.toyImage} alt="" />}
                 </div>
                 <p className="postcard-preview-message">
-                  “{postcard.comment || 'A kind new chapter.'}”
+                  Thanks for playing and engaging in dialogue around these toys.
+                  You are now part of our museum community.
                 </p>
+                <div className="postcard-preview-footer">Shared at Museu del Joguet de Catalunya</div>
               </div>
 
               {postcardSaved && <p className="postcard-save-status">✓</p>}
