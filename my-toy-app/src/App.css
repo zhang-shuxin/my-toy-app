@@ -1250,17 +1250,24 @@ textarea {
 .postcard-preview {
   position: relative;
   aspect-ratio: 381 / 758;
-  width: 64%;
-  max-width: 220px;
+  width: 78%;
+  max-width: 260px;
   margin: 8px auto 20px;
   box-sizing: border-box;
   overflow: hidden;
-  background-color: #c0f0fa;
-  background-image: url('./assets/world-bg.png');
-  background-size: cover;
-  background-position: center;
+  background: rgba(255, 239, 222, 1);
   box-shadow: 0 12px 24px rgba(38, 28, 91, 0.24);
   text-align: left;
+}
+
+.postcard-card-stage {
+  position: absolute;
+  left: 8%;
+  top: 5%;
+  width: 84%;
+  height: 90%;
+  overflow: hidden;
+  background: rgba(255, 239, 222, 1);
 }
 
 .postcard-museum-frame {

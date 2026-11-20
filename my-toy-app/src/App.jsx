@@ -785,27 +785,15 @@ function App() {
       canvas.height = 1516;
       const context = canvas.getContext('2d');
 
-      context.fillStyle = '#c0f0fa';
+      context.fillStyle = 'rgba(255, 239, 222, 1)';
       context.fillRect(0, 0, canvas.width, canvas.height);
-      const postcardBackground = await loadPostcardImage(worldBg);
-      if (postcardBackground) {
-        const scale = Math.max(canvas.width / postcardBackground.width, canvas.height / postcardBackground.height);
-        const width = postcardBackground.width * scale;
-        const height = postcardBackground.height * scale;
-        context.drawImage(
-          postcardBackground,
-          (canvas.width - width) / 2,
-          (canvas.height - height) / 2,
-          width,
-          height,
-        );
-      }
 
+      const frameRect = { x: 76, y: 151, width: 610, height: 1214 };
       const photoFrame = {
-        x: 34,
-        y: 182,
-        width: 694,
-        height: 900,
+        x: frameRect.x + (17 / 381) * frameRect.width,
+        y: frameRect.y + (91 / 758) * frameRect.height,
+        width: (347 / 381) * frameRect.width,
+        height: (450 / 758) * frameRect.height,
       };
       context.fillStyle = '#050505';
       context.fillRect(photoFrame.x, photoFrame.y, photoFrame.width, photoFrame.height);
@@ -826,7 +814,7 @@ function App() {
 
       const museumFrame = await loadPostcardImage(ePostcardFrame);
       if (museumFrame) {
-        context.drawImage(museumFrame, 0, 0, canvas.width, canvas.height);
+        context.drawImage(museumFrame, frameRect.x, frameRect.y, frameRect.width, frameRect.height);
       }
 
       context.fillStyle = '#40345e';
@@ -1476,49 +1464,51 @@ function App() {
               </button>
 
               <div className="postcard-preview">
-                <img className="postcard-museum-frame" src={ePostcardFrame} alt="" />
-                <div className="postcard-preview-photo">
-                  {postcardPhoto ? (
-                    <img src={postcardPhoto} alt="Captured museum photo" />
-                  ) : (
-                    <>
-                      <video ref={postcardVideoRef} muted playsInline />
-                      <button
-                        type="button"
-                        className="postcard-camera-button"
-                        onClick={startPostcardCamera}
-                        aria-label="Open camera"
-                      >
-                        <span />
-                      </button>
-                    </>
+                <div className="postcard-card-stage">
+                  <img className="postcard-museum-frame" src={ePostcardFrame} alt="" />
+                  <div className="postcard-preview-photo">
+                    {postcardPhoto ? (
+                      <img src={postcardPhoto} alt="Captured museum photo" />
+                    ) : (
+                      <>
+                        <video ref={postcardVideoRef} muted playsInline />
+                        <button
+                          type="button"
+                          className="postcard-camera-button"
+                          onClick={startPostcardCamera}
+                          aria-label="Open camera"
+                        >
+                          <span />
+                        </button>
+                      </>
+                    )}
+                  </div>
+                  {postcardPhoto && (
+                    <button
+                      type="button"
+                      className="postcard-retake-button"
+                      onClick={() => {
+                        setPostcardPhoto(null);
+                        startPostcardCamera();
+                      }}
+                    >
+                      Retake
+                    </button>
                   )}
-                </div>
-                {postcardPhoto && (
-                  <button
-                    type="button"
-                    className="postcard-retake-button"
-                    onClick={() => {
-                      setPostcardPhoto(null);
-                      startPostcardCamera();
-                    }}
-                  >
-                    Retake
-                  </button>
-                )}
-                {!postcardPhoto && !cameraError && (
-                  <button type="button" className="postcard-shutter" onClick={capturePostcardPhoto}>
-                    <span />
-                  </button>
-                )}
-                {cameraError && <p className="postcard-camera-error">{cameraError}</p>}
-                <div className="postcard-preview-copy">
-                  <p className="postcard-preview-greeting">Greetings from the Toy Community!</p>
-                  <p className="postcard-preview-message">
-                    Thanks for playing and engaging in dialogue around these toys.
-                    You are now part of our museum community.
-                  </p>
-                  <div className="postcard-preview-footer">Shared at Museu del Joguet de Catalunya</div>
+                  {!postcardPhoto && !cameraError && (
+                    <button type="button" className="postcard-shutter" onClick={capturePostcardPhoto}>
+                      <span />
+                    </button>
+                  )}
+                  {cameraError && <p className="postcard-camera-error">{cameraError}</p>}
+                  <div className="postcard-preview-copy">
+                    <p className="postcard-preview-greeting">Greetings from the Toy Community!</p>
+                    <p className="postcard-preview-message">
+                      Thanks for playing and engaging in dialogue around these toys.
+                      You are now part of our museum community.
+                    </p>
+                    <div className="postcard-preview-footer">Shared at Museu del Joguet de Catalunya</div>
+                  </div>
                 </div>
               </div>
 
