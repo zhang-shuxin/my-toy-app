@@ -1510,13 +1510,6 @@ function App() {
               >
                 {isSavingPostcard ? t.postcardSaving : t.postcardSave}
               </button>
-              <button
-                className="postcard-later-btn"
-                type="button"
-                onClick={() => setPostcard(null)}
-              >
-                {t.postcardLater}
-              </button>
             </div>
           </div>
         )}

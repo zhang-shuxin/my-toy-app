@@ -1408,15 +1408,6 @@ textarea {
   opacity: 0.68;
 }
 
-.postcard-later-btn {
-  margin-top: 8px;
-  border: 0;
-  background: transparent;
-  color: #756d82;
-  font-size: 13px;
-  cursor: pointer;
-}
-
 .postcard-save-status {
   position: absolute;
   left: 50%;
