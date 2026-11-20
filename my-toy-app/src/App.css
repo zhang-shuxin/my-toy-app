@@ -1265,7 +1265,7 @@ textarea {
   left: 8%;
   top: 5%;
   width: 84%;
-  height: 90%;
+  aspect-ratio: 381 / 758;
   overflow: hidden;
   background: rgba(255, 239, 222, 1);
 }
@@ -1276,7 +1276,7 @@ textarea {
   z-index: 3;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   pointer-events: none;
 }
 
