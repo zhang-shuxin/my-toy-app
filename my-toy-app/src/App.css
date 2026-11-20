@@ -1196,13 +1196,12 @@ textarea {
 .postcard-dialog {
   position: relative;
   width: min(360px, 100%);
-  max-height: calc(100dvh - 40px);
+  max-height: calc(100dvh - 24px);
   overflow-y: auto;
   box-sizing: border-box;
-  padding: 28px 20px 18px;
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  border-radius: 28px;
-  background: #ece6f8;
+  padding: 34px 20px 18px;
+  border-radius: 18px;
+  background: #5140b1;
   box-shadow: 0 24px 60px rgba(28, 20, 48, 0.38);
   text-align: center;
   animation: postcard-rise 420ms cubic-bezier(.2,.8,.2,1);
@@ -1210,13 +1209,14 @@ textarea {
 
 .postcard-close {
   position: absolute;
-  top: 10px;
-  right: 12px;
+  top: 12px;
+  right: 14px;
+  z-index: 5;
   width: 32px;
   height: 32px;
   border: 0;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.68);
+  background: #fff;
   color: #655a78;
   font-size: 22px;
   line-height: 1;
@@ -1249,72 +1249,136 @@ textarea {
 
 .postcard-preview {
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 381 / 692;
   width: 72%;
   max-width: 250px;
   margin: 0 auto 16px;
   box-sizing: border-box;
-  padding: 18px 18px 12px;
-  border: 8px solid #fffaf0;
-  border-radius: 3px;
-  background:
-    linear-gradient(135deg, rgba(182, 139, 115, 0.09), transparent 45%),
-    #f7f0dc;
-  box-shadow: 0 12px 24px rgba(61, 49, 94, 0.22);
-  transform: rotate(-1.5deg);
+  overflow: hidden;
+  background: #fffaf0;
+  box-shadow: 0 12px 24px rgba(38, 28, 91, 0.24);
   text-align: left;
 }
 
-.postcard-preview-header {
-  height: 42px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #3d315e;
-  font-family: Georgia, serif;
-  text-align: center;
-  line-height: 1.05;
-}
-
-.postcard-preview-header span {
-  font-size: 8px;
-  font-style: italic;
-}
-
-.postcard-preview-header strong {
-  font-size: 11px;
-}
-
-.postcard-preview-image {
-  height: 61%;
-  margin-top: 8px;
-  overflow: hidden;
-  background: #e7dfd1;
-}
-
-.postcard-preview-image img {
+.postcard-museum-frame {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+.postcard-preview-photo {
+  position: absolute;
+  z-index: 2;
+  left: 4.5%;
+  top: 13.2%;
+  width: 91%;
+  height: 65%;
+  overflow: hidden;
+  background: #050505;
+}
+
+.postcard-preview-photo video,
+.postcard-preview-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.postcard-preview-photo video {
+  transform: scaleX(-1);
+}
+
+.postcard-camera-button {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.postcard-camera-button span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 48px;
+  height: 48px;
+  border: 2px solid rgba(255,255,255,.8);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.postcard-shutter {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: 25%;
+  width: 38px;
+  height: 38px;
+  border: 3px solid white;
+  border-radius: 50%;
+  background: rgba(0,0,0,.38);
+  transform: translateX(-50%);
+  cursor: pointer;
+}
+
+.postcard-shutter span {
+  display: block;
+  width: 24px;
+  height: 24px;
+  margin: 4px;
+  border-radius: 50%;
+  background: white;
+}
+
+.postcard-retake-button {
+  position: absolute;
+  z-index: 4;
+  right: 16%;
+  bottom: 25%;
+  border: 0;
+  border-radius: 10px;
+  background: rgba(255,255,255,.9);
+  color: #40345e;
+  font-size: 8px;
+  padding: 5px 7px;
+  cursor: pointer;
+}
+
+.postcard-camera-error {
+  position: absolute;
+  z-index: 3;
+  top: 42%;
+  left: 19%;
+  width: 62%;
+  margin: 0;
+  color: white;
+  font-size: 9px;
+  text-align: center;
+}
+
 .postcard-preview-message {
   display: -webkit-box;
-  margin: 9px 2px 0;
+  position: absolute;
+  z-index: 3;
+  right: 13%;
+  bottom: 21%;
+  left: 13%;
+  margin: 0;
   overflow: hidden;
   color: #4f4a55;
   font-family: Georgia, serif;
-  font-size: 8.5px;
-  line-height: 1.38;
+  font-size: 7.5px;
+  line-height: 1.42;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
 }
 
 .postcard-preview-footer {
   position: absolute;
   right: 18px;
-  bottom: 7px;
+  bottom: 4.5%;
   left: 18px;
   color: #a87963;
   font-family: Georgia, serif;
@@ -1328,7 +1392,7 @@ textarea {
   min-height: 48px;
   border: 0;
   border-radius: 16px;
-  background: #4a3b78;
+  background: #372a91;
   box-shadow: 0 8px 18px rgba(74, 59, 120, 0.24);
   color: white;
   font-size: 15px;

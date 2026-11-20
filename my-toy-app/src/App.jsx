@@ -11,6 +11,7 @@ import customBubble from './assets/custom-bubble.png'
 import seagullBanner from './assets/seagull-banner.png'
 import worldBg from './assets/world-bg.png'
 import buildingBg from './assets/building-bg.png';
+import ePostcardFrame from './assets/e-postcard frame.png';
 import infoIcon from './assets/info-icon.png'
 import StaffControlPage from './pages/StaffControlPage.jsx'
 
@@ -418,6 +419,10 @@ function App() {
   const [postcard, setPostcard] = useState(null);
   const [isSavingPostcard, setIsSavingPostcard] = useState(false);
   const [postcardSaved, setPostcardSaved] = useState(false);
+  const [postcardPhoto, setPostcardPhoto] = useState(null);
+  const [cameraError, setCameraError] = useState('');
+  const postcardVideoRef = useRef(null);
+  const postcardStreamRef = useRef(null);
   const commentsContentRef = useRef(null);
 
   const handleLanguageChange = (event) => {
@@ -569,6 +574,17 @@ function App() {
     return () => cancelAnimationFrame(frame);
   }, [activeToy, shouldScrollCommentsToBottom]);
 
+  useEffect(() => {
+    if (!postcard) {
+      stopPostcardCamera();
+      return;
+    }
+
+    setPostcardPhoto(null);
+    startPostcardCamera();
+    return stopPostcardCamera;
+  }, [Boolean(postcard)]);
+
   const goToPage = (page) => {
     setCurrentPage(page);
     navigate(`/${page === 'welcome' ? '' : page}`);
@@ -711,6 +727,52 @@ function App() {
     image.src = source;
   });
 
+  const stopPostcardCamera = () => {
+    postcardStreamRef.current?.getTracks().forEach((track) => track.stop());
+    postcardStreamRef.current = null;
+  };
+
+  const startPostcardCamera = async () => {
+    setCameraError('');
+    stopPostcardCamera();
+
+    if (!navigator.mediaDevices?.getUserMedia) {
+      setCameraError('Camera is not available in this browser.');
+      return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment' },
+        audio: false,
+      });
+      postcardStreamRef.current = stream;
+      if (postcardVideoRef.current) {
+        postcardVideoRef.current.srcObject = stream;
+        await postcardVideoRef.current.play();
+      }
+    } catch (error) {
+      setCameraError(error?.name === 'NotAllowedError'
+        ? 'Allow camera access to take a museum photo.'
+        : 'Could not open the camera.');
+    }
+  };
+
+  const capturePostcardPhoto = () => {
+    const video = postcardVideoRef.current;
+    if (!video?.videoWidth) return;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080;
+    canvas.height = 1350;
+    const context = canvas.getContext('2d');
+    const scale = Math.max(canvas.width / video.videoWidth, canvas.height / video.videoHeight);
+    const width = video.videoWidth * scale;
+    const height = video.videoHeight * scale;
+    context.drawImage(video, (canvas.width - width) / 2, (canvas.height - height) / 2, width, height);
+    setPostcardPhoto(canvas.toDataURL('image/jpeg', 0.92));
+  };
+
   const savePostcard = async () => {
     if (!postcard || isSavingPostcard) return;
 
@@ -723,41 +785,30 @@ function App() {
       canvas.height = 1350;
       const context = canvas.getContext('2d');
 
-      context.fillStyle = '#f7f0dc';
-      context.fillRect(0, 0, canvas.width, canvas.height);
       context.fillStyle = '#fffaf0';
       context.fillRect(54, 54, 972, 1242);
 
-      context.fillStyle = '#3d315e';
-      context.font = '700 38px Georgia, serif';
-      context.textAlign = 'center';
-      context.fillText('Greetings from', 540, 112);
-      context.font = '700 46px Georgia, serif';
-      context.fillText('the Toy Community!', 540, 166);
-      context.textAlign = 'left';
+      const museumFrame = await loadPostcardImage(ePostcardFrame);
+      if (museumFrame) {
+        context.drawImage(museumFrame, 54, 54, 972, 1242);
+      }
 
-      const postcardImage = await loadPostcardImage(postcard.toyImage);
+      const photoFrame = { x: 54 + (17 / 381) * 972, y: 54 + (91 / 692) * 1242, width: (347 / 381) * 972, height: (450 / 692) * 1242 };
+      context.fillStyle = '#050505';
+      context.fillRect(photoFrame.x, photoFrame.y, photoFrame.width, photoFrame.height);
+
+      const postcardImage = await loadPostcardImage(postcardPhoto);
       if (postcardImage) {
-        const frame = { x: 104, y: 170, width: 872, height: 760 };
-        context.save();
-        context.beginPath();
-        context.rect(frame.x, frame.y, frame.width, frame.height);
-        context.clip();
-
-        const scale = Math.max(frame.width / postcardImage.width, frame.height / postcardImage.height);
+        const scale = Math.max(photoFrame.width / postcardImage.width, photoFrame.height / postcardImage.height);
         const width = postcardImage.width * scale;
         const height = postcardImage.height * scale;
         context.drawImage(
           postcardImage,
-          frame.x + (frame.width - width) / 2,
-          frame.y + (frame.height - height) / 2,
+          photoFrame.x + (photoFrame.width - width) / 2,
+          photoFrame.y + (photoFrame.height - height) / 2,
           width,
           height,
         );
-        context.restore();
-      } else {
-        context.fillStyle = '#e5dcce';
-        context.fillRect(104, 170, 872, 760);
       }
 
       context.fillStyle = '#4f4a55';
@@ -1400,18 +1451,43 @@ function App() {
                 &times;
               </button>
 
-              <p className="postcard-eyebrow">{t.postcardEyebrow}</p>
-              <h2>{t.postcardTitle}</h2>
-              <p className="postcard-copy">{t.postcardCopy}</p>
-
               <div className="postcard-preview">
-                <div className="postcard-preview-header">
-                  <span>Greetings from</span>
-                  <strong>the Toy Community!</strong>
+                <img className="postcard-museum-frame" src={ePostcardFrame} alt="" />
+                <div className="postcard-preview-photo">
+                  {postcardPhoto ? (
+                    <img src={postcardPhoto} alt="Captured museum photo" />
+                  ) : (
+                    <>
+                      <video ref={postcardVideoRef} muted playsInline />
+                      <button
+                        type="button"
+                        className="postcard-camera-button"
+                        onClick={startPostcardCamera}
+                        aria-label="Open camera"
+                      >
+                        <span />
+                      </button>
+                    </>
+                  )}
                 </div>
-                <div className="postcard-preview-image">
-                  {postcard.toyImage && <img src={postcard.toyImage} alt="" />}
-                </div>
+                {postcardPhoto && (
+                  <button
+                    type="button"
+                    className="postcard-retake-button"
+                    onClick={() => {
+                      setPostcardPhoto(null);
+                      startPostcardCamera();
+                    }}
+                  >
+                    Retake
+                  </button>
+                )}
+                {!postcardPhoto && !cameraError && (
+                  <button type="button" className="postcard-shutter" onClick={capturePostcardPhoto}>
+                    <span />
+                  </button>
+                )}
+                {cameraError && <p className="postcard-camera-error">{cameraError}</p>}
                 <p className="postcard-preview-message">
                   Thanks for playing and engaging in dialogue around these toys.
                   You are now part of our museum community.
