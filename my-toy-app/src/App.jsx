@@ -159,6 +159,12 @@ const translations = {
     commentPlaceholder: 'Make a comment or attach a photo...',
     attachPhoto: 'Attach a photo',
     sendComment: 'Send comment',
+    postcardEyebrow: 'A little thank-you',
+    postcardTitle: 'Postcard received!',
+    postcardCopy: 'Your kindness helped this story travel a little further.',
+    postcardSave: 'Save to photos',
+    postcardSaving: 'Preparing postcard...',
+    postcardLater: 'Maybe later',
     uploadPhoto: 'Upload a photo of your character toy',
     dropFile: 'Drop jpeg or png',
     maxFile: 'Max file size: 5 MB',
@@ -201,6 +207,12 @@ const translations = {
     commentPlaceholder: 'Escriu un comentari o adjunta una foto...',
     attachPhoto: 'Adjunta una foto',
     sendComment: 'Envia el comentari',
+    postcardEyebrow: 'Un petit agraïment',
+    postcardTitle: 'Has rebut una postal!',
+    postcardCopy: 'La teva amabilitat ha ajudat aquesta història a arribar una mica més lluny.',
+    postcardSave: 'Desa a les fotos',
+    postcardSaving: 'Preparant la postal...',
+    postcardLater: 'Potser més tard',
     uploadPhoto: 'Puja una foto de la teva joguina personatge',
     dropFile: 'Arrossega un jpeg o png',
     maxFile: 'Mida màxima: 5 MB',
@@ -243,6 +255,12 @@ const translations = {
     commentPlaceholder: 'Escribe un comentario o adjunta una foto...',
     attachPhoto: 'Adjunta una foto',
     sendComment: 'Enviar comentario',
+    postcardEyebrow: 'Un pequeño agradecimiento',
+    postcardTitle: '¡Postal recibida!',
+    postcardCopy: 'Tu amabilidad ha ayudado a que esta historia viaje un poco más lejos.',
+    postcardSave: 'Guardar en fotos',
+    postcardSaving: 'Preparando postal...',
+    postcardLater: 'Quizá más tarde',
     uploadPhoto: 'Sube una foto de tu juguete personaje',
     dropFile: 'Arrastra un jpeg o png',
     maxFile: 'Tamaño máximo: 5 MB',
@@ -285,6 +303,12 @@ const translations = {
     commentPlaceholder: 'Écris un commentaire ou ajoute une photo...',
     attachPhoto: 'Ajouter une photo',
     sendComment: 'Envoyer le commentaire',
+    postcardEyebrow: 'Un petit merci',
+    postcardTitle: 'Carte reçue !',
+    postcardCopy: 'Ta gentillesse a permis à cette histoire de voyager un peu plus loin.',
+    postcardSave: 'Enregistrer dans les photos',
+    postcardSaving: 'Préparation de la carte...',
+    postcardLater: 'Peut-être plus tard',
     uploadPhoto: 'Ajoute une photo de ton jouet personnage',
     dropFile: 'Dépose un jpeg ou png',
     maxFile: 'Taille maximale : 5 Mo',
@@ -327,6 +351,12 @@ const translations = {
     commentPlaceholder: '发表评论或附加照片……',
     attachPhoto: '附加照片',
     sendComment: '发送评论',
+    postcardEyebrow: '一份小小的谢意',
+    postcardTitle: '收到明信片！',
+    postcardCopy: '你的善意让这个故事又向前走了一小步。',
+    postcardSave: '保存到相册',
+    postcardSaving: '正在制作明信片...',
+    postcardLater: '稍后再说',
     uploadPhoto: '上传角色玩具照片',
     dropFile: '拖入 jpeg 或 png 文件',
     maxFile: '最大文件：5 MB',
@@ -385,6 +415,9 @@ function App() {
   const [commentImageFile, setCommentImageFile] = useState(null);
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
   const [shouldScrollCommentsToBottom, setShouldScrollCommentsToBottom] = useState(false);
+  const [postcard, setPostcard] = useState(null);
+  const [isSavingPostcard, setIsSavingPostcard] = useState(false);
+  const [postcardSaved, setPostcardSaved] = useState(false);
   const commentsContentRef = useRef(null);
 
   const handleLanguageChange = (event) => {
@@ -621,6 +654,12 @@ function App() {
       }
 
       await fetchToys();
+      setPostcard({
+        toyImage: activeToy.image,
+        comment: newComment.trim(),
+        story: activeToy.story,
+      });
+      setPostcardSaved(false);
       setShouldScrollCommentsToBottom(true);
       setNewComment('');
       setCommentImage(null);
@@ -657,6 +696,137 @@ function App() {
     }
     // This resets the input so they can pick the same photo again if they change their mind
     event.target.value = null; 
+  };
+
+  const loadPostcardImage = (source) => new Promise((resolve) => {
+    if (!source) {
+      resolve(null);
+      return;
+    }
+
+    const image = new Image();
+    image.crossOrigin = 'anonymous';
+    image.onload = () => resolve(image);
+    image.onerror = () => resolve(null);
+    image.src = source;
+  });
+
+  const savePostcard = async () => {
+    if (!postcard || isSavingPostcard) return;
+
+    setIsSavingPostcard(true);
+    setPostcardSaved(false);
+
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1080;
+      canvas.height = 1350;
+      const context = canvas.getContext('2d');
+
+      context.fillStyle = '#f7f0dc';
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = '#fffaf0';
+      context.fillRect(54, 54, 972, 1242);
+
+      context.fillStyle = '#3d315e';
+      context.font = '700 34px Georgia, serif';
+      context.fillText('TOY COMMUNITY', 104, 126);
+
+      context.strokeStyle = '#b68b73';
+      context.lineWidth = 4;
+      context.beginPath();
+      context.arc(910, 112, 46, 0, Math.PI * 2);
+      context.stroke();
+      context.fillStyle = '#b68b73';
+      context.font = '700 18px Georgia, serif';
+      context.textAlign = 'center';
+      context.fillText('THANK', 910, 104);
+      context.fillText('YOU', 910, 128);
+      context.textAlign = 'left';
+
+      const postcardImage = await loadPostcardImage(postcard.toyImage);
+      if (postcardImage) {
+        const frame = { x: 104, y: 170, width: 872, height: 760 };
+        context.save();
+        context.beginPath();
+        context.rect(frame.x, frame.y, frame.width, frame.height);
+        context.clip();
+
+        const scale = Math.max(frame.width / postcardImage.width, frame.height / postcardImage.height);
+        const width = postcardImage.width * scale;
+        const height = postcardImage.height * scale;
+        context.drawImage(
+          postcardImage,
+          frame.x + (frame.width - width) / 2,
+          frame.y + (frame.height - height) / 2,
+          width,
+          height,
+        );
+        context.restore();
+      } else {
+        context.fillStyle = '#e5dcce';
+        context.fillRect(104, 170, 872, 760);
+      }
+
+      context.fillStyle = '#4a3b62';
+      context.font = '700 46px Georgia, serif';
+      context.fillText('Thank you for joining the story.', 104, 1018);
+
+      context.fillStyle = '#4f4a55';
+      context.font = '36px Georgia, serif';
+      const comment = postcard.comment || 'A kind new chapter.';
+      const words = comment.split(/\s+/);
+      const lines = [];
+      let line = '';
+      words.forEach((word) => {
+        const testLine = line ? `${line} ${word}` : word;
+        if (context.measureText(testLine).width > 850 && line) {
+          lines.push(line);
+          line = word;
+        } else {
+          line = testLine;
+        }
+      });
+      if (line) lines.push(line);
+
+      lines.slice(0, 4).forEach((textLine, index) => {
+        context.fillText(`“${textLine}${index === Math.min(lines.length, 4) - 1 ? '”' : ''}`, 104, 1090 + index * 50);
+      });
+
+      context.fillStyle = '#b68b73';
+      context.font = '700 24px Georgia, serif';
+      context.textAlign = 'right';
+      context.fillText(new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'short', day: 'numeric' }).format(new Date()), 976, 1238);
+
+      const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
+      if (!blob) throw new Error('Could not create postcard.');
+
+      const file = new File([blob], 'toy-community-postcard.png', { type: 'image/png' });
+      if (navigator.canShare?.({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: 'Toy Community postcard',
+        });
+      } else {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'toy-community-postcard.png';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+      }
+
+      setPostcardSaved(true);
+    } catch (error) {
+      if (error?.name !== 'AbortError') {
+        console.error(error);
+        setPostcardSaved(false);
+      }
+    } finally {
+      setIsSavingPostcard(false);
+    }
   };
 
   const handleUploadImage = async () => {
@@ -1228,6 +1398,57 @@ function App() {
 
             </div> 
           </div> 
+        )}
+
+        {postcard && (
+          <div className="postcard-overlay" role="dialog" aria-modal="true" aria-label={t.postcardTitle}>
+            <div className="postcard-dialog" onClick={(event) => event.stopPropagation()}>
+              <button
+                className="postcard-close"
+                type="button"
+                onClick={() => setPostcard(null)}
+                aria-label={t.postcardLater}
+              >
+                &times;
+              </button>
+
+              <p className="postcard-eyebrow">{t.postcardEyebrow}</p>
+              <h2>{t.postcardTitle}</h2>
+              <p className="postcard-copy">{t.postcardCopy}</p>
+
+              <div className="postcard-preview">
+                <div className="postcard-preview-brand">TOY COMMUNITY</div>
+                <div className="postcard-preview-stamp" aria-hidden="true">
+                  <span>THANK</span>
+                  <span>YOU</span>
+                </div>
+                <div className="postcard-preview-image">
+                  {postcard.toyImage && <img src={postcard.toyImage} alt="" />}
+                </div>
+                <p className="postcard-preview-message">
+                  “{postcard.comment || 'A kind new chapter.'}”
+                </p>
+              </div>
+
+              {postcardSaved && <p className="postcard-save-status">✓</p>}
+
+              <button
+                className="postcard-save-btn"
+                type="button"
+                onClick={savePostcard}
+                disabled={isSavingPostcard}
+              >
+                {isSavingPostcard ? t.postcardSaving : t.postcardSave}
+              </button>
+              <button
+                className="postcard-later-btn"
+                type="button"
+                onClick={() => setPostcard(null)}
+              >
+                {t.postcardLater}
+              </button>
+            </div>
+          </div>
         )}
 
         {/* Upload Modal (Existing code) */}

@@ -1180,6 +1180,196 @@ textarea {
   margin-bottom: 10px;
 }
 
+/* --- COMMENT REWARD POSTCARD --- */
+.postcard-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 210;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(44, 35, 68, 0.72);
+  backdrop-filter: blur(8px);
+  animation: postcard-fade-in 220ms ease-out;
+}
+
+.postcard-dialog {
+  position: relative;
+  width: min(360px, 100%);
+  max-height: calc(100dvh - 40px);
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 28px 20px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 28px;
+  background: #ece6f8;
+  box-shadow: 0 24px 60px rgba(28, 20, 48, 0.38);
+  text-align: center;
+  animation: postcard-rise 420ms cubic-bezier(.2,.8,.2,1);
+}
+
+.postcard-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.68);
+  color: #655a78;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.postcard-eyebrow {
+  margin: 0 0 4px;
+  color: #a16f5d;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.postcard-dialog h2 {
+  margin: 0;
+  color: #40345e;
+  font-family: Georgia, serif;
+  font-size: 26px;
+}
+
+.postcard-copy {
+  max-width: 280px;
+  margin: 7px auto 16px;
+  color: #716880;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.postcard-preview {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  width: 72%;
+  max-width: 250px;
+  margin: 0 auto 16px;
+  box-sizing: border-box;
+  padding: 34px 22px 18px;
+  border: 8px solid #fffaf0;
+  border-radius: 3px;
+  background:
+    linear-gradient(135deg, rgba(182, 139, 115, 0.09), transparent 45%),
+    #f7f0dc;
+  box-shadow: 0 12px 24px rgba(61, 49, 94, 0.22);
+  transform: rotate(-1.5deg);
+  text-align: left;
+}
+
+.postcard-preview-brand {
+  color: #3d315e;
+  font-family: Georgia, serif;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.postcard-preview-stamp {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  display: flex;
+  width: 36px;
+  height: 36px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #b68b73;
+  border-radius: 50%;
+  color: #b68b73;
+  font-family: Georgia, serif;
+  font-size: 6px;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.postcard-preview-image {
+  height: 64%;
+  margin-top: 18px;
+  overflow: hidden;
+  background: #e7dfd1;
+}
+
+.postcard-preview-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.postcard-preview-message {
+  display: -webkit-box;
+  margin: 10px 2px 0;
+  overflow: hidden;
+  color: #4f4a55;
+  font-family: Georgia, serif;
+  font-size: 10px;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.postcard-save-btn {
+  width: 100%;
+  min-height: 48px;
+  border: 0;
+  border-radius: 16px;
+  background: #4a3b78;
+  box-shadow: 0 8px 18px rgba(74, 59, 120, 0.24);
+  color: white;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.postcard-save-btn:disabled {
+  cursor: wait;
+  opacity: 0.68;
+}
+
+.postcard-later-btn {
+  margin-top: 8px;
+  border: 0;
+  background: transparent;
+  color: #756d82;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.postcard-save-status {
+  position: absolute;
+  left: 50%;
+  bottom: 92px;
+  width: 38px;
+  height: 38px;
+  margin: 0;
+  border-radius: 50%;
+  background: #5e8b66;
+  color: white;
+  font-size: 20px;
+  line-height: 38px;
+  transform: translateX(-50%);
+  box-shadow: 0 6px 16px rgba(68, 109, 77, 0.3);
+}
+
+@keyframes postcard-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes postcard-rise {
+  from { opacity: 0; transform: translateY(24px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 /* --- COMMENT IMAGE PREVIEW (Before Sending) --- */
 .comment-image-preview {
   position: absolute;
