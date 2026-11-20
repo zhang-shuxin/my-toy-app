@@ -788,12 +788,12 @@ function App() {
       context.fillStyle = '#fffaf0';
       context.fillRect(54, 54, 972, 1242);
 
-      const museumFrame = await loadPostcardImage(ePostcardFrame);
-      if (museumFrame) {
-        context.drawImage(museumFrame, 54, 54, 972, 1242);
-      }
-
-      const photoFrame = { x: 54 + (17 / 381) * 972, y: 54 + (91 / 692) * 1242, width: (347 / 381) * 972, height: (450 / 692) * 1242 };
+      const photoFrame = {
+        x: 54 + (17 / 381) * 972,
+        y: 54 + (91 / 758) * 1242,
+        width: (347 / 381) * 972,
+        height: (450 / 758) * 1242,
+      };
       context.fillStyle = '#050505';
       context.fillRect(photoFrame.x, photoFrame.y, photoFrame.width, photoFrame.height);
 
@@ -809,6 +809,11 @@ function App() {
           width,
           height,
         );
+      }
+
+      const museumFrame = await loadPostcardImage(ePostcardFrame);
+      if (museumFrame) {
+        context.drawImage(museumFrame, 54, 54, 972, 1242);
       }
 
       context.fillStyle = '#4f4a55';
