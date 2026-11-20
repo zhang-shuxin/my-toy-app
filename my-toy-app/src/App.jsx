@@ -781,18 +781,15 @@ function App() {
 
     try {
       const canvas = document.createElement('canvas');
-      canvas.width = 1080;
-      canvas.height = 1350;
+      canvas.width = 762;
+      canvas.height = 1516;
       const context = canvas.getContext('2d');
 
-      context.fillStyle = '#fffaf0';
-      context.fillRect(54, 54, 972, 1242);
-
       const photoFrame = {
-        x: 54 + (17 / 381) * 972,
-        y: 54 + (91 / 758) * 1242,
-        width: (347 / 381) * 972,
-        height: (450 / 758) * 1242,
+        x: 34,
+        y: 182,
+        width: 694,
+        height: 900,
       };
       context.fillStyle = '#050505';
       context.fillRect(photoFrame.x, photoFrame.y, photoFrame.width, photoFrame.height);
@@ -813,22 +810,24 @@ function App() {
 
       const museumFrame = await loadPostcardImage(ePostcardFrame);
       if (museumFrame) {
-        context.drawImage(museumFrame, 54, 54, 972, 1242);
+        context.drawImage(museumFrame, 0, 0, canvas.width, canvas.height);
       }
 
       context.fillStyle = '#40345e';
-      context.font = 'italic 32px Georgia, serif';
-      context.fillText('Greetings from the Toy Community!', 104, 1000);
+      context.font = 'italic 25px Georgia, serif';
+      context.textAlign = 'center';
+      context.fillText('Greetings from the Toy Community!', 381, 1180);
 
       context.fillStyle = '#4f4a55';
-      context.font = '30px Georgia, serif';
+      context.font = '23px Georgia, serif';
+      context.textAlign = 'left';
       const message = 'Thanks for playing and engaging in dialogue around these toys. You are now part of our museum community.';
       const words = message.split(/\s+/);
       const lines = [];
       let line = '';
       words.forEach((word) => {
         const testLine = line ? `${line} ${word}` : word;
-        if (context.measureText(testLine).width > 840 && line) {
+        if (context.measureText(testLine).width > 690 && line) {
           lines.push(line);
           line = word;
         } else {
@@ -838,13 +837,13 @@ function App() {
       if (line) lines.push(line);
 
       lines.slice(0, 5).forEach((textLine, index) => {
-        context.fillText(textLine, 104, 1060 + index * 44);
+        context.fillText(textLine, 56, 1230 + index * 34);
       });
 
       context.fillStyle = '#b68b73';
-      context.font = '700 25px Georgia, serif';
+      context.font = '700 20px Georgia, serif';
       context.textAlign = 'center';
-      context.fillText('Shared at Museu del Joguet de Catalunya', 540, 1238);
+      context.fillText('Shared at Museu del Joguet de Catalunya', 381, 1475);
 
       const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
       if (!blob) throw new Error('Could not create postcard.');
