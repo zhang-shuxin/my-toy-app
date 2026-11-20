@@ -1360,13 +1360,18 @@ textarea {
   text-align: center;
 }
 
+.postcard-preview-copy {
+  position: absolute;
+  z-index: 5;
+  right: 12%;
+  bottom: 9%;
+  left: 12%;
+  text-align: center;
+  pointer-events: none;
+}
+
 .postcard-preview-message {
   display: -webkit-box;
-  position: absolute;
-  z-index: 4;
-  right: 12%;
-  bottom: 14%;
-  left: 12%;
   margin: 0;
   overflow: hidden;
   color: #4f4a55;
@@ -1378,11 +1383,6 @@ textarea {
 }
 
 .postcard-preview-greeting {
-  position: absolute;
-  z-index: 4;
-  right: 12%;
-  bottom: 34%;
-  left: 12%;
   margin: 0;
   color: #40345e;
   font-family: Georgia, serif;
@@ -1394,11 +1394,6 @@ textarea {
 }
 
 .postcard-preview-footer {
-  position: absolute;
-  z-index: 4;
-  right: 18px;
-  bottom: 4%;
-  left: 18px;
   color: #9e725f;
   font-family: Georgia, serif;
   font-size: 6.25px;

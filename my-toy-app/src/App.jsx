@@ -1497,12 +1497,14 @@ function App() {
                   </button>
                 )}
                 {cameraError && <p className="postcard-camera-error">{cameraError}</p>}
-                <p className="postcard-preview-greeting">Greetings from the Toy Community!</p>
-                <p className="postcard-preview-message">
-                  Thanks for playing and engaging in dialogue around these toys.
-                  You are now part of our museum community.
-                </p>
-                <div className="postcard-preview-footer">Shared at Museu del Joguet de Catalunya</div>
+                <div className="postcard-preview-copy">
+                  <p className="postcard-preview-greeting">Greetings from the Toy Community!</p>
+                  <p className="postcard-preview-message">
+                    Thanks for playing and engaging in dialogue around these toys.
+                    You are now part of our museum community.
+                  </p>
+                  <div className="postcard-preview-footer">Shared at Museu del Joguet de Catalunya</div>
+                </div>
               </div>
 
               {postcardSaved && <p className="postcard-save-status">✓</p>}
