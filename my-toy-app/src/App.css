@@ -1250,9 +1250,9 @@ textarea {
 .postcard-preview {
   position: relative;
   aspect-ratio: 381 / 758;
-  width: 72%;
-  max-width: 250px;
-  margin: 0 auto 16px;
+  width: 64%;
+  max-width: 220px;
+  margin: 8px auto 20px;
   box-sizing: border-box;
   overflow: hidden;
   background: #fffaf0;
