@@ -785,6 +785,22 @@ function App() {
       canvas.height = 1516;
       const context = canvas.getContext('2d');
 
+      context.fillStyle = '#c0f0fa';
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      const postcardBackground = await loadPostcardImage(worldBg);
+      if (postcardBackground) {
+        const scale = Math.max(canvas.width / postcardBackground.width, canvas.height / postcardBackground.height);
+        const width = postcardBackground.width * scale;
+        const height = postcardBackground.height * scale;
+        context.drawImage(
+          postcardBackground,
+          (canvas.width - width) / 2,
+          (canvas.height - height) / 2,
+          width,
+          height,
+        );
+      }
+
       const photoFrame = {
         x: 34,
         y: 182,
