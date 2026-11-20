@@ -1201,8 +1201,8 @@ textarea {
   box-sizing: border-box;
   padding: 34px 20px 18px;
   border-radius: 18px;
-  background: #5140b1;
-  box-shadow: 0 24px 60px rgba(28, 20, 48, 0.38);
+  background: rgba(192, 240, 250, 1);
+  box-shadow: 0 24px 60px rgba(49, 44, 62, 0.38);
   text-align: center;
   animation: postcard-rise 420ms cubic-bezier(.2,.8,.2,1);
 }
