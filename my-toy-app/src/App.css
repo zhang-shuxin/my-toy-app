@@ -1364,29 +1364,46 @@ textarea {
   display: -webkit-box;
   position: absolute;
   z-index: 4;
-  right: 13%;
-  bottom: 21%;
-  left: 13%;
+  right: 12%;
+  bottom: 14%;
+  left: 12%;
   margin: 0;
   overflow: hidden;
   color: #4f4a55;
   font-family: Georgia, serif;
-  font-size: 7.5px;
-  line-height: 1.42;
+  font-size: 8px;
+  line-height: 1.5;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
+}
+
+.postcard-preview-greeting {
+  position: absolute;
+  z-index: 4;
+  right: 12%;
+  bottom: 34%;
+  left: 12%;
+  margin: 0;
+  color: #40345e;
+  font-family: Georgia, serif;
+  font-size: 8.5px;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
 }
 
 .postcard-preview-footer {
   position: absolute;
   z-index: 4;
   right: 18px;
-  bottom: 4.5%;
+  bottom: 4%;
   left: 18px;
-  color: #a87963;
+  color: #9e725f;
   font-family: Georgia, serif;
-  font-size: 6.5px;
-  font-weight: 800;
+  font-size: 6.25px;
+  font-weight: 700;
+  letter-spacing: 0.1px;
   text-align: center;
 }
 

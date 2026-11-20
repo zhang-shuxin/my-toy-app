@@ -816,15 +816,19 @@ function App() {
         context.drawImage(museumFrame, 54, 54, 972, 1242);
       }
 
+      context.fillStyle = '#40345e';
+      context.font = 'italic 32px Georgia, serif';
+      context.fillText('Greetings from the Toy Community!', 104, 1000);
+
       context.fillStyle = '#4f4a55';
-      context.font = '34px Georgia, serif';
+      context.font = '30px Georgia, serif';
       const message = 'Thanks for playing and engaging in dialogue around these toys. You are now part of our museum community.';
       const words = message.split(/\s+/);
       const lines = [];
       let line = '';
       words.forEach((word) => {
         const testLine = line ? `${line} ${word}` : word;
-        if (context.measureText(testLine).width > 850 && line) {
+        if (context.measureText(testLine).width > 840 && line) {
           lines.push(line);
           line = word;
         } else {
@@ -834,7 +838,7 @@ function App() {
       if (line) lines.push(line);
 
       lines.slice(0, 5).forEach((textLine, index) => {
-        context.fillText(textLine, 104, 1018 + index * 48);
+        context.fillText(textLine, 104, 1060 + index * 44);
       });
 
       context.fillStyle = '#b68b73';
@@ -1493,6 +1497,7 @@ function App() {
                   </button>
                 )}
                 {cameraError && <p className="postcard-camera-error">{cameraError}</p>}
+                <p className="postcard-preview-greeting">Greetings from the Toy Community!</p>
                 <p className="postcard-preview-message">
                   Thanks for playing and engaging in dialogue around these toys.
                   You are now part of our museum community.
