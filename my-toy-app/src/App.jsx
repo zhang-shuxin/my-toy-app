@@ -162,7 +162,8 @@ const translations = {
     postcardEyebrow: 'A little thank-you',
     postcardTitle: 'Postcard received!',
     postcardCopy: 'Your kindness helped this story travel a little further.',
-    postcardSave: 'SAVE',
+    postcardSave: 'download',
+    postcardShare: 'share',
     postcardSaving: 'Preparing postcard...',
     postcardLater: 'Maybe later',
     uploadPhoto: 'Upload a photo of your character toy',
@@ -210,7 +211,8 @@ const translations = {
     postcardEyebrow: 'Un petit agraïment',
     postcardTitle: 'Has rebut una postal!',
     postcardCopy: 'La teva amabilitat ha ajudat aquesta història a arribar una mica més lluny.',
-    postcardSave: 'Desa a les fotos',
+    postcardSave: 'descarrega',
+    postcardShare: 'comparteix',
     postcardSaving: 'Preparant la postal...',
     postcardLater: 'Potser més tard',
     uploadPhoto: 'Puja una foto de la teva joguina personatge',
@@ -258,7 +260,8 @@ const translations = {
     postcardEyebrow: 'Un pequeño agradecimiento',
     postcardTitle: '¡Postal recibida!',
     postcardCopy: 'Tu amabilidad ha ayudado a que esta historia viaje un poco más lejos.',
-    postcardSave: 'Guardar en fotos',
+    postcardSave: 'descargar',
+    postcardShare: 'compartir',
     postcardSaving: 'Preparando postal...',
     postcardLater: 'Quizá más tarde',
     uploadPhoto: 'Sube una foto de tu juguete personaje',
@@ -306,7 +309,8 @@ const translations = {
     postcardEyebrow: 'Un petit merci',
     postcardTitle: 'Carte reçue !',
     postcardCopy: 'Ta gentillesse a permis à cette histoire de voyager un peu plus loin.',
-    postcardSave: 'Enregistrer dans les photos',
+    postcardSave: 'télécharger',
+    postcardShare: 'partager',
     postcardSaving: 'Préparation de la carte...',
     postcardLater: 'Peut-être plus tard',
     uploadPhoto: 'Ajoute une photo de ton jouet personnage',
@@ -354,7 +358,8 @@ const translations = {
     postcardEyebrow: '一份小小的谢意',
     postcardTitle: '收到明信片！',
     postcardCopy: '你的善意让这个故事又向前走了一小步。',
-    postcardSave: '保存到相册',
+    postcardSave: '下载',
+    postcardShare: '分享',
     postcardSaving: '正在制作明信片...',
     postcardLater: '稍后再说',
     uploadPhoto: '上传角色玩具照片',
@@ -698,7 +703,7 @@ function App() {
     event.target.value = null; 
   };
 
-  const savePostcard = async () => {
+  const savePostcard = async (action = 'download') => {
     if (!postcard || isSavingPostcard) return;
 
     setIsSavingPostcard(true);
@@ -736,10 +741,14 @@ function App() {
       context.fillRect(102, 112, 558, 430);
       context.shadowColor = 'transparent';
 
-      context.fillStyle = '#bd3b2d';
-      context.font = 'italic 700 31px Georgia, serif';
+      context.fillStyle = '#c79a35';
+      context.font = 'italic 700 27px Georgia, serif';
       context.textAlign = 'center';
       context.fillText('Greetings from the Toy Community!', 381, 200);
+
+      context.strokeStyle = '#c79a35';
+      context.lineWidth = 3;
+      context.strokeRect(116, 126, 530, 402);
 
       context.fillStyle = '#4f4a55';
       context.font = '23px Georgia, serif';
@@ -763,16 +772,11 @@ function App() {
         context.fillText(textLine, 145, 270 + index * 34);
       });
 
-      context.fillStyle = '#b68b73';
-      context.font = '700 20px Georgia, serif';
-      context.textAlign = 'center';
-      context.fillText('Shared at Museu del Joguet de Catalunya', 381, 710);
-
       const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
       if (!blob) throw new Error('Could not create postcard.');
 
       const file = new File([blob], 'toy-community-postcard.png', { type: 'image/png' });
-      if (navigator.canShare?.({ files: [file] })) {
+      if (action === 'share' && navigator.canShare?.({ files: [file] })) {
         await navigator.share({
           files: [file],
           title: 'Toy Community postcard',
@@ -1389,23 +1393,29 @@ function App() {
                     Thanks for playing and engaging in dialogue around these toys.
                     You are now part of our museum community.
                   </p>
-                  <div className="postcard-preview-footer">
-                    Shared at Museu del Joguet de Catalunya
-                  </div>
                 </div>
                 <div className="postcard-envelope" aria-hidden="true" />
               </div>
 
               {postcardSaved && <p className="postcard-save-status">✓</p>}
-
-              <button
-                className="postcard-save-btn"
-                type="button"
-                onClick={savePostcard}
-                disabled={isSavingPostcard}
-              >
-                {isSavingPostcard ? t.postcardSaving : t.postcardSave}
-              </button>
+              <div className="postcard-actions">
+                <button
+                  className="postcard-action-btn"
+                  type="button"
+                  onClick={() => savePostcard('share')}
+                  disabled={isSavingPostcard}
+                >
+                  {isSavingPostcard ? t.postcardSaving : t.postcardShare}
+                </button>
+                <button
+                  className="postcard-action-btn"
+                  type="button"
+                  onClick={() => savePostcard('download')}
+                  disabled={isSavingPostcard}
+                >
+                  {isSavingPostcard ? t.postcardSaving : t.postcardSave}
+                </button>
+              </div>
             </div>
           </div>
         )}
