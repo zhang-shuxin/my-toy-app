@@ -641,6 +641,23 @@ textarea {
   cursor: pointer;
 }
 
+.goback-button {
+  flex: 0 0 41px;
+  width: 41px;
+  height: 41px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: none;
+}
+
+.goback-button img {
+  width: 41px;
+  height: 41px;
+  display: block;
+}
+
 .btn-solid-disabled {
   background-color: #a8a39d; /* Gray */
   border: none;
