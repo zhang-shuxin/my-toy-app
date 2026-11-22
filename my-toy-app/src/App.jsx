@@ -11,7 +11,6 @@ import customBubble from './assets/custom-bubble.png'
 import seagullBanner from './assets/seagull-banner.png'
 import worldBg from './assets/world-bg.png'
 import buildingBg from './assets/building-bg.png';
-import ePostcardFrame from './assets/e-postcard frame.png';
 import infoIcon from './assets/info-icon.png'
 import StaffControlPage from './pages/StaffControlPage.jsx'
 
@@ -699,19 +698,6 @@ function App() {
     event.target.value = null; 
   };
 
-  const loadPostcardImage = (source) => new Promise((resolve) => {
-    if (!source) {
-      resolve(null);
-      return;
-    }
-
-    const image = new Image();
-    image.crossOrigin = 'anonymous';
-    image.onload = () => resolve(image);
-    image.onerror = () => resolve(null);
-    image.src = source;
-  });
-
   const savePostcard = async () => {
     if (!postcard || isSavingPostcard) return;
 
@@ -721,45 +707,39 @@ function App() {
     try {
       const canvas = document.createElement('canvas');
       canvas.width = 762;
-      canvas.height = 1516;
+      canvas.height = 762;
       const context = canvas.getContext('2d');
 
-      context.fillStyle = 'rgba(255, 239, 222, 1)';
+      context.fillStyle = '#fffaf0';
       context.fillRect(0, 0, canvas.width, canvas.height);
 
-      const frameRect = { x: 76, y: 151, width: 610, height: 1214 };
-      const photoFrame = {
-        x: frameRect.x + (17 / 381) * frameRect.width,
-        y: frameRect.y + (91 / 758) * frameRect.height,
-        width: (347 / 381) * frameRect.width,
-        height: (450 / 758) * frameRect.height,
-      };
-      context.fillStyle = '#050505';
-      context.fillRect(photoFrame.x, photoFrame.y, photoFrame.width, photoFrame.height);
+      context.fillStyle = '#c92f31';
+      context.fillRect(64, 342, 634, 346);
+      context.beginPath();
+      context.moveTo(64, 342);
+      context.lineTo(381, 555);
+      context.lineTo(698, 342);
+      context.closePath();
+      context.fill();
+      context.beginPath();
+      context.moveTo(64, 688);
+      context.lineTo(381, 555);
+      context.lineTo(698, 688);
+      context.closePath();
+      context.fillStyle = '#a91f2b';
+      context.fill();
 
-      const postcardImage = await loadPostcardImage(postcard.toyImage);
-      if (postcardImage) {
-        const scale = Math.max(photoFrame.width / postcardImage.width, photoFrame.height / postcardImage.height);
-        const width = postcardImage.width * scale;
-        const height = postcardImage.height * scale;
-        context.drawImage(
-          postcardImage,
-          photoFrame.x + (photoFrame.width - width) / 2,
-          photoFrame.y + (photoFrame.height - height) / 2,
-          width,
-          height,
-        );
-      }
+      context.shadowColor = 'rgba(78, 48, 35, 0.18)';
+      context.shadowBlur = 16;
+      context.shadowOffsetY = 8;
+      context.fillStyle = '#fffdf3';
+      context.fillRect(102, 112, 558, 430);
+      context.shadowColor = 'transparent';
 
-      const museumFrame = await loadPostcardImage(ePostcardFrame);
-      if (museumFrame) {
-        context.drawImage(museumFrame, frameRect.x, frameRect.y, frameRect.width, frameRect.height);
-      }
-
-      context.fillStyle = '#40345e';
-      context.font = 'italic 25px Georgia, serif';
+      context.fillStyle = '#bd3b2d';
+      context.font = 'italic 700 31px Georgia, serif';
       context.textAlign = 'center';
-      context.fillText('Greetings from the Toy Community!', 381, 1180);
+      context.fillText('Greetings from the Toy Community!', 381, 200);
 
       context.fillStyle = '#4f4a55';
       context.font = '23px Georgia, serif';
@@ -780,13 +760,13 @@ function App() {
       if (line) lines.push(line);
 
       lines.slice(0, 5).forEach((textLine, index) => {
-        context.fillText(textLine, 56, 1230 + index * 34);
+        context.fillText(textLine, 145, 270 + index * 34);
       });
 
       context.fillStyle = '#b68b73';
       context.font = '700 20px Georgia, serif';
       context.textAlign = 'center';
-      context.fillText('Shared at Museu del Joguet de Catalunya', 381, 1475);
+      context.fillText('Shared at Museu del Joguet de Catalunya', 381, 710);
 
       const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
       if (!blob) throw new Error('Could not create postcard.');
@@ -1403,22 +1383,17 @@ function App() {
               </button>
 
               <div className="postcard-preview">
-                <div className="postcard-card-stage">
-                  <img className="postcard-museum-frame" src={ePostcardFrame} alt="" />
-                  <div className="postcard-preview-photo">
-                    {postcard.toyImage && (
-                      <img src={postcard.toyImage} alt="Toy used in the postcard" />
-                    )}
-                  </div>
-                  <div className="postcard-preview-copy">
-                    <p className="postcard-preview-greeting">Greetings from the Toy Community!</p>
-                    <p className="postcard-preview-message">
-                      Thanks for playing and engaging in dialogue around these toys.
-                      You are now part of our museum community.
-                    </p>
-                    <div className="postcard-preview-footer">Shared at Museu del Joguet de Catalunya</div>
+                <div className="postcard-letter">
+                  <p className="postcard-preview-greeting">Greetings from the Toy Community!</p>
+                  <p className="postcard-preview-message">
+                    Thanks for playing and engaging in dialogue around these toys.
+                    You are now part of our museum community.
+                  </p>
+                  <div className="postcard-preview-footer">
+                    Shared at Museu del Joguet de Catalunya
                   </div>
                 </div>
+                <div className="postcard-envelope" aria-hidden="true" />
               </div>
 
               {postcardSaved && <p className="postcard-save-status">✓</p>}
