@@ -1385,30 +1385,13 @@ function App() {
                   disabled={isSavingPostcard}
                 >
                   <span className="postcard-action-content">
-                    {(
-                      <svg className="postcard-action-icon" viewBox="0 0 24 24" aria-hidden="true">
-                        <circle cx="18" cy="5" r="2.5" />
-                        <circle cx="6" cy="12" r="2.5" />
-                        <circle cx="18" cy="19" r="2.5" />
-                        <path d="M8.2 10.8 15.8 6.2M8.2 13.2l7.6 4.6" />
-                      </svg>
-                    )}
+                    <svg className="postcard-action-icon" viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="18" cy="5" r="2.5" />
+                      <circle cx="6" cy="12" r="2.5" />
+                      <circle cx="18" cy="19" r="2.5" />
+                      <path d="M8.2 10.8 15.8 6.2M8.2 13.2l7.6 4.6" />
+                    </svg>
                     <span>{t.postcardShare}</span>
-                  </span>
-                </button>
-                <button
-                  className="postcard-action-btn"
-                  type="button"
-                  onClick={() => savePostcard('download')}
-                  disabled={isSavingPostcard}
-                >
-                  <span className="postcard-action-content">
-                    {(
-                      <svg className="postcard-action-icon" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12 3v12M7.5 10.5 12 15l4.5-4.5M5 21h14" />
-                      </svg>
-                    )}
-                    <span>{t.postcardSave}</span>
                   </span>
                 </button>
               </div>
