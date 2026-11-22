@@ -1259,6 +1259,8 @@ textarea {
   background: #fffaf0;
   box-shadow: 0 12px 24px rgba(38, 28, 91, 0.24);
   text-align: left;
+  transform-origin: 50% 100%;
+  animation: envelope-arrival 3.8s cubic-bezier(.2,.75,.25,1) both;
 }
 
 .postcard-envelope {
@@ -1267,7 +1269,7 @@ textarea {
   bottom: 7%;
   left: 8%;
   height: 45%;
-  z-index: 1;
+  z-index: 3;
   overflow: hidden;
   border-radius: 3px;
   background: #c92f31;
@@ -1284,6 +1286,8 @@ textarea {
   height: 80%;
   background: #cf3232;
   clip-path: polygon(0 0, 50% 62%, 100% 0);
+  transform-origin: 50% 0;
+  animation: envelope-flap-open 3.8s ease-in-out both;
 }
 
 .postcard-envelope::after {
@@ -1301,7 +1305,7 @@ textarea {
 .postcard-letter {
   position: absolute;
   z-index: 2;
-  top: 12%;
+  top: 58%;
   left: 14%;
   width: 72%;
   height: 61%;
@@ -1311,6 +1315,7 @@ textarea {
   background: #fffdf3;
   box-shadow: 0 8px 20px rgba(78, 48, 35, 0.16);
   text-align: center;
+  animation: letter-rise 3.8s cubic-bezier(.2,.75,.25,1) both;
 }
 
 .postcard-preview-copy {
@@ -1394,6 +1399,56 @@ textarea {
 @keyframes postcard-rise {
   from { opacity: 0; transform: translateY(24px) scale(.96); }
   to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes envelope-arrival {
+  0% {
+    opacity: 0;
+    transform: translateY(140%) rotate(0deg);
+  }
+  18% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+  26% {
+    transform: translateY(-2%) rotate(-7deg);
+  }
+  36% {
+    transform: translateY(0) rotate(7deg);
+  }
+  46% {
+    transform: translateY(-1%) rotate(-7deg);
+  }
+  56% {
+    transform: translateY(0) rotate(7deg);
+  }
+  66%,
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes envelope-flap-open {
+  0%,
+  62% {
+    transform: translateY(0) scaleY(1);
+  }
+  78%,
+  100% {
+    transform: translateY(-52%) scaleY(.18);
+  }
+}
+
+@keyframes letter-rise {
+  0%,
+  64% {
+    top: 58%;
+  }
+  82%,
+  100% {
+    top: 12%;
+  }
 }
 
 /* --- COMMENT IMAGE PREVIEW (Before Sending) --- */
