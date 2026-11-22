@@ -13,6 +13,11 @@ import worldBg from './assets/world-bg.png'
 import buildingBg from './assets/building-bg.png';
 import infoIcon from './assets/info-icon.png'
 import StaffControlPage from './pages/StaffControlPage.jsx'
+import ePostcardCatalan from './assets/e-postcard_Catalan.jpg'
+import ePostcardChinese from './assets/e-postcard_Chinese.jpg'
+import ePostcardEnglish from './assets/e-postcard_English.jpg'
+import ePostcardFrench from './assets/e-postcard_French.jpg'
+import ePostcardSpanish from './assets/e-postcard_Spanish.jpg'
 
 import Actionman1 from './assets/maa-Action Man-1.jpeg'
 import Actionman2 from './assets/maa-Action Man-2.jpeg'
@@ -382,6 +387,14 @@ const translations = {
 function App() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState(() => localStorage.getItem('toy-community-language') || 'en');
+  const postcardsByLanguage = {
+    ca: ePostcardCatalan,
+    zh: ePostcardChinese,
+    en: ePostcardEnglish,
+    fr: ePostcardFrench,
+    es: ePostcardSpanish,
+  };
+  const activePostcard = postcardsByLanguage[language] || ePostcardEnglish;
   const consentSourceByLanguage = {
     en: 'zh',
     ca: 'en',
@@ -710,72 +723,11 @@ function App() {
     setPostcardSaved(false);
 
     try {
-      const canvas = document.createElement('canvas');
-      canvas.width = 762;
-      canvas.height = 762;
-      const context = canvas.getContext('2d');
+      const response = await fetch(activePostcard);
+      if (!response.ok) throw new Error('Could not load postcard.');
 
-      context.fillStyle = '#fffaf0';
-      context.fillRect(0, 0, canvas.width, canvas.height);
-
-      context.fillStyle = '#c92f31';
-      context.fillRect(64, 342, 634, 346);
-      context.beginPath();
-      context.moveTo(64, 342);
-      context.lineTo(381, 555);
-      context.lineTo(698, 342);
-      context.closePath();
-      context.fill();
-      context.beginPath();
-      context.moveTo(64, 688);
-      context.lineTo(381, 555);
-      context.lineTo(698, 688);
-      context.closePath();
-      context.fillStyle = '#a91f2b';
-      context.fill();
-
-      context.shadowColor = 'rgba(78, 48, 35, 0.18)';
-      context.shadowBlur = 16;
-      context.shadowOffsetY = 8;
-      context.fillStyle = '#fffdf3';
-      context.fillRect(102, 112, 558, 430);
-      context.shadowColor = 'transparent';
-
-      context.fillStyle = '#c79a35';
-      context.font = 'italic 700 27px Georgia, serif';
-      context.textAlign = 'center';
-      context.fillText('Greetings from the Toy Community!', 381, 200);
-
-      context.strokeStyle = '#c79a35';
-      context.lineWidth = 3;
-      context.strokeRect(116, 126, 530, 402);
-
-      context.fillStyle = '#4f4a55';
-      context.font = '23px Georgia, serif';
-      context.textAlign = 'left';
-      const message = 'Thanks for playing and engaging in dialogue around these toys. You are now part of our museum community.';
-      const words = message.split(/\s+/);
-      const lines = [];
-      let line = '';
-      words.forEach((word) => {
-        const testLine = line ? `${line} ${word}` : word;
-        if (context.measureText(testLine).width > 690 && line) {
-          lines.push(line);
-          line = word;
-        } else {
-          line = testLine;
-        }
-      });
-      if (line) lines.push(line);
-
-      lines.slice(0, 5).forEach((textLine, index) => {
-        context.fillText(textLine, 145, 270 + index * 34);
-      });
-
-      const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
-      if (!blob) throw new Error('Could not create postcard.');
-
-      const file = new File([blob], 'toy-community-postcard.png', { type: 'image/png' });
+      const blob = await response.blob();
+      const file = new File([blob], `toy-community-postcard-${language}.jpg`, { type: 'image/jpeg' });
       if (action === 'share' && navigator.canShare?.({ files: [file] })) {
         await navigator.share({
           files: [file],
@@ -785,7 +737,7 @@ function App() {
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = 'toy-community-postcard.png';
+        link.download = `toy-community-postcard-${language}.jpg`;
         document.body.appendChild(link);
         link.click();
         link.remove();
@@ -1387,14 +1339,11 @@ function App() {
               </button>
 
               <div className="postcard-preview">
-                <div className="postcard-letter">
-                  <p className="postcard-preview-greeting">Greetings from the Toy Community!</p>
-                  <p className="postcard-preview-message">
-                    Thanks for playing and engaging in dialogue around these toys.
-                    You are now part of our museum community.
-                  </p>
-                </div>
-                <div className="postcard-envelope" aria-hidden="true" />
+                <img
+                  className="postcard-design"
+                  src={activePostcard}
+                  alt={t.postcardTitle}
+                />
               </div>
 
               {postcardSaved && <p className="postcard-save-status">✓</p>}

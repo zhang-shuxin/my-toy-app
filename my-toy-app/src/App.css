@@ -1246,18 +1246,23 @@ textarea {
 
 .postcard-preview {
   position: relative;
-  aspect-ratio: 1 / 1;
   width: 100%;
   max-width: 430px;
   margin: 0 auto;
   box-sizing: border-box;
   overflow: hidden;
   border-radius: 0;
-  background: transparent;
+  background: #fff;
   box-shadow: none;
   text-align: left;
   transform-origin: 50% 100%;
   animation: envelope-arrival 3.8s cubic-bezier(.2,.75,.25,1) both;
+}
+
+.postcard-design {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .postcard-envelope {
