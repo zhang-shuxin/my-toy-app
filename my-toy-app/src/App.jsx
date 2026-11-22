@@ -732,7 +732,7 @@ function App() {
 
       const blob = await response.blob();
       const file = new File([blob], `toy-community-postcard-${language}.jpg`, { type: 'image/jpeg' });
-      if (action === 'share' && navigator.canShare?.({ files: [file] })) {
+      if (navigator.canShare?.({ files: [file] })) {
         await navigator.share({
           files: [file],
           title: 'Toy Community postcard',
