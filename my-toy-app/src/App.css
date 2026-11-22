@@ -1186,8 +1186,8 @@ textarea {
   inset: 0;
   z-index: 210;
   display: grid;
-  place-items: center;
-  padding: 20px;
+  place-items: end center;
+  padding: 0;
   background: rgba(38, 48, 70, 0.88);
   animation: postcard-fade-in 220ms ease-out;
 }
@@ -1195,10 +1195,10 @@ textarea {
 .postcard-dialog {
   position: relative;
   width: min(430px, 100%);
-  max-height: calc(100dvh - 24px);
+  max-height: none;
   overflow: visible;
   box-sizing: border-box;
-  padding: 52px 0 0;
+  padding: 0;
   background: transparent;
   text-align: center;
   animation: postcard-rise 420ms cubic-bezier(.2,.8,.2,1);
@@ -1206,7 +1206,7 @@ textarea {
 
 .postcard-close {
   position: absolute;
-  top: 38px;
+  top: -42px;
   right: -8px;
   z-index: 5;
   width: 32px;
