@@ -8,7 +8,7 @@ import logoBubble from './assets/logo-bubble.png'
 import dollhouseBg from './assets/dollhouse-bg.png'
 import dollhouseBgProjector from './assets/dollhouse-bg-projector.png'
 import customBubble from './assets/custom-bubble.png'
-import seagullBanner from './assets/seagull-banner.png'
+import seagullBanner from './assets/seagull-banner.svg'
 import worldBg from './assets/world-bg.png'
 import buildingBg from './assets/building-bg.png';
 import infoIcon from './assets/info-icon.png'
