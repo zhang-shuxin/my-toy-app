@@ -1093,8 +1093,9 @@ function App() {
             className="pretty-back-btn"
             onClick={() => goToPage('welcome')}
             disabled={Boolean(placedToy)}
+            aria-label={t.back}
           >
-            {t.back}
+            <img src={goBackIcon} alt="" />
           </button>
           {/* Right: The Info Icon */}
           <button
@@ -1177,9 +1178,7 @@ function App() {
           ) : (
           <> {/* 1. ADD THIS INVISIBLE OPENING TAG */}
             <div className="bottom-actions">
-              <button className="nav-btn goback-button" type="button" onClick={handleBackToEdit} aria-label={t.back}>
-                <img src={goBackIcon} alt="" />
-              </button>
+              <button className="nav-btn btn-outline" onClick={handleBackToEdit}>{t.back}</button>
               <button className="nav-btn btn-solid-active" onClick={handleDoneClick}>{t.done}</button>
             </div>
             
@@ -1454,7 +1453,7 @@ function App() {
               </div>
 
               <div className="modal-actions">
-                <button className="nav-btn goback-button" type="button" aria-label={t.back} onClick={() => {
+                <button className="nav-btn btn-outline" onClick={() => {
                 if (selectedImage) {
                  // Clear the toy and stay on this screen
                  setSelectedImage(null);
@@ -1464,7 +1463,7 @@ function App() {
                 setIsModalOpen(false);
                 setShowUploadModal(true); 
                 }
-                }}><img src={goBackIcon} alt="" /></button>
+                }}>{t.back}</button>
                 
                 <button className={`nav-btn ${isNextValid ? 'btn-solid-active' : 'btn-solid-disabled'}`} onClick={handleNextClick} disabled={!isNextValid}>{t.next}</button>
               </div>
