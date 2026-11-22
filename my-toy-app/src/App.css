@@ -421,20 +421,22 @@ body {
 }
 
 .create-button {
-  background-color: #EA4335;
-  color: #FFFFFF;
-  font-size: 60px; /* A smaller font fits beautifully inside a 60px button */
-  line-height: 1;  /* Removes automatic browser text padding */
-  border: 1px solid #EA4335;
-  border-radius: 100%;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
   width: 60px;
   height: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  box-shadow: 0px 3px 3px #f59f2e;
-  padding-bottom: 6px;
+  padding: 0;
+}
+
+.create-button img {
+  width: 64px;
+  height: 65px;
+  display: block;
 }
 
 /* --- POP-UP MODAL STYLES --- */

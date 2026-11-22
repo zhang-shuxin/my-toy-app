@@ -7,6 +7,7 @@ import logoBubble from './assets/logo-bubble.svg'
 import dollhouseBg from './assets/dollhouse-bg.png'
 import dollhouseBgProjector from './assets/dollhouse-bg-projector.png'
 import customBubble from './assets/custom-bubble.svg'
+import createIcon from './assets/create.svg'
 import seagullBanner from './assets/seagull-banner.svg'
 import worldBg from './assets/world-bg.png'
 import buildingBg from './assets/building-bg.svg';
@@ -1164,7 +1165,14 @@ function App() {
 
         <div className="bottom-panel">
           {!placedToy ? (
-            <button className="create-button" onClick={() => setIsModalOpen(true)}>+</button>
+            <button
+              className="create-button"
+              type="button"
+              onClick={() => setIsModalOpen(true)}
+              aria-label={t.uploadPhoto}
+            >
+              <img src={createIcon} alt="" />
+            </button>
           ) : (
           <> {/* 1. ADD THIS INVISIBLE OPENING TAG */}
             <div className="bottom-actions">
