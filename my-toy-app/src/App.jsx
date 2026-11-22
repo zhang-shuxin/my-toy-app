@@ -1344,6 +1344,7 @@ function App() {
                   src={activePostcard}
                   alt={t.postcardTitle}
                 />
+                <div className="postcard-envelope" aria-hidden="true" />
               </div>
 
               {postcardSaved && <p className="postcard-save-status">✓</p>}

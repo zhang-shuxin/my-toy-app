@@ -1250,7 +1250,7 @@ textarea {
   max-width: 430px;
   margin: 0 auto;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible;
   border-radius: 0;
   background: #fff;
   box-shadow: none;
@@ -1260,6 +1260,8 @@ textarea {
 }
 
 .postcard-design {
+  position: relative;
+  z-index: 3;
   display: block;
   width: 100%;
   height: auto;
@@ -1267,14 +1269,14 @@ textarea {
 
 .postcard-envelope {
   position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 45%;
-  z-index: 2;
+  right: -13%;
+  bottom: -18%;
+  left: -13%;
+  height: 29%;
+  z-index: 1;
   overflow: hidden;
-  border-radius: 0;
-  background: #cf2d2d;
+  border-radius: 4px;
+  background: #c92f31;
   box-shadow: 0 10px 24px rgba(18, 24, 38, 0.16);
 }
 
