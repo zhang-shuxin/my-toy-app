@@ -1354,14 +1354,16 @@ textarea {
 }
 
 .postcard-action-btn {
-  min-height: 38px;
-  border: 0;
-  border-radius: 999px;
-  background: #aaa09a;
-  box-shadow: 0 5px 14px rgba(20, 28, 44, 0.12);
-  color: #322d28;
-  font-family: "Segoe Print", "Bradley Hand", cursive;
-  font-size: 13px;
+  min-height: 48px;
+  padding: 14px;
+  border: 1.5px solid #FFEE99;
+  border-radius: 30px;
+  background: #EA4335;
+  color: #FFEE99;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
   cursor: pointer;
   text-transform: lowercase;
 }
