@@ -1263,7 +1263,7 @@ textarea {
 
 .postcard-design {
   position: relative;
-  top: -90px;
+  top: -100px;
   z-index: 3;
   display: block;
   width: 100%;
@@ -1369,7 +1369,7 @@ textarea {
   font-weight: bold;
   text-align: center;
   cursor: pointer;
-  text-transform: lowercase;
+  text-transform: uppercase;
 }
 
 .postcard-action-btn:disabled {
