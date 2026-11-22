@@ -1267,43 +1267,34 @@ textarea {
   height: auto;
 }
 
-.postcard-envelope {
+.postcard-envelope-back {
   position: absolute;
+  z-index: 1;
+  right: -13%;
+  bottom: 3%;
+  left: -13%;
+  width: 126%;
+  height: auto;
+  pointer-events: none;
+}
+
+.postcard-envelope-front {
+  position: absolute;
+  z-index: 1;
   right: -13%;
   bottom: -18%;
   left: -13%;
-  height: 29%;
-  z-index: 1;
-  overflow: hidden;
-  border-radius: 0;
-  background: #f2efe9;
-  box-shadow: 0 10px 24px rgba(18, 24, 38, 0.12);
+  width: 126%;
+  height: auto;
+  pointer-events: none;
 }
 
-.postcard-envelope::before {
-  content: '';
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #dcd7d0;
-  clip-path: polygon(0 0, 50% 44%, 100% 0);
-  transform-origin: 50% 0;
-  animation: envelope-flap-open 3.8s ease-in-out both;
-}
-
-.postcard-envelope::after {
-  content: '';
-  position: absolute;
+.postcard-design {
   z-index: 2;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 100%;
-  background: #f6f3ed;
-  clip-path: polygon(0 100%, 50% 28%, 100% 100%);
+}
+
+.postcard-envelope-front {
+  z-index: 4;
 }
 
 .postcard-letter {

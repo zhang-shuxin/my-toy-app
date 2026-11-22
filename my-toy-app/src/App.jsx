@@ -18,6 +18,8 @@ import ePostcardChinese from './assets/e-postcard_Chinese.jpg'
 import ePostcardEnglish from './assets/e-postcard_English.jpg'
 import ePostcardFrench from './assets/e-postcard_French.jpg'
 import ePostcardSpanish from './assets/e-postcard_Spanish.jpg'
+import envelopeBack from './assets/envelope_1.png'
+import envelopeFront from './assets/envelope_2.png'
 
 import Actionman1 from './assets/maa-Action Man-1.jpeg'
 import Actionman2 from './assets/maa-Action Man-2.jpeg'
@@ -1340,11 +1342,22 @@ function App() {
 
               <div className="postcard-preview">
                 <img
+                  className="postcard-envelope-back"
+                  src={envelopeBack}
+                  alt=""
+                  aria-hidden="true"
+                />
+                <img
                   className="postcard-design"
                   src={activePostcard}
                   alt={t.postcardTitle}
                 />
-                <div className="postcard-envelope" aria-hidden="true" />
+                <img
+                  className="postcard-envelope-front"
+                  src={envelopeFront}
+                  alt=""
+                  aria-hidden="true"
+                />
               </div>
 
               {postcardSaved && <p className="postcard-save-status">✓</p>}
