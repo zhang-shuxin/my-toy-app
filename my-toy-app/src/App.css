@@ -1370,12 +1370,13 @@ textarea {
 
 .postcard-actions {
   position: absolute;
-  right: 20%;
+  right: 7%;
   bottom: 4.5%;
-  left: 20%;
+  left: 7%;
   z-index: 6;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
 
 .postcard-action-btn {

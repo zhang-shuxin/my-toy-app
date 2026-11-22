@@ -1394,6 +1394,19 @@ function App() {
                     <span>{t.postcardShare}</span>
                   </span>
                 </button>
+                <button
+                  className="postcard-action-btn"
+                  type="button"
+                  onClick={() => savePostcard('download')}
+                  disabled={isSavingPostcard}
+                >
+                  <span className="postcard-action-content">
+                    <svg className="postcard-action-icon" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 3v12M7.5 10.5 12 15l4.5-4.5M5 21h14" />
+                    </svg>
+                    <span>{t.postcardSave}</span>
+                  </span>
+                </button>
               </div>
             </div>
           </div>
