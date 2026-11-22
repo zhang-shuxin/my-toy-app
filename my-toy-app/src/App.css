@@ -486,15 +486,13 @@ body {
   position: absolute;
   top: 15px;
   right: 15px;
-  background: #EA4335;
-  color: white;
-  border: 1px solid black;
+  background: transparent;
+  color: inherit;
+  border: 0;
   border-radius: 50%;
-  width: 34px;
-  height: 34px;
-  font-size: 30px;
-  font-weight: 500;
-  line-height: 1;
+  width: 36px;
+  height: 36px;
+  padding: 0;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -894,15 +892,13 @@ textarea {
 
 /* --- DETAILS & COMMENTS PAGE --- */
 .details-close-btn {
-  background: #EA4335;
-  color: white;
-  border: 1px solid black;
+  background: transparent;
+  color: inherit;
+  border: 0;
   border-radius: 50%;
-  width: 34px;
-  height: 34px;
-  font-size: 30px;
-  font-weight: 500;
-  line-height: 1;
+  width: 36px;
+  height: 36px;
+  padding: 0;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -1229,19 +1225,25 @@ textarea {
   top: -120px;
   right: 16px;
   z-index: 5;
-  width: 34px;
-  height: 34px;
-  border: 1px solid black;
+  width: 36px;
+  height: 36px;
+  border: 0;
   border-radius: 50%;
-  background: #EA4335;
-  color: white;
-  font-size: 30px;
-  font-weight: 500;
-  line-height: 1;
+  background: transparent;
+  color: inherit;
+  padding: 0;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.close-btn img,
+.details-close-btn img,
+.postcard-close img {
+  width: 36px;
+  height: 36px;
+  display: block;
 }
 
 .postcard-eyebrow {

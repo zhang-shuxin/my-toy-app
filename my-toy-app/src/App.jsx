@@ -9,6 +9,7 @@ import dollhouseBgProjector from './assets/dollhouse-bg-projector.png'
 import customBubble from './assets/custom-bubble.svg'
 import createIcon from './assets/create.svg'
 import goBackIcon from './assets/goback.svg'
+import closeIcon from './assets/close.svg'
 import seagullBanner from './assets/seagull-banner.svg'
 import worldBg from './assets/world-bg.png'
 import buildingBg from './assets/building-bg.svg';
@@ -1224,7 +1225,7 @@ function App() {
                   aria-label="Close comments"
                   title="Close comments"
                 >
-                  &times;
+                  <img src={closeIcon} alt="" />
                 </button>
               </div>
 
@@ -1346,7 +1347,7 @@ function App() {
                 onClick={() => setPostcard(null)}
                 aria-label={t.postcardLater}
               >
-                &times;
+                <img src={closeIcon} alt="" />
               </button>
 
               <div className="postcard-preview">
@@ -1413,7 +1414,9 @@ function App() {
         {isModalOpen && (
           <div className="modal-overlay">
             <div className="modal-content">
-              <button className="close-btn" onClick={handleCloseModal}>&times;</button>
+              <button className="close-btn" type="button" onClick={handleCloseModal} aria-label={t.cancel}>
+                <img src={closeIcon} alt="" />
+              </button>
               <div className="upload-section">
                 <div className="sticker-header yellow-sticker">{t.uploadPhoto}</div>
                 {!selectedImage ? (
