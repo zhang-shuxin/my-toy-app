@@ -1343,7 +1343,7 @@ function App() {
               <div className="postcard-preview">
                 <img
                   className="postcard-envelope-back"
-                  src={envelopeBack}
+                  src={envelopeFront}
                   alt=""
                   aria-hidden="true"
                 />
@@ -1354,7 +1354,7 @@ function App() {
                 />
                 <img
                   className="postcard-envelope-front"
-                  src={envelopeFront}
+                  src={envelopeBack}
                   alt=""
                   aria-hidden="true"
                 />
