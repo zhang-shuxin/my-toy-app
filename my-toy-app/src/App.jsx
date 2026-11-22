@@ -732,7 +732,13 @@ function App() {
 
       const blob = await response.blob();
       const file = new File([blob], `toy-community-postcard-${language}.jpg`, { type: 'image/jpeg' });
-      if (navigator.canShare?.({ files: [file] })) {
+      if (action === 'share' && navigator.canShare?.({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: 'Toy Community postcard',
+          text: 'A postcard from the Toy Community.',
+        });
+      } else if (action === 'download' && navigator.canShare?.({ files: [file] })) {
         await navigator.share({
           files: [file],
           title: 'Toy Community postcard',
