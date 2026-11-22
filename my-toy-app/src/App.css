@@ -1259,6 +1259,7 @@ textarea {
 
 .postcard-design {
   position: relative;
+  top: -18px;
   z-index: 3;
   display: block;
   width: 100%;
