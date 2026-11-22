@@ -1394,10 +1394,6 @@ textarea {
   text-transform: uppercase;
 }
 
-.postcard-action-btn:disabled {
-  cursor: wait;
-  opacity: 0.68;
-}
 
 .postcard-action-content {
   display: inline-flex;
