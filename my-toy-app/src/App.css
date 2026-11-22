@@ -1275,21 +1275,21 @@ textarea {
   height: 29%;
   z-index: 1;
   overflow: hidden;
-  border-radius: 4px;
-  background: #c92f31;
-  box-shadow: 0 10px 24px rgba(18, 24, 38, 0.16);
+  border-radius: 0;
+  background: #f2efe9;
+  box-shadow: 0 10px 24px rgba(18, 24, 38, 0.12);
 }
 
 .postcard-envelope::before {
   content: '';
   position: absolute;
-  z-index: 2;
-  top: -1px;
+  z-index: 1;
+  top: 0;
   left: 0;
   width: 100%;
-  height: 78%;
-  background: #d92f2f;
-  clip-path: polygon(0 0, 50% 68%, 100% 0);
+  height: 100%;
+  background: #dcd7d0;
+  clip-path: polygon(0 0, 50% 44%, 100% 0);
   transform-origin: 50% 0;
   animation: envelope-flap-open 3.8s ease-in-out both;
 }
@@ -1297,13 +1297,13 @@ textarea {
 .postcard-envelope::after {
   content: '';
   position: absolute;
-  z-index: 3;
+  z-index: 2;
   right: 0;
   bottom: 0;
   left: 0;
-  height: 45%;
-  background: #b91e24;
-  clip-path: polygon(0 100%, 50% 4%, 100% 100%);
+  height: 100%;
+  background: #f6f3ed;
+  clip-path: polygon(0 100%, 50% 28%, 100% 100%);
 }
 
 .postcard-letter {
@@ -1364,7 +1364,7 @@ textarea {
   min-height: 38px;
   border: 0;
   border-radius: 999px;
-  background: #fff;
+  background: #aaa09a;
   box-shadow: 0 5px 14px rgba(20, 28, 44, 0.12);
   color: #322d28;
   font-family: "Segoe Print", "Bradley Hand", cursive;
