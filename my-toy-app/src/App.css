@@ -1255,8 +1255,6 @@ textarea {
   background: #fff;
   box-shadow: none;
   text-align: left;
-  transform-origin: 50% 100%;
-  animation: envelope-arrival 3.8s cubic-bezier(.2,.75,.25,1) both;
 }
 
 .postcard-design {
@@ -1265,6 +1263,8 @@ textarea {
   display: block;
   width: 100%;
   height: auto;
+  transform-origin: 50% 100%;
+  animation: envelope-arrival 3.8s cubic-bezier(.2,.75,.25,1) both;
 }
 
 .postcard-envelope-back {
@@ -1280,7 +1280,7 @@ textarea {
 
 .postcard-envelope-front {
   position: absolute;
-  z-index: 1;
+  z-index: 4;
   right: -13%;
   bottom: -18%;
   left: -13%;
