@@ -419,10 +419,6 @@ function App() {
   const [postcard, setPostcard] = useState(null);
   const [isSavingPostcard, setIsSavingPostcard] = useState(false);
   const [postcardSaved, setPostcardSaved] = useState(false);
-  const [postcardPhoto, setPostcardPhoto] = useState(null);
-  const [cameraError, setCameraError] = useState('');
-  const postcardVideoRef = useRef(null);
-  const postcardStreamRef = useRef(null);
   const commentsContentRef = useRef(null);
 
   const handleLanguageChange = (event) => {
@@ -574,17 +570,6 @@ function App() {
     return () => cancelAnimationFrame(frame);
   }, [activeToy, shouldScrollCommentsToBottom]);
 
-  useEffect(() => {
-    if (!postcard) {
-      stopPostcardCamera();
-      return;
-    }
-
-    setPostcardPhoto(null);
-    startPostcardCamera();
-    return stopPostcardCamera;
-  }, [Boolean(postcard)]);
-
   const goToPage = (page) => {
     setCurrentPage(page);
     navigate(`/${page === 'welcome' ? '' : page}`);
@@ -727,52 +712,6 @@ function App() {
     image.src = source;
   });
 
-  const stopPostcardCamera = () => {
-    postcardStreamRef.current?.getTracks().forEach((track) => track.stop());
-    postcardStreamRef.current = null;
-  };
-
-  const startPostcardCamera = async () => {
-    setCameraError('');
-    stopPostcardCamera();
-
-    if (!navigator.mediaDevices?.getUserMedia) {
-      setCameraError('Camera is not available in this browser.');
-      return;
-    }
-
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'environment' },
-        audio: false,
-      });
-      postcardStreamRef.current = stream;
-      if (postcardVideoRef.current) {
-        postcardVideoRef.current.srcObject = stream;
-        await postcardVideoRef.current.play();
-      }
-    } catch (error) {
-      setCameraError(error?.name === 'NotAllowedError'
-        ? 'Allow camera access to take a museum photo.'
-        : 'Could not open the camera.');
-    }
-  };
-
-  const capturePostcardPhoto = () => {
-    const video = postcardVideoRef.current;
-    if (!video?.videoWidth) return;
-
-    const canvas = document.createElement('canvas');
-    canvas.width = 1080;
-    canvas.height = 1350;
-    const context = canvas.getContext('2d');
-    const scale = Math.max(canvas.width / video.videoWidth, canvas.height / video.videoHeight);
-    const width = video.videoWidth * scale;
-    const height = video.videoHeight * scale;
-    context.drawImage(video, (canvas.width - width) / 2, (canvas.height - height) / 2, width, height);
-    setPostcardPhoto(canvas.toDataURL('image/jpeg', 0.92));
-  };
-
   const savePostcard = async () => {
     if (!postcard || isSavingPostcard) return;
 
@@ -798,7 +737,7 @@ function App() {
       context.fillStyle = '#050505';
       context.fillRect(photoFrame.x, photoFrame.y, photoFrame.width, photoFrame.height);
 
-      const postcardImage = await loadPostcardImage(postcardPhoto);
+      const postcardImage = await loadPostcardImage(postcard.toyImage);
       if (postcardImage) {
         const scale = Math.max(photoFrame.width / postcardImage.width, photoFrame.height / postcardImage.height);
         const width = postcardImage.width * scale;
@@ -1467,40 +1406,10 @@ function App() {
                 <div className="postcard-card-stage">
                   <img className="postcard-museum-frame" src={ePostcardFrame} alt="" />
                   <div className="postcard-preview-photo">
-                    {postcardPhoto ? (
-                      <img src={postcardPhoto} alt="Captured museum photo" />
-                    ) : (
-                      <>
-                        <video ref={postcardVideoRef} muted playsInline />
-                        <button
-                          type="button"
-                          className="postcard-camera-button"
-                          onClick={startPostcardCamera}
-                          aria-label="Open camera"
-                        >
-                          <span />
-                        </button>
-                      </>
+                    {postcard.toyImage && (
+                      <img src={postcard.toyImage} alt="Toy used in the postcard" />
                     )}
                   </div>
-                  {postcardPhoto && (
-                    <button
-                      type="button"
-                      className="postcard-retake-button"
-                      onClick={() => {
-                        setPostcardPhoto(null);
-                        startPostcardCamera();
-                      }}
-                    >
-                      Retake
-                    </button>
-                  )}
-                  {!postcardPhoto && !cameraError && (
-                    <button type="button" className="postcard-shutter" onClick={capturePostcardPhoto}>
-                      <span />
-                    </button>
-                  )}
-                  {cameraError && <p className="postcard-camera-error">{cameraError}</p>}
                   <div className="postcard-preview-copy">
                     <p className="postcard-preview-greeting">Greetings from the Toy Community!</p>
                     <p className="postcard-preview-message">

@@ -1291,83 +1291,10 @@ textarea {
   background: #050505;
 }
 
-.postcard-preview-photo video,
 .postcard-preview-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.postcard-preview-photo video {
-  transform: scaleX(-1);
-}
-
-.postcard-camera-button {
-  position: absolute;
-  inset: 0;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-}
-
-.postcard-camera-button span {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 48px;
-  height: 48px;
-  border: 2px solid rgba(255,255,255,.8);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.postcard-shutter {
-  position: absolute;
-  z-index: 4;
-  left: 50%;
-  bottom: 25%;
-  width: 38px;
-  height: 38px;
-  border: 3px solid white;
-  border-radius: 50%;
-  background: rgba(0,0,0,.38);
-  transform: translateX(-50%);
-  cursor: pointer;
-}
-
-.postcard-shutter span {
-  display: block;
-  width: 24px;
-  height: 24px;
-  margin: 4px;
-  border-radius: 50%;
-  background: white;
-}
-
-.postcard-retake-button {
-  position: absolute;
-  z-index: 4;
-  right: 16%;
-  bottom: 25%;
-  border: 0;
-  border-radius: 10px;
-  background: rgba(255,255,255,.9);
-  color: #40345e;
-  font-size: 8px;
-  padding: 5px 7px;
-  cursor: pointer;
-}
-
-.postcard-camera-error {
-  position: absolute;
-  z-index: 4;
-  top: 42%;
-  left: 19%;
-  width: 62%;
-  margin: 0;
-  color: white;
-  font-size: 9px;
-  text-align: center;
 }
 
 .postcard-preview-copy {
