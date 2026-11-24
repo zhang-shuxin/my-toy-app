@@ -12,6 +12,7 @@ const normalizeToy = (toy) => ({
   id: toy.id,
   image: String(toy.imageUrl || '').replace(/^http:\/\//i, 'https://'),
   story: toy.story,
+  likes: Math.max(Number(toy.likes) || 0, 0),
   scale: Number(toy.scale || 0),
   x: Number(toy.positionX || 0),
   y: Number(toy.positionY || 0),

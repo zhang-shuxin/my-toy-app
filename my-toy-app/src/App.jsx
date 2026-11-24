@@ -573,7 +573,10 @@ function App() {
   }
 }
   const [currentPage, setCurrentPage] = useState(() => {
-    if (window.location.pathname === '/staff-control') return 'staff-control';
+    if (
+      window.location.pathname === '/staff-control'
+      || window.location.pathname === '/dollhouse/staffcontrol'
+    ) return 'staff-control';
     if (window.location.pathname === '/research-consent') return 'research-consent';
     if (window.location.pathname === '/dollhouse') return 'dollhouse';
     return 'welcome';

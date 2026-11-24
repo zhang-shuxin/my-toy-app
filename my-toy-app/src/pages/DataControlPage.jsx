@@ -49,6 +49,10 @@ function DataControlPage({
             <strong>{savedToys.reduce((total, toy) => total + toy.comments.length, 0)}</strong>
             <span>comments</span>
           </div>
+          <div>
+            <strong>{savedToys.reduce((total, toy) => total + (toy.likes || 0), 0)}</strong>
+            <span>likes</span>
+          </div>
         </section>
 
         <label className="data-control-search">
@@ -89,6 +93,7 @@ function DataControlPage({
                 <dl className="data-control-meta">
                   <div><dt>Position</dt><dd>{toy.x.toFixed(1)}%, {toy.y.toFixed(1)}%</dd></div>
                   <div><dt>Scale</dt><dd>{toy.scale.toFixed(1)}%</dd></div>
+                  <div><dt>Likes</dt><dd>{toy.likes || 0}</dd></div>
                 </dl>
                 {toy.comments.length > 0 && (
                   <ul className="data-control-comments">
