@@ -951,7 +951,55 @@ textarea {
   font-size: 15px;
   font-family: 'Plus Jakarta Sans', sans-serif;
   line-height: 1.5;
-  margin-bottom: 20px;
+  margin-bottom: 44px;
+}
+
+.toy-like-btn {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #cacaca;
+  border-radius: 18px;
+  bottom: 10px;
+  color: #555;
+  cursor: pointer;
+  display: flex;
+  gap: 6px;
+  height: 34px;
+  left: 14px;
+  padding: 0 10px;
+  position: absolute;
+  transition: border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.toy-like-btn:active {
+  transform: scale(0.96);
+}
+
+.toy-like-btn svg {
+  fill: transparent;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  width: 18px;
+}
+
+.toy-like-btn span,
+.toy-like-btn strong {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+}
+
+.toy-like-btn strong {
+  min-width: 10px;
+}
+
+.toy-like-btn.is-liked {
+  border-color: #ea4335;
+  color: #ea4335;
+}
+
+.toy-like-btn.is-liked svg {
+  fill: currentColor;
 }
 
 .details-date {

@@ -122,6 +122,7 @@ const normalizeToy = (toy) => ({
   id: toy.id,
   image: String(toy.imageUrl || '').replace(/^http:\/\//i, 'https://'),
   story: toy.story,
+  likes: Math.max(Number(toy.likes) || 0, 0),
   // Older API responses expose this value as `size`; keep existing records visible.
   scale: Math.max(Number(toy.scale ?? toy.size) || 0, 10),
   rotation: Number(toy.rotation) || 0,
@@ -168,6 +169,8 @@ const translations = {
     commentPlaceholder: 'Make a comment or attach a photo...',
     attachPhoto: 'Attach a photo',
     sendComment: 'Send comment',
+    likeToy: 'Like',
+    unlikeToy: 'Unlike',
     postcardEyebrow: 'A little thank-you',
     postcardTitle: 'Postcard received!',
     postcardCopy: 'Your kindness helped this story travel a little further.',
@@ -217,6 +220,8 @@ const translations = {
     commentPlaceholder: 'Escriu un comentari o adjunta una foto...',
     attachPhoto: 'Adjunta una foto',
     sendComment: 'Envia el comentari',
+    likeToy: 'M’agrada',
+    unlikeToy: 'Ja no m’agrada',
     postcardEyebrow: 'Un petit agraïment',
     postcardTitle: 'Has rebut una postal!',
     postcardCopy: 'La teva amabilitat ha ajudat aquesta història a arribar una mica més lluny.',
@@ -266,6 +271,8 @@ const translations = {
     commentPlaceholder: 'Escribe un comentario o adjunta una foto...',
     attachPhoto: 'Adjunta una foto',
     sendComment: 'Enviar comentario',
+    likeToy: 'Me gusta',
+    unlikeToy: 'Ya no me gusta',
     postcardEyebrow: 'Un pequeño agradecimiento',
     postcardTitle: '¡Postal recibida!',
     postcardCopy: 'Tu amabilidad ha ayudado a que esta historia viaje un poco más lejos.',
@@ -315,6 +322,8 @@ const translations = {
     commentPlaceholder: 'Écris un commentaire ou ajoute une photo...',
     attachPhoto: 'Ajouter une photo',
     sendComment: 'Envoyer le commentaire',
+    likeToy: 'J’aime',
+    unlikeToy: 'Je n’aime plus',
     postcardEyebrow: 'Un petit merci',
     postcardTitle: 'Carte reçue !',
     postcardCopy: 'Ta gentillesse a permis à cette histoire de voyager un peu plus loin.',
@@ -364,6 +373,8 @@ const translations = {
     commentPlaceholder: '发表评论或附加照片……',
     attachPhoto: '附加照片',
     sendComment: '发送评论',
+    likeToy: '点赞',
+    unlikeToy: '取消点赞',
     postcardEyebrow: '一份小小的谢意',
     postcardTitle: '收到明信片！',
     postcardCopy: '你的善意让这个故事又向前走了一小步。',
@@ -437,6 +448,14 @@ function App() {
   const [commentImageFile, setCommentImageFile] = useState(null);
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
   const [shouldScrollCommentsToBottom, setShouldScrollCommentsToBottom] = useState(false);
+  const [likedToyIds, setLikedToyIds] = useState(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem('toy-community-liked-toys') || '[]');
+      return new Set(Array.isArray(saved) ? saved.map(Number).filter(Number.isFinite) : []);
+    } catch {
+      return new Set();
+    }
+  });
   const [postcard, setPostcard] = useState(null);
   const [isSavingPostcard, setIsSavingPostcard] = useState(false);
   const [postcardSaved, setPostcardSaved] = useState(false);
@@ -648,6 +667,59 @@ function App() {
     setPlacedToy((previousToy) => (
       previousToy ? { ...previousToy, rotation: nextRotation } : previousToy
     ));
+  };
+
+  const handleToyLike = async () => {
+    if (!activeToy) return;
+
+    const liked = !likedToyIds.has(activeToy.id);
+    const previousLikes = activeToy.likes;
+    const nextLikedToyIds = new Set(likedToyIds);
+
+    if (liked) {
+      nextLikedToyIds.add(activeToy.id);
+    } else {
+      nextLikedToyIds.delete(activeToy.id);
+    }
+
+    setLikedToyIds(nextLikedToyIds);
+    localStorage.setItem(
+      'toy-community-liked-toys',
+      JSON.stringify(Array.from(nextLikedToyIds)),
+    );
+    setSavedToys((toys) => toys.map((toy) => (
+      toy.id === activeToy.id
+        ? { ...toy, likes: Math.max(0, toy.likes + (liked ? 1 : -1)) }
+        : toy
+    )));
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/toys/${activeToy.id}/like`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ liked }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Could not update like.');
+      }
+
+      const data = await response.json();
+      setSavedToys((toys) => toys.map((toy) => (
+        toy.id === activeToy.id ? { ...toy, likes: data.likes } : toy
+      )));
+    } catch (error) {
+      console.error(error);
+      setLikedToyIds(likedToyIds);
+      localStorage.setItem(
+        'toy-community-liked-toys',
+        JSON.stringify(Array.from(likedToyIds)),
+      );
+      setSavedToys((toys) => toys.map((toy) => (
+        toy.id === activeToy.id ? { ...toy, likes: previousLikes } : toy
+      )));
+      setUploadMessage(error.message);
+    }
   };
 
   const handleAddComment = () => {
@@ -1247,6 +1319,19 @@ function App() {
                 <div className="details-story-box">
                   <p>{activeToy.story}</p>
                   <span className="details-date">{activeToy.date}</span>
+                  <button
+                    type="button"
+                    className={`toy-like-btn${likedToyIds.has(activeToy.id) ? ' is-liked' : ''}`}
+                    onClick={handleToyLike}
+                    aria-label={likedToyIds.has(activeToy.id) ? t.unlikeToy : t.likeToy}
+                    aria-pressed={likedToyIds.has(activeToy.id)}
+                  >
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 21s-7.2-4.35-9.35-9.1C1 8.2 3.1 4.5 7 4.5c2.1 0 3.7 1.15 5 2.85C13.3 5.65 14.9 4.5 17 4.5c3.9 0 6 3.7 4.35 7.4C19.2 16.65 12 21 12 21z" />
+                    </svg>
+                    <span>{t.likeToy}</span>
+                    <strong>{activeToy.likes}</strong>
+                  </button>
                 </div>
 
                 {/* Comments Section */}
