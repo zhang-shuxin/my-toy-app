@@ -1208,7 +1208,7 @@ function App() {
                   transform: `rotate(${toy.rotation || 0}deg)`
                 }}
               >
-                <img src={toy.image} alt="Saved toy" />
+                <img src={toy.image} alt="Saved toy" decoding="async" draggable="false" />
                 {/* Clicking now passes the exact index of this toy */}
                 <button
                   className="story-bubble-btn"
@@ -1216,7 +1216,7 @@ function App() {
                   disabled={Boolean(placedToy)}
                   aria-disabled={Boolean(placedToy)}
                 >
-                  <img src={customBubble} alt="Read Story" />
+                  <img src={customBubble} alt="Read Story" decoding="async" draggable="false" />
                 </button>
               </div>
             ))}
